@@ -3,8 +3,9 @@
 # #####################################################################
 TEMPLATE = app
 TARGET = Hyne
-DEPENDPATH += .
-INCLUDEPATH += .
+
+QT       += core gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 # Input
 HEADERS += PageWidgets/ConfigEditor.h \
@@ -92,11 +93,15 @@ TRANSLATIONS += hyne_en.ts \
 # QTPLUGIN += qjpcodecs
 # CONFIG += static
 
-macx:ICON = images/hyne.icns
+macx {
+	ICON = images/hyne.icns
+	greaterThan(QT_MAJOR_VERSION, 4): LIBS += -L"/zlib-1.2.7" -lzlib
+}
 win32 {
 	RC_FILE = Hyne.rc
 	LIBS += -lole32
 	HEADERS += shobjidl.h # Windows 7 taskBarButton
+	greaterThan(QT_MAJOR_VERSION, 4): LIBS += -lzlib
 }
 
 OTHER_FILES += Hyne.rc \

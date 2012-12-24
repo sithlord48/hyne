@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2012 Arzel JÃ©rÃ´me <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -53,16 +53,16 @@ Window::Window() :
 	actionSaveAs = menu->addAction(tr("E&xporter..."), this, SLOT(exportAs()), QKeySequence::SaveAs);
 	actionSaveAs->setEnabled(false);
 	menu->addSeparator();
-	actionProperties = menu->addAction(tr("&Propriétés..."), this, SLOT(properties()));
+	actionProperties = menu->addAction(tr("&PropriÃ©tÃ©s..."), this, SLOT(properties()));
 	actionProperties->setEnabled(false);
 	action = menu->addAction(QIcon(":/images/ff8.png"), tr("&Lancer Final Fantasy VIII"), this, SLOT(runFF8()), Qt::Key_F8);
 	action->setShortcutContext(Qt::ApplicationShortcut);
 	action->setEnabled(isInstalled);
 	addAction(action);
-	action = menu->addAction(tr("Ple&in écran"), this, SLOT(fullScreen()), Qt::Key_F11);
+	action = menu->addAction(tr("Ple&in Ã©cran"), this, SLOT(fullScreen()), Qt::Key_F11);
 	action->setShortcutContext(Qt::ApplicationShortcut);
 	addAction(action);
-	menuRecent = menu->addMenu(tr("O&uverts récemment"));
+	menuRecent = menu->addMenu(tr("O&uverts rÃ©cemment"));
 	fillMenuRecent();
 	connect(menuRecent, SIGNAL(triggered(QAction*)), SLOT(openRecentFile(QAction*)));
 	menu->addSeparator();
@@ -79,9 +79,9 @@ Window::Window() :
 	
 	/* MENU 'PARAMETRES' */
 	
-	menu = menuBar->addMenu(tr("&Paramètres"));
+	menu = menuBar->addMenu(tr("&ParamÃ¨tres"));
 	
-	actionMode = menu->addAction(tr("&Mode Avancé"), this, SLOT(mode(bool)));
+	actionMode = menu->addAction(tr("&Mode AvancÃ©"), this, SLOT(mode(bool)));
 	actionMode->setCheckable(true);
 	actionMode->setChecked(Config::mode());
 	
@@ -100,7 +100,7 @@ Window::Window() :
 		action->setData(50);
 	connect(menuFrame, SIGNAL(triggered(QAction*)), SLOT(changeFrame(QAction*)));
 	
-	actionFont = menu->addAction(tr("&Police haute résolution"), this, SLOT(font(bool)));
+	actionFont = menu->addAction(tr("&Police haute rÃ©solution"), this, SLOT(font(bool)));
 	actionFont->setCheckable(true);
 	actionFont->setChecked(!Config::value("font").isEmpty());
 	
@@ -330,7 +330,7 @@ void Window::openFile(const QString &path, bool isPCSlot)
 		saveList->setSavecard(saves);
 
 		if(saves->type() == SavecardData::Psv || saves->type() == SavecardData::Vmp)
-			QMessageBox::information(this, tr("Sauvegarde hasardeuse"), tr("Le format %1 est protégé, l'enregistrement sera partiel et risque de ne pas fonctionner.")
+			QMessageBox::information(this, tr("Sauvegarde hasardeuse"), tr("Le format %1 est protÃ©gÃ©, l'enregistrement sera partiel et risque de ne pas fonctionner.")
 									 .arg(saves->extension()));
 
 		setIsOpen(true);
@@ -425,7 +425,7 @@ bool Window::exportAs()
 	else	return false;
 
 	if(newType == SavecardData::Vmp || newType == SavecardData::Psv) {
-		int reponse = QMessageBox::information(this, tr("Sauvegarde hasardeuse"), tr("Les formats VMP et PSV sont protégés, l'enregistrement sera partiel et risque de ne pas fonctionner.\nContinuer quand même ?"), tr("Oui"), tr("Non"));
+		int reponse = QMessageBox::information(this, tr("Sauvegarde hasardeuse"), tr("Les formats VMP et PSV sont protÃ©gÃ©s, l'enregistrement sera partiel et risque de ne pas fonctionner.\nContinuer quand mÃªme ?"), tr("Oui"), tr("Non"));
 		if(reponse != 0)  return exportAs();
 	}
 	
@@ -705,12 +705,12 @@ QStringList Window::availableLanguages()
 	QDir dir(qApp->applicationDirPath());
 	QStringList languages, stringList = dir.entryList(QStringList("hyne_*.qm"), QDir::Files, QDir::Name);
 
-	languages.append("Français|fr");
+	languages.append("FranÃ§ais|fr");
 
 	QTranslator translator;
 	foreach(QString str, stringList) {
 		translator.load(str, qApp->applicationDirPath());
-		QString lang = translator.translate("Window", "Français", "Your translation language");
+		QString lang = translator.translate("Window", "FranÃ§ais", "Your translation language");
 
 		str = str.mid(5);
 		languages.append(lang + "|" + str.left(str.size()-3));
@@ -763,12 +763,12 @@ void Window::restartNow()
 {
 	QString str_title, str_text;
 	if(Config::translator->load("hyne_" + Config::value("lang"), qApp->applicationDirPath())) {
-		str_title = Config::translator->translate("Window", "Paramètres modifiés");
-		str_text = Config::translator->translate("Window", "Relancez le programme pour que les paramètres prennent effet.");
+		str_title = Config::translator->translate("Window", "ParamÃ¨tres modifiÃ©s");
+		str_text = Config::translator->translate("Window", "Relancez le programme pour que les paramÃ¨tres prennent effet.");
     }
     else {
-        str_title = "Paramètres modifiés";
-        str_text = "Relancez le programme pour que les paramètres prennent effet.";
+        str_title = "ParamÃ¨tres modifiÃ©s";
+        str_text = "Relancez le programme pour que les paramÃ¨tres prennent effet.";
 	}
 	Data::reload();
     QMessageBox::information(this, str_title, str_text);
@@ -786,7 +786,7 @@ void Window::restartNow()
 void Window::runFF8()
 {
 	if(!QProcess::startDetached("\"" % Config::ff8Path() % "/FF8.exe\"", QStringList(), Config::ff8Path())) {
-		QMessageBox::warning(this, tr("Erreur"), tr("Final Fantasy VIII n'a pas pu être lancé.\n%1").arg(Config::ff8Path() % "/FF8.exe"));
+		QMessageBox::warning(this, tr("Erreur"), tr("Final Fantasy VIII n'a pas pu Ãªtre lancÃ©.\n%1").arg(Config::ff8Path() % "/FF8.exe"));
 	}
 }
 
@@ -800,7 +800,7 @@ void Window::about()
 {
 	QDialog about(this, Qt::Dialog | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
 	about.setFixedSize(224, 248);
-	about.setWindowTitle(tr("À propos"));
+	about.setWindowTitle(tr("Ã€ propos"));
 	
 	QFont font;
 	font.setPointSize(12);
@@ -816,7 +816,7 @@ void Window::about()
 
 	font.setPointSize(8);
 
-	QLabel desc2(tr("Par myst6re<br/><a href=\"https://sourceforge.net/projects/hyne/\">https://sourceforge.net/projects/hyne/</a><br/><br/>75% modifiable<br/><br/>Merci à :<br/> - Qhimm<br/> - Cyberman<br/> - sithlord48<br/> - Aladore384<br/><br/>Traducteurs :<br/> - Anglais : myst6re, Vgr<br/> - Japonais : Asa"), &about);
+	QLabel desc2(tr("Par myst6re<br/><a href=\"https://sourceforge.net/projects/hyne/\">https://sourceforge.net/projects/hyne/</a><br/><br/>75% modifiable<br/><br/>Merci Ã  :<br/> - Qhimm<br/> - Cyberman<br/> - sithlord48<br/> - Aladore384<br/><br/>Traducteurs :<br/> - Anglais : myst6re, Vgr<br/> - Japonais : Asa"), &about);
 	desc2.setTextInteractionFlags(Qt::LinksAccessibleByMouse | Qt::LinksAccessibleByKeyboard);
 	desc2.setTextFormat(Qt::RichText);
 	desc2.setOpenExternalLinks(true);

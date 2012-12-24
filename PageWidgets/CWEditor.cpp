@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2012 Arzel JÃ©rÃ´me <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -50,11 +50,11 @@ void CWEditor::buildWidget()
 	weaponE = new QSpinBox(this);
 	weaponE->setRange(0000, 9999);
 
-//	QGroupBox *questGroupE = new QGroupBox(tr("Avancement quête"), this);
+//	QGroupBox *questGroupE = new QGroupBox(tr("Avancement quÃªte"), this);
 //	QGridLayout *questL = new QGridLayout(questGroupE);
 
 //	QStringList texts;
-//	texts << tr("Activé") << tr("MiniMog trouvé") << tr("Koko rencontrée") << tr("Dépêche-toi !") << tr("Koko enlevée") << tr("Roi démon vaincu") << tr("Boko et MiniMog : Home/World") << tr("MiniMog disponible");
+//	texts << tr("ActivÃ©") << tr("MiniMog trouvÃ©") << tr("Koko rencontrÃ©e") << tr("DÃ©pÃªche-toi !") << tr("Koko enlevÃ©e") << tr("Roi dÃ©mon vaincu") << tr("Boko et MiniMog : Home/World") << tr("MiniMog disponible");
 //	for(int i=0 ; i<8 ; ++i)
 //	{
 //		QCheckBox *questCheckBox = new QCheckBox(texts.at(i), questGroupE);

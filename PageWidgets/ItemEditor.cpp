@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2012 Arzel JÃ©rÃ´me <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ QWidget *ItemEditor::buildPage1()
 
 	QPushButton *allItems = new QPushButton(tr("Tous les objets"), buttonsW);
 	QPushButton *type_sort = new QPushButton(tr("Type"), buttonsW);
-	QPushButton *alpha_sort = new QPushButton(tr("Ordre alphabétique"), buttonsW);
+	QPushButton *alpha_sort = new QPushButton(tr("Ordre alphabÃ©tique"), buttonsW);
 
 	QHBoxLayout *buttons = new QHBoxLayout(buttonsW);
 	buttons->addWidget(allItems);
@@ -90,7 +90,7 @@ QWidget *ItemEditor::buildPage2()
 	battle_itemE_list->setDragDropMode(QAbstractItemView::InternalMove);
 	battle_itemE_list->setUniformItemSizes(true);
 
-	QLabel *info = new QLabel(tr("Déplacez les éléments à la souris pour modifier l'ordre des objets en combat."), ret);
+	QLabel *info = new QLabel(tr("DÃ©placez les Ã©lÃ©ments Ã  la souris pour modifier l'ordre des objets en combat."), ret);
 	info->setTextFormat(Qt::PlainText);
 	QLabel *infoIcon = new QLabel(ret);
 	infoIcon->setPixmap(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation).pixmap(16));
@@ -126,12 +126,12 @@ QWidget *ItemEditor::buildPage3()
 		weaponsE_list->addTopLevelItem(item);
 	}
 	for(int i=28 ; i<32 ; ++i) {
-		item = new QTreeWidgetItem(QStringList(tr("Inutilisé")));
+		item = new QTreeWidgetItem(QStringList(tr("InutilisÃ©")));
 		item->setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
 		weaponsE_list->addTopLevelItem(item);
 	}
 
-	QCheckBox *weaponsCheckAll = new QCheckBox(tr("Sélectionner tout"), ret);
+	QCheckBox *weaponsCheckAll = new QCheckBox(tr("SÃ©lectionner tout"), ret);
 	connect(weaponsCheckAll, SIGNAL(toggled(bool)), SLOT(selectAllWeapons(bool)));
 
 	timbermaniacsE_list = new QTreeWidget(ret);
@@ -141,10 +141,10 @@ QWidget *ItemEditor::buildPage3()
 	timbermaniacsE_list->setUniformRowHeights(true);
 
 	QStringList timbermaniacsStrings;
-	timbermaniacsStrings << tr("Hôtel de Balamb") << tr("Gare de Balamb") << tr("Pub de Dollet") << tr("Hôtel de Dollet")
-						 << tr("Bureau de rédaction de Timber") << tr("Hôtel de Timber") << tr("Hôtel de Deling City") << tr("Horizon : Maison du bricoleur")
-						 << tr("Hôtel d'Horizon") << tr("Université de Trabia - Cimetière") << tr("Ruines de Centra (automatique)") << tr("Village Shumi : Maison du bricoleur")
-						 << tr("Orphelinat d'Edea") << tr("Bateau des seeds blancs") << tr("Inutilisé") << tr("Inutilisé");
+	timbermaniacsStrings << tr("HÃ´tel de Balamb") << tr("Gare de Balamb") << tr("Pub de Dollet") << tr("HÃ´tel de Dollet")
+						 << tr("Bureau de rÃ©daction de Timber") << tr("HÃ´tel de Timber") << tr("HÃ´tel de Deling City") << tr("Horizon : Maison du bricoleur")
+						 << tr("HÃ´tel d'Horizon") << tr("UniversitÃ© de Trabia - CimetiÃ¨re") << tr("Ruines de Centra (automatique)") << tr("Village Shumi : Maison du bricoleur")
+						 << tr("Orphelinat d'Edea") << tr("Bateau des seeds blancs") << tr("InutilisÃ©") << tr("InutilisÃ©");
 
 	foreach(QString timbermaniacsString, timbermaniacsStrings) {
 		item = new QTreeWidgetItem(QStringList(timbermaniacsString));
@@ -152,7 +152,7 @@ QWidget *ItemEditor::buildPage3()
 		timbermaniacsE_list->addTopLevelItem(item);
 	}
 
-	QCheckBox *timbermaniacsCheckAll = new QCheckBox(tr("Sélectionner tout"), ret);
+	QCheckBox *timbermaniacsCheckAll = new QCheckBox(tr("SÃ©lectionner tout"), ret);
 	connect(timbermaniacsCheckAll, SIGNAL(toggled(bool)), SLOT(selectAllTimberManiacs(bool)));
 
 	font.setPixelSize(10);
@@ -177,7 +177,7 @@ void ItemEditor::fillPage()
 	QMultiMap<int, int> battle_order;
 	
 	itemE_model->clear();
-	itemE_model->setHorizontalHeaderLabels(QStringList() << tr("Nom") << tr("Qté"));
+	itemE_model->setHorizontalHeaderLabels(QStringList() << tr("Nom") << tr("QtÃ©"));
 	int i;
 	for(i=0 ; i<198 ; ++i)
 	{
@@ -199,8 +199,13 @@ void ItemEditor::fillPage()
 	}
 	
 	battle_itemE_list->clear();
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+	itemE_view->header()->setSectionResizeMode(0, QHeaderView::Stretch);
+	itemE_view->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+#else
 	itemE_view->header()->setResizeMode(0, QHeaderView::Stretch);
 	itemE_view->header()->setResizeMode(1, QHeaderView::ResizeToContents);
+#endif
 
 	for(itemID=0 ; itemID<32 ; ++itemID)
 	{

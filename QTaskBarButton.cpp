@@ -9,32 +9,52 @@ QTaskBarButton::QTaskBarButton(QWidget *mainWindow) :
 {
 	_winId = mainWindow->window()->winId();
 
-	CoInitialize(NULL);
-	HRESULT hRes = CoCreateInstance(CLSID_TaskbarList,
-									NULL, CLSCTX_INPROC_SERVER,
-									IID_ITaskbarList3, (LPVOID *)&pITask);
-	if(FAILED(hRes)) {
-		pITask = 0;
-		CoUninitialize();
-		return;
-	}
-
-	pITask->HrInit();
+	initTaskBar();
 }
 
 QTaskBarButton::~QTaskBarButton()
 {
 	if(pITask) {
 		pITask->Release();
-		pITask = NULL;
+		pITask = 0;
 		CoUninitialize();
 	}
 
 	if(destinationList) {
 		removedItems->Release();
 		destinationList->Release();
-		destinationList = NULL;
+		destinationList = 0;
 //		CoUninitialize();
+	}
+}
+
+void QTaskBarButton::initTaskBar()
+{
+	HRESULT hRes = CoInitialize(NULL);
+
+	if(FAILED(hRes)) {
+		return;
+	}
+
+	hRes = CoCreateInstance(CLSID_TaskbarList,
+							NULL, CLSCTX_INPROC_SERVER,
+							IID_ITaskbarList3, (LPVOID *)&pITask);
+
+	if(FAILED(hRes)) {
+		pITask = 0;
+		CoUninitialize();
+		qWarning() << "error TaskBar" << hRes;
+		return;
+	}
+
+	hRes = pITask->HrInit();
+
+	if(FAILED(hRes)) {
+		pITask->Release();
+		pITask = 0;
+		CoUninitialize();
+		qWarning() << "error TaskBar" << hRes;
+		return;
 	}
 }
 
@@ -94,7 +114,6 @@ void QTaskBarButton::addList(ListCategories category)
 
 		if(FAILED(hRes)) {
 			qWarning() << "error AppendKnownCategory" << hRes;
-			return;
 		}
 	}
 
@@ -148,7 +167,7 @@ void QTaskBarButton::setState(State state)
 		break;
 	}
 
-	if(S_OK == pITask->SetProgressState(_winId, flag)) {
+	if(SUCCEEDED(pITask->SetProgressState(_winId, flag))) {
 		_state = state;
 	}
 }
@@ -162,7 +181,7 @@ void QTaskBarButton::setValue(int value)
 		return;
 	}
 
-	if(S_OK == pITask->SetProgressValue(_winId, completed, total)) {
+	if(SUCCEEDED(pITask->SetProgressValue(_winId, completed, total))) {
 		_value = value;
 		emit valueChanged(value);
 	}

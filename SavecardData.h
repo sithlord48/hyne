@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2012 Arzel JÃ©rÃ´me <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -80,7 +80,7 @@ private:
 	QString _path, _lastError;
 	bool _ok;
 	Type _type;
-	quint16 start;//Départ de la sauvegarde <=> taille du header rajouté
+	quint16 start;//DÃ©part de la sauvegarde <=> taille du header rajoutÃ©
 	QFileSystemWatcher fileWatcher;
 	QList<SaveData *> saves;
 	bool _isModified;

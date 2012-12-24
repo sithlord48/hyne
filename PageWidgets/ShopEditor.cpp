@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2012 Arzel JÃ©rÃ´me <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -63,7 +63,7 @@ void ShopEditor::buildWidget()
 		  << tr("Boutique d'Horizon") << tr("Boutique de Trabia ?") << tr("Boutique d'Esthar")
 		  << tr("Boutique de Balamb ? (Laguna)") << tr("Boutique de Dollet ? (Laguna)") << tr("Boutique de Timber ? (Laguna)")
 		  << tr("Boutique de Deling City ? (Laguna)") << tr("Boutique de Winhill (Laguna)") << tr("Boutique d'Horizon ? (Laguna)")
-		  << tr("Boutique de Trabia ? (Laguna)") << tr("Garde de l'université") << tr("Pet Shop d'Esthar")
+		  << tr("Boutique de Trabia ? (Laguna)") << tr("Garde de l'universitÃ©") << tr("Pet Shop d'Esthar")
 		  << tr("Librairie d'Esthar") << tr("Magasin d'Esthar!");
 
 	shopList->addItems(shops);
@@ -73,9 +73,9 @@ void ShopEditor::buildWidget()
 
 	normalItemColor = shopList->item(0)->foreground();
 
-	shopEnabledE = new QCheckBox(tr("Magasin visité au moins une fois"), this);
+	shopEnabledE = new QCheckBox(tr("Magasin visitÃ© au moins une fois"), this);
 
-	QLabel *info = new QLabel(tr("Les valeurs concernant les objets semblent ne pas être utilisées par le jeu."), this);
+	QLabel *info = new QLabel(tr("Les valeurs concernant les objets semblent ne pas Ãªtre utilisÃ©es par le jeu."), this);
 	info->setTextFormat(Qt::PlainText);
 	QLabel *infoIcon = new QLabel(this);
 	infoIcon->setPixmap(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation).pixmap(16));

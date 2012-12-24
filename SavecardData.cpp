@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel JÈrÙme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2012 Arzel J√©r√¥me <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -253,7 +253,7 @@ bool SavecardData::ps()
 	}
 	if(!fic.open(QIODevice::ReadOnly))
 	{
-		_lastError = QObject::tr("Le fichier est protÈgÈ en lecture.");
+		_lastError = QObject::tr("Le fichier est prot√©g√© en lecture.");
 		return false;
 	}
 	if(fic.size() < start+131072)//start+8192*16
@@ -291,7 +291,7 @@ bool SavecardData::ps3()
 	}
 	if(!fic.open(QIODevice::ReadOnly))
 	{
-		_lastError = QObject::tr("Le fichier est protÈgÈ en lecture.");
+		_lastError = QObject::tr("Le fichier est prot√©g√© en lecture.");
 		return false;
 	}
 
@@ -400,11 +400,11 @@ bool SavecardData::sstate_ePSXe()
 {
 	QTemporaryFile temp;
 	if(!temp.open()) {
-		_lastError = QObject::tr("Impossible de crÈer le fichier temporaire.");
+		_lastError = QObject::tr("Impossible de cr√©er le fichier temporaire.");
 		return false;
 	}
 	if(!GZIP::decompress(_path, temp.fileName())) {
-		_lastError = QObject::tr("Impossible de dÈcompresser le fichier.");
+		_lastError = QObject::tr("Impossible de d√©compresser le fichier.");
 		return false;
 	}
 //	temp.seek(7);
@@ -422,7 +422,7 @@ bool SavecardData::sstate_pSX()
 {
 	QFile f(_path);
 	if(!f.open(QIODevice::ReadOnly)) {
-		_lastError = QObject::tr("Le fichier est protÈgÈ en lecture.");
+		_lastError = QObject::tr("Le fichier est prot√©g√© en lecture.");
 		return false;
 	}
 
@@ -467,7 +467,7 @@ bool SavecardData::sstate(const QByteArray &fdata, const QByteArray &MCHeader)
 		if(!saveData->isFF8()) {
 			saves.removeLast();
 			delete saveData;
-			_lastError = QObject::tr("La sauvegarde trouvÈe n'est pas de Final Fantasy VIII.");
+			_lastError = QObject::tr("La sauvegarde trouv√©e n'est pas de Final Fantasy VIII.");
 			return false;
 		}
 	}
@@ -540,13 +540,13 @@ bool SavecardData::save(const QString &saveAs, Type newType)
 	}
 	if(!fic.open(QIODevice::ReadOnly))
 	{
-		_lastError = QObject::tr("Le fichier est protÈgÈ en lecture.\n%1").arg(_path);
+		_lastError = QObject::tr("Le fichier est prot√©g√© en lecture.\n%1").arg(_path);
 		return false;
 	}
 	if(!temp.open())
 	{
 		fic.close();
-		_lastError = QObject::tr("Impossible de crÈer un fichier temporaire");
+		_lastError = QObject::tr("Impossible de cr√©er un fichier temporaire");
 		return false;
 	}
 
@@ -611,13 +611,13 @@ bool SavecardData::save(const QString &saveAs, Type newType)
 	if(QFile::exists(path) && !QFile::remove(path))
 	{
 		temp.close();
-		_lastError = QObject::tr("Impossible de supprimer le fichier !\n%1\n…chec de la sauvegarde.\nVÈrifiez que le fichier n'est pas utilisÈ par un autre programme.").arg(path);
+		_lastError = QObject::tr("Impossible de supprimer le fichier !\n%1\n√âchec de la sauvegarde.\nV√©rifiez que le fichier n'est pas utilis√© par un autre programme.").arg(path);
 		if(readdPath)	fileWatcher.addPath(path);
 		return false;
 	}
 	if(!temp.copy(path))
 	{
-		_lastError = QObject::tr("…chec de la sauvegarde.");
+		_lastError = QObject::tr("√âchec de la sauvegarde.");
 	}
 	if(readdPath)	fileWatcher.addPath(path);
 
@@ -632,7 +632,7 @@ bool SavecardData::save2PC(qint8 id, QString path)
 	QTemporaryFile temp("hyneOne");
 	if(!temp.open())
 	{
-		_lastError = QObject::tr("Impossible de crÈer un fichier temporaire");
+		_lastError = QObject::tr("Impossible de cr√©er un fichier temporaire");
 		return false;
 	}
 
@@ -657,13 +657,13 @@ bool SavecardData::save2PC(qint8 id, QString path)
 
 	if(QFile::exists(path) && !QFile::remove(path))
 	{
-		_lastError = QObject::tr("Impossible de supprimer le fichier !\n%1\n…chec de la sauvegarde.\nVÈrifiez que le fichier n'est pas utilisÈ par un autre programme.").arg(path);
+		_lastError = QObject::tr("Impossible de supprimer le fichier !\n%1\n√âchec de la sauvegarde.\nV√©rifiez que le fichier n'est pas utilis√© par un autre programme.").arg(path);
 		if(readdPath)	fileWatcher.addPath(path);
 		return false;
 	}
 	if(!temp.copy(path))
 	{
-		_lastError = QObject::tr("…chec de la sauvegarde.");
+		_lastError = QObject::tr("√âchec de la sauvegarde.");
 	}
 	if(readdPath)	fileWatcher.addPath(path);
 
@@ -683,7 +683,7 @@ bool SavecardData::save2PSV(qint8 id, QString path)
 	QTemporaryFile temp("hynePsv");
 	if(!temp.open())
 	{
-		_lastError = QObject::tr("Impossible de crÈer un fichier temporaire");
+		_lastError = QObject::tr("Impossible de cr√©er un fichier temporaire");
 		return false;
 	}
 
@@ -721,13 +721,13 @@ bool SavecardData::save2PSV(qint8 id, QString path)
 
 	if(QFile::exists(path) && !QFile::remove(path))
 	{
-		_lastError = QObject::tr("Impossible de supprimer le fichier !\n%1\n…chec de la sauvegarde.\nVÈrifiez que le fichier n'est pas utilisÈ par un autre programme.").arg(path);
+		_lastError = QObject::tr("Impossible de supprimer le fichier !\n%1\n√âchec de la sauvegarde.\nV√©rifiez que le fichier n'est pas utilis√© par un autre programme.").arg(path);
 		if(readdPath)	fileWatcher.addPath(path);
 		return false;
 	}
 	if(!temp.copy(path))
 	{
-		_lastError = QObject::tr("…chec de la sauvegarde.");
+		_lastError = QObject::tr("√âchec de la sauvegarde.");
 	}
 	if(readdPath)	fileWatcher.addPath(path);
 
@@ -746,7 +746,7 @@ bool SavecardData::save2PS(QList<int> ids, const QString &path, Type newType, QB
 
 	if(!temp.open())
 	{
-		_lastError = QObject::tr("Impossible de crÈer un fichier temporaire");
+		_lastError = QObject::tr("Impossible de cr√©er un fichier temporaire");
 		return false;
 	}
 
@@ -804,15 +804,15 @@ bool SavecardData::save2PS(QList<int> ids, const QString &path, Type newType, QB
 	if(QFile::exists(path) && !QFile::remove(path))
 	{
 		_lastError = QObject::tr("Impossible de supprimer le fichier !"
-								 "\n%1\n…chec de la sauvegarde."
-								 "\nVÈrifiez que le fichier n'est pas utilisÈ"
+								 "\n%1\n√âchec de la sauvegarde."
+								 "\nV√©rifiez que le fichier n'est pas utilis√©"
 								 " par un autre programme.").arg(path);
 		if(readdPath)	fileWatcher.addPath(path);
 		return false;
 	}
 	if(!temp.copy(path))
 	{
-		_lastError = QObject::tr("…chec de la sauvegarde.");
+		_lastError = QObject::tr("√âchec de la sauvegarde.");
 	}
 	if(readdPath)	fileWatcher.addPath(path);
 

@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2012 Arzel JÃ©rÃ´me <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -19,7 +19,12 @@
 #ifndef DEF_SAVEICON
 #define DEF_SAVEICON
 
-#include <QtGui>
+#include "qglobal.h"
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+	#include <QtWidgets>
+#else
+	#include <QtGui>
+#endif
 #define COEFF_COLOR	8.2258064516129032258064516129032 // 255/31
 
 class SaveIconData

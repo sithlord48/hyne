@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2012 Arzel JÃ©rÃ´me <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -26,10 +26,10 @@ PartyEditor::PartyEditor(QWidget *parent)
 
 void PartyEditor::buildWidget()
 {
-	QGroupBox *partyGBE = new QGroupBox(tr("Équipe"), this);
+	QGroupBox *partyGBE = new QGroupBox(tr("Ã‰quipe"), this);
 	QGridLayout *partyGBL = new QGridLayout(partyGBE);
 	partyGBL->addWidget(new QLabel(tr("Menus :")), 0, 0);
-	partyGBL->addWidget(new QLabel(tr("À l'écran :")), 1, 0);
+	partyGBL->addWidget(new QLabel(tr("Ã€ l'Ã©cran :")), 1, 0);
 	QList<QIcon> icons;
 	int i, j;
 	for(j=0 ; j<11 ; ++j) {
@@ -56,7 +56,7 @@ void PartyEditor::buildWidget()
 		partyGBL->addWidget(comboBox, 1, i+1);
 	}
 
-	dreamE = new QCheckBox(tr("Seule l'équipe principale est visible (rêve avec Laguna)"), partyGBE);
+	dreamE = new QCheckBox(tr("Seule l'Ã©quipe principale est visible (rÃªve avec Laguna)"), partyGBE);
 	partyGBL->addWidget(dreamE, 2, 0, 1, 4, Qt::AlignLeft);
 
 	QGroupBox *positionGBE = new QGroupBox(tr("Position"), this);
@@ -112,7 +112,7 @@ void PartyEditor::buildWidget()
 	positionGBL->addWidget(moduleE, 4, 0);
 	positionGBL->addWidget(new QLabel(tr("Terrain courant")), 4, 1, 1, 2);
 	positionGBL->addWidget(mapE, 4, 3, 1, 2);
-	positionGBL->addWidget(new QLabel(tr("Terrain précédent")), 5, 1, 1, 2);
+	positionGBL->addWidget(new QLabel(tr("Terrain prÃ©cÃ©dent")), 5, 1, 1, 2);
 	positionGBL->addWidget(lastMapE, 5, 3, 1, 2);
 
 	QVBoxLayout *layout = new QVBoxLayout(this);

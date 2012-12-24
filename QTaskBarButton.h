@@ -1,7 +1,8 @@
 #ifndef QTASKBARBUTTON_H
 #define QTASKBARBUTTON_H
 
-#include <QtGui>
+#include <QtCore>
+#include <QWidget>
 #ifdef Q_WS_WIN
 #include "shobjidl.h"
 #endif
@@ -39,6 +40,7 @@ public slots:
 	void setRange(int minimum, int maximum);
 	void setValue(int value);
 private:
+	void initTaskBar();
 	void initDestinationList();
 #ifdef Q_WS_WIN
 	WId _winId;
