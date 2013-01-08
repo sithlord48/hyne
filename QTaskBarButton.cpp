@@ -1,6 +1,6 @@
 #include "QTaskBarButton.h"
 
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN32_AI
 
 QTaskBarButton::QTaskBarButton(QWidget *mainWindow) :
 	QObject(mainWindow), pITask(0), destinationList(0),
@@ -136,15 +136,21 @@ void QTaskBarButton::addToRecentDocs(const QString &path)
 	SHAddToRecentDocs(SHARD_PATHW, QDir::toNativeSeparators(QDir::cleanPath(path)).utf16());
 }
 
+#if QT_VERSION >= 0x050000
+extern HICON qt_pixmapToWinHICON(const QPixmap &p);
+#else
+#define qt_pixmapToWinHICON(p) p.toWinHICON()
+#endif
+
 void QTaskBarButton::setOverlayIcon(const QPixmap &pixmap, const QString &text)
 {
 	if(!pITask)	return;
 
 	if(pixmap.isNull()) {
-		pITask->SetOverlayIcon(_winId, NULL, NULL);
+		pITask->SetOverlayIcon(HWND(_winId), NULL, NULL);
 	} else {
-		const HICON icon = pixmap.toWinHICON();
-		pITask->SetOverlayIcon(_winId, icon, (wchar_t *)text.utf16());
+		const HICON icon = qt_pixmapToWinHICON(pixmap);
+		pITask->SetOverlayIcon(HWND(_winId), icon, (wchar_t *)text.utf16());
 		DestroyIcon(icon);
 	}
 }
@@ -167,7 +173,7 @@ void QTaskBarButton::setState(State state)
 		break;
 	}
 
-	if(SUCCEEDED(pITask->SetProgressState(_winId, flag))) {
+	if(SUCCEEDED(pITask->SetProgressState(HWND(_winId), flag))) {
 		_state = state;
 	}
 }
@@ -181,7 +187,7 @@ void QTaskBarButton::setValue(int value)
 		return;
 	}
 
-	if(SUCCEEDED(pITask->SetProgressValue(_winId, completed, total))) {
+	if(SUCCEEDED(pITask->SetProgressValue(HWND(_winId), completed, total))) {
 		_value = value;
 		emit valueChanged(value);
 	}

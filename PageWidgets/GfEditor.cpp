@@ -289,7 +289,7 @@ void GfEditor::fillPage()
 		{
 			abilityID = Data::innateAbilities[id][i];
 
-			if(!capacitesEnPlace.contains(abilityID))//Si pas déjà listé précédemment dans les capacités aquises
+			if(!capacitesEnPlace.contains(abilityID))//Si pas déj�  listé précédemment dans les capacités aquises
 			{
 				if(!((gf_data->forgotten >> i) & 1))//En apprentissage
 				{
@@ -306,13 +306,8 @@ void GfEditor::fillPage()
 
 		liste->sortByColumn(0, Qt::AscendingOrder);
 		liste2->sortByColumn(0, Qt::AscendingOrder);
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 		liste->header()->setSectionResizeMode(1, QHeaderView::Stretch);
 		liste->header()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
-#else
-		liste->header()->setResizeMode(1, QHeaderView::Stretch);
-		liste->header()->setResizeMode(2, QHeaderView::ResizeToContents);
-#endif
 	}
 }
 
@@ -516,13 +511,8 @@ void GfEditor::restore_C()
 	liste->sortByColumn(0, Qt::AscendingOrder);
 	liste->scrollToItem(item);
 	liste->setCurrentItem(item);
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 	liste->header()->setSectionResizeMode(1, QHeaderView::Stretch);
 	liste->header()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
-#else
-	liste->header()->setResizeMode(1, QHeaderView::Stretch);
-	liste->header()->setResizeMode(2, QHeaderView::ResizeToContents);
-#endif
 
 	gf_data->forgotten ^= 1 << pos;
 }
@@ -590,13 +580,8 @@ void GfEditor::addCapacity()
 		setCompleteAbility(abilityID, true);
 		liste->scrollToItem(item);
 		liste->setCurrentItem(item);
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 		liste->header()->setSectionResizeMode(1, QHeaderView::Stretch);
 		liste->header()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
-#else
-		liste->header()->setResizeMode(1, QHeaderView::Stretch);
-		liste->header()->setResizeMode(2, QHeaderView::ResizeToContents);
-#endif
 	}
 }
 

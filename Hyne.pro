@@ -4,8 +4,7 @@
 TEMPLATE = app
 TARGET = Hyne
 
-QT       += core gui
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui widgets
 
 # Input
 HEADERS += PageWidgets/ConfigEditor.h \
@@ -45,7 +44,8 @@ HEADERS += PageWidgets/ConfigEditor.h \
     GZIP.h \
     SavecardData.h \
     SavecardView.h \
-	QTaskBarButton.h
+	QTaskBarButton.h \
+    shlobj.h
 SOURCES += PageWidgets/ConfigEditor.cpp \
     PageWidgets/MiscEditor.cpp \
     PageWidgets/GfEditor.cpp \

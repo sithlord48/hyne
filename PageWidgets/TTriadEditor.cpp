@@ -120,13 +120,8 @@ QWidget *TTriadEditor::buildPage1()
 		cardE_model->appendRow(items);
 	}
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 	cardE_view->header()->setSectionResizeMode(0, QHeaderView::Stretch);
 	cardE_view->header()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-#else
-	cardE_view->header()->setResizeMode(0, QHeaderView::Stretch);
-	cardE_view->header()->setResizeMode(1, QHeaderView::ResizeToContents);
-#endif
 
 	labels.replace(1, tr("Possesseur"));
 	cardE_model2->setHorizontalHeaderLabels(labels);
@@ -170,13 +165,8 @@ QWidget *TTriadEditor::buildPage1()
 		cardE_model2->appendRow(items);
 	}
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 	cardE_view2->header()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
 	cardE_view2->header()->setSectionResizeMode(1, QHeaderView::Stretch);
-#else
-	cardE_view2->header()->setResizeMode(0, QHeaderView::ResizeToContents);
-	cardE_view2->header()->setResizeMode(1, QHeaderView::Stretch);
-#endif
 
 	font.setPixelSize(10);
 	QString selectAll = tr("Sélectionner tout");

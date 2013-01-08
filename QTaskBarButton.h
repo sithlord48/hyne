@@ -3,8 +3,9 @@
 
 #include <QtCore>
 #include <QWidget>
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN32_AI
 #include "shobjidl.h"
+#include "shlobj.h"
 #endif
 
 class QTaskBarButton : public QObject
@@ -42,12 +43,12 @@ public slots:
 private:
 	void initTaskBar();
 	void initDestinationList();
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN32_AI
 	WId _winId;
 	ITaskbarList3 *pITask;
 	ICustomDestinationList *destinationList;
 	IObjectArray *removedItems;
-#endif // Q_WS_WIN
+#endif // Q_OS_WIN32
 	int _minimum, _maximum, _value;
 	State _state;
 };

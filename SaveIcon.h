@@ -19,7 +19,6 @@
 #ifndef DEF_SAVEICON
 #define DEF_SAVEICON
 
-#include "qglobal.h"
 #include <QtGui>
 #define COEFF_COLOR	8.2258064516129032258064516129032 // 255/31
 

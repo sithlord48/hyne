@@ -19,12 +19,7 @@
 #ifndef DEF_WINDOW
 #define DEF_WINDOW
 
-#include "qglobal.h"
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-	#include <QtWidgets>
-#else
-	#include <QtGui>
-#endif
+#include <QtWidgets>
 #include "SavecardWidget.h"
 #include "Editor.h"
 #include "Parameters.h"

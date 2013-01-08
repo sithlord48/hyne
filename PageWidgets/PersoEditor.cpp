@@ -307,11 +307,7 @@ QWidget *PersoEditor::buildPage3()
 
 		magie_E_model->appendRow(items);
 	}
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 	magie_E_view->header()->setSectionResizeMode(0, QHeaderView::Stretch);
-#else
-	magie_E_view->header()->setResizeMode(0, QHeaderView::Stretch);
-#endif
 
 	font.setPixelSize(10);
 	QPushButton *delAll = new QPushButton(tr("Supprimer tout"), ret);

@@ -18,12 +18,7 @@
 #ifndef STARTWIDGET_H
 #define STARTWIDGET_H
 
-#include "qglobal.h"
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
-	#include <QtWidgets>
-#else
-	#include <QtGui>
-#endif
+#include <QtWidgets>
 #include "FF8Text.h"
 
 #define OPTION_WIDTH	250
