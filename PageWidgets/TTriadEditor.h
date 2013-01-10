@@ -19,7 +19,7 @@
 #ifndef DEF_TTEDITOR
 #define DEF_TTEDITOR
 
-#include "SpinBoxDelegate.h"
+#include "../SpinBoxDelegate.h"
 #include "PageWidget.h"
 
 class TTriadEditor : public PageWidget

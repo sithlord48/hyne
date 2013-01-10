@@ -85,7 +85,7 @@ void CWEditor::buildWidget()
 
 void CWEditor::fillPage()
 {
-	bokoE->setText(FF8Text::toString(descData->boko, jp));
+	bokoE->setText(FF8Text::toString((char *)descData->boko, jp));
 
 //	for(int i=0 ; i<8 ; ++i)
 //		questE.at(i)->setChecked((data->chocobo.enabled >> i) & 1);

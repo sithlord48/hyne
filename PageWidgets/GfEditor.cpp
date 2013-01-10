@@ -230,7 +230,7 @@ void GfEditor::fillPage()
 	{
 		stackedWidget->setCurrentIndex(1);
 
-		grieverE->setText(FF8Text::toString(data->misc1.griever, jp));
+		grieverE->setText(FF8Text::toString((char *)data->misc1.griever, jp));
 		odinE->setChecked((data->misc2.dream >> 1) & 1);
 		phoenixE->setChecked((data->misc2.dream >> 2) & 1);
 		gilgameshE->setChecked((data->misc2.dream >> 3) & 1);
@@ -254,7 +254,7 @@ void GfEditor::fillPage()
 		}
 
 		existsE->setChecked(gf_data->exists & 1);
-		nameEdit->setText(FF8Text::toString(gf_data->name, jp));
+		nameEdit->setText(FF8Text::toString((char *)gf_data->name, jp));
 		hpEdit->setValue(gf_data->HPs);
 
 		expEdit->setValue(gf_data->exp);
@@ -284,14 +284,16 @@ void GfEditor::fillPage()
 
 		enableButtons();
 
+		quint32 forgotten = GF_GET_FORGOTTEN(*gf_data);
+
 		//Listage des capacités en apprentissage et des capacités oubliées
 		for(quint8 i=0 ; i<22 ; ++i)
 		{
 			abilityID = Data::innateAbilities[id][i];
 
-			if(!capacitesEnPlace.contains(abilityID))//Si pas déj�  listé précédemment dans les capacités aquises
+			if(!capacitesEnPlace.contains(abilityID))//Si pas déjà listé précédemment dans les capacités aquises
 			{
-				if(!((gf_data->forgotten >> i) & 1))//En apprentissage
+				if(!((forgotten >> i) & 1))//En apprentissage
 				{
 					addItem(abilityID, 0, i, icons);
 				}
@@ -406,15 +408,17 @@ void GfEditor::remove_C()
 		gf_data->learning = 0;
 	}
 	
+	quint32 forgotten = GF_GET_FORGOTTEN(*gf_data);
 	qint8 pos;
 	if((pos = posAbility(abilityID)) != -1)
 	{
 		QTreeWidgetItem *item = addItem(abilityID, 2, pos);
-		gf_data->forgotten |= 1 << pos;
+		forgotten |= 1 << pos;
 		liste2->sortByColumn(0, Qt::AscendingOrder);
 		liste2->scrollToItem(item);
 		liste2->setCurrentItem(item);
 	}
+	GF_SET_FORGOTTEN(*gf_data, forgotten & 0xFFFF);
 	setCompleteAbility(abilityID, false);
 }
 
@@ -514,7 +518,9 @@ void GfEditor::restore_C()
 	liste->header()->setSectionResizeMode(1, QHeaderView::Stretch);
 	liste->header()->setSectionResizeMode(2, QHeaderView::ResizeToContents);
 
-	gf_data->forgotten ^= 1 << pos;
+	quint32 forgotten = GF_GET_FORGOTTEN(*gf_data);
+	forgotten ^= 1 << pos;
+	GF_SET_FORGOTTEN(*gf_data, forgotten);
 }
 
 void GfEditor::enableButtons()

@@ -222,7 +222,7 @@ void ConfigEditor::fillPage()
 void ConfigEditor::savePage()
 {
 	data->config.divers =
-			(ATB2E->isChecked()) | (son2E->isChecked()<<1) | (pointeur2E->isChecked()<<2) | (inconnu1E->isChecked()<<3) |
+			int(ATB2E->isChecked()) | (son2E->isChecked()<<1) | (pointeur2E->isChecked()<<2) | (inconnu1E->isChecked()<<3) |
 			(targetMenu2E->isChecked()<<4) | (manetteGroupE->isChecked()<<5) | (vibration2E->isChecked()<<6) | (data->config.divers&0x80);
 
 	data->config.scan = scan2E->isChecked();

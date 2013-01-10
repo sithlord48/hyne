@@ -19,7 +19,7 @@
 #ifndef DEF_DRAWPOINTEDITOR
 #define DEF_DRAWPOINTEDITOR
 
-#include "SpinBoxDelegate.h"
+#include "../SpinBoxDelegate.h"
 #include "PageWidget.h"
 
 #define DRAWPOINT_COLOR_FILLED			QColor(0xa1,0x62,0xb2)

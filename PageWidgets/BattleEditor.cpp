@@ -191,11 +191,11 @@ void BattleEditor::savePage()
 	data->misc3.battle_escaped				= battleescE->value();
 	data->misc3.monster_kills				= monsterkillsE->value();
 	data->misc2.tomberry_vaincus			= tombyE->value();
-	data->misc2.tomberry_sr_vaincu			= (data->misc2.tomberry_sr_vaincu & 0xFFFE) | tombySrE->isChecked();
-	data->misc2.elmidea_battle_r1			= (data->misc2.elmidea_battle_r1 & 0xFFFE) | firstr1E->isChecked();
-	data->misc2.succube_battle_elemental	= (data->misc2.succube_battle_elemental & 0xFFFE) | firsteleE->isChecked();
-	data->misc2.trex_battle_mental			= (data->misc2.trex_battle_mental & 0xFFFE) | firstmtlE->isChecked();
-	data->misc2.battle_irvine				= (data->misc2.battle_irvine & 0xFFFE) | firstirvinelbE->isChecked();
+	data->misc2.tomberry_sr_vaincu			= (data->misc2.tomberry_sr_vaincu & 0xFFFE) | int(tombySrE->isChecked());
+	data->misc2.elmidea_battle_r1			= (data->misc2.elmidea_battle_r1 & 0xFFFE) | int(firstr1E->isChecked());
+	data->misc2.succube_battle_elemental	= (data->misc2.succube_battle_elemental & 0xFFFE) | int(firsteleE->isChecked());
+	data->misc2.trex_battle_mental			= (data->misc2.trex_battle_mental & 0xFFFE) | int(firstmtlE->isChecked());
+	data->misc2.battle_irvine				= (data->misc2.battle_irvine & 0xFFFE) | int(firstirvinelbE->isChecked());
 	data->misc2.u3							= unknown1E->value();
 	data->misc2.u4							= unknown2E->value();
 

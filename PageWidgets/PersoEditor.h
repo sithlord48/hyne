@@ -19,7 +19,7 @@
 #ifndef DEF_PERSOEDITOR
 #define DEF_PERSOEDITOR
 
-#include "SpinBoxDelegate.h"
+#include "../SpinBoxDelegate.h"
 #include "PageWidget.h"
 
 class PersoEditor : public PageWidget

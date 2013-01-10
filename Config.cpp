@@ -18,10 +18,11 @@
 
 #include "Config.h"
 #ifdef Q_OS_WIN32
-#include <windef.h>
-#include <winbase.h>
-//#include <winerror.h>
-#include <winreg.h>
+#	include <windows.h>
+#	include <winbase.h>
+//#	include <winerror.h>
+#	include <winreg.h>
+#	undef min
 #endif
 #include "QTaskBarButton.h"
 

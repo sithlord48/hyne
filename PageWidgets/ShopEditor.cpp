@@ -144,7 +144,7 @@ void ShopEditor::savePage()
 {
 	if(!loaded)	return;
 
-	shops_data->visited = (shops_data->visited & 0xFE) | shopEnabledE->isChecked();
+	shops_data->visited = (shops_data->visited & 0xFE) | int(shopEnabledE->isChecked());
 
 	if(shops_data->visited) {
 		for(int i=0 ; i<16 ; ++i) {

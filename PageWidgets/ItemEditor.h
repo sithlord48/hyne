@@ -19,7 +19,7 @@
 #ifndef DEF_OBJETEDITOR
 #define DEF_OBJETEDITOR
 
-#include "SpinBoxDelegate.h"
+#include "../SpinBoxDelegate.h"
 #include "PageWidget.h"
 
 class ItemEditor : public PageWidget

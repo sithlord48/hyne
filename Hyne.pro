@@ -3,6 +3,8 @@
 # #####################################################################
 TEMPLATE = app
 TARGET = Hyne
+# include zlib
+INCLUDEPATH += $$[QT_INSTALL_PREFIX]/include/QtZlib
 
 QT       += core gui widgets
 
@@ -44,8 +46,7 @@ HEADERS += PageWidgets/ConfigEditor.h \
     GZIP.h \
     SavecardData.h \
     SavecardView.h \
-	QTaskBarButton.h \
-    shlobj.h
+    QTaskBarButton.h
 SOURCES += PageWidgets/ConfigEditor.cpp \
     PageWidgets/MiscEditor.cpp \
     PageWidgets/GfEditor.cpp \
@@ -95,13 +96,11 @@ TRANSLATIONS += hyne_en.ts \
 
 macx {
 	ICON = images/hyne.icns
-	greaterThan(QT_MAJOR_VERSION, 4): LIBS += -L"/zlib-1.2.7" -lzlib
 }
 win32 {
 	RC_FILE = Hyne.rc
-	LIBS += -lole32
-	HEADERS += shobjidl.h # Windows 7 taskBarButton
-	greaterThan(QT_MAJOR_VERSION, 4): LIBS += -lzlib
+	# include Windows libs
+	LIBS += -lole32 -ladvapi32 -lshell32
 }
 
 OTHER_FILES += Hyne.rc \

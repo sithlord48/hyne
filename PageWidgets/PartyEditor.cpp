@@ -17,7 +17,7 @@
  ****************************************************************************/
 
 #include "PartyEditor.h"
-#include "Data.h"
+#include "../Data.h"
 
 PartyEditor::PartyEditor(QWidget *parent)
 	: PageWidget(parent)
@@ -169,7 +169,7 @@ void PartyEditor::savePage()
 		data->misc2.id[i] = idE.at(i)->value();
 		data->misc2.dir[i] = dirE.at(i)->value();
 	}
-	data->misc2.dream = dreamE->isChecked() | (data->misc2.dream & 0xFE);
+	data->misc2.dream = int(dreamE->isChecked()) | (data->misc2.dream & 0xFE);
 	data->misc2.module = moduleE->itemData(moduleE->currentIndex()).toInt();
 	data->misc2.location = mapE->itemData(mapE->currentIndex()).toInt();
 	data->misc2.location_last = lastMapE->itemData(lastMapE->currentIndex()).toInt();

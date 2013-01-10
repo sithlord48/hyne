@@ -406,11 +406,11 @@ bool SaveData::isVmp() const
 QString SaveData::perso(quint8 index) const
 {
 	switch(index) {
-	case SQUALL:		return FF8Text::toString(_descData.squall, isJp());
-	case RINOA:			return FF8Text::toString(_descData.linoa, isJp());
-	case GRIEVER:		return FF8Text::toString(_mainData.misc1.griever, isJp());
-	case BOKO:			return FF8Text::toString(_descData.boko, isJp());
-	case ANGELO:		return FF8Text::toString(_descData.angelo, isJp());
+	case SQUALL:		return FF8Text::toString((char *)_descData.squall, isJp());
+	case RINOA:			return FF8Text::toString((char *)_descData.linoa, isJp());
+	case GRIEVER:		return FF8Text::toString((char *)_mainData.misc1.griever, isJp());
+	case BOKO:			return FF8Text::toString((char *)_descData.boko, isJp());
+	case ANGELO:		return FF8Text::toString((char *)_descData.angelo, isJp());
 	default:
 		if(index < 16)	return Data::names().at(index);
 		return QString();

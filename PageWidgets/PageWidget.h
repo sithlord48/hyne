@@ -20,9 +20,9 @@
 #define PAGEWIDGET_H
 
 #include <QtWidgets>
-#include "Data.h"
-#include "Config.h"
-#include "SaveData.h"
+#include "../Data.h"
+#include "../Config.h"
+#include "../SaveData.h"
 
 class PageWidget : public QWidget
 {

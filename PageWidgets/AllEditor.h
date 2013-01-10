@@ -19,7 +19,7 @@
 #ifndef DEF_ALLEDITOR
 #define DEF_ALLEDITOR
 
-#include "QHexEdit/qhexedit.h"
+#include "../QHexEdit/qhexedit.h"
 #include "PageWidget.h"
 
 class AllEditor : public PageWidget

@@ -565,7 +565,7 @@ void PersoEditor::buildPage6()
 		grid->setRowStretch(4, 1);
 		return;
 	case RINOA:
-		angel_E = new QLineEdit(FF8Text::toString(descData->angelo, jp), lbWidget);
+		angel_E = new QLineEdit(FF8Text::toString((char *)descData->angelo, jp), lbWidget);
 		angel_disabledE = new QCheckBox(tr("Angel désactivé"), lbWidget);
 		angel_disabledE->setChecked((data->misc2.dream >> 4) & 1);
 		a_wing_enabledE = new QCheckBox(tr("Canonisation activé"), lbWidget);
@@ -644,8 +644,8 @@ void PersoEditor::fillPage()
 	this->perso_data = &data->persos[id];
 
 	QString persoName;
-	if(id == SQUALL)		persoName = FF8Text::toString(descData->squall, jp);
-	else if(id == RINOA)	persoName = FF8Text::toString(descData->linoa, jp);
+	if(id == SQUALL)		persoName = FF8Text::toString((char *)descData->squall, jp);
+	else if(id == RINOA)	persoName = FF8Text::toString((char *)descData->linoa, jp);
 	else					persoName = Data::names().at(id);
 
 	/* PAGE 1 */
@@ -744,7 +744,7 @@ void PersoEditor::savePage()
 
 	/* PAGE 1 */
 
-	perso_data->exists = (unknown6E->value() << 3) | (lock2E->isChecked() << 2) | (lock1E->isChecked() << 1) | existsE->isChecked();
+	perso_data->exists = (unknown6E->value() << 3) | (lock2E->isChecked() << 2) | (lock1E->isChecked() << 1) | int(existsE->isChecked());
 
 	const char *persoName = FF8Text::toByteArray(nameE->text(), jp).leftJustified(11, '\x00', true).append('\x00').constData();
 	if(id == SQUALL)		memcpy(&descData->squall, persoName, 12);
@@ -775,7 +775,7 @@ void PersoEditor::savePage()
 	perso_data->u3 = unknown3E->value();
 	perso_data->u4 = unknown4E->value();
 	perso_data->u5 = unknown5E->value();
-	perso_data->alternative_model = (perso_data->alternative_model & 0xFE) | alternativeE->isChecked();
+	perso_data->alternative_model = (perso_data->alternative_model & 0xFE) | int(alternativeE->isChecked());
 
 	/* PAGE 2 */
 

@@ -3,9 +3,11 @@
 
 #include <QtCore>
 #include <QWidget>
-#ifdef Q_OS_WIN32_AI
-#include "shobjidl.h"
-#include "shlobj.h"
+#ifdef Q_OS_WIN32
+#	ifndef __GNUC__
+#		include <shobjidl.h>
+#		include <shlobj.h>
+#	endif
 #endif
 
 class QTaskBarButton : public QObject
@@ -35,22 +37,29 @@ public:
 signals:
 	void valueChanged(int value);
 public slots:
-	void reset();
+	inline void reset() {
+		setState(Normal);
+		setValue(0);
+	}
 	void setMaximum(int maximum);
 	void setMinimum(int minimum);
-	void setRange(int minimum, int maximum);
+	inline void setRange(int minimum, int maximum) {
+		setMinimum(minimum);
+		setMaximum(maximum);
+	}
+
 	void setValue(int value);
 private:
+#ifdef __ITaskbarList3_INTERFACE_DEFINED__
 	void initTaskBar();
 	void initDestinationList();
-#ifdef Q_OS_WIN32_AI
-	WId _winId;
+	HWND _winId;
 	ITaskbarList3 *pITask;
 	ICustomDestinationList *destinationList;
 	IObjectArray *removedItems;
-#endif // Q_OS_WIN32
 	int _minimum, _maximum, _value;
 	State _state;
+#endif // __ITaskbarList3_INTERFACE_DEFINED__
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(QTaskBarButton::ListCategories)
