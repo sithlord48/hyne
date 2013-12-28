@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -17,44 +17,56 @@
  ****************************************************************************/
 
 #include "Config.h"
-#ifdef Q_OS_WIN32
-#	include <windows.h>
-#	include <winbase.h>
-//#	include <winerror.h>
-#	include <winreg.h>
-#	undef min
-#endif
 #include "QTaskBarButton.h"
+
+const char *Config::keys[KEYS_SIZE] = {
+	"recentFiles", "lang", "geometry",
+	"font", "freq", "freq_auto", "mode", "lastCountry", "lastGameCode", "selectedFF8Installation",
+	"loadPath", "savePath", "savePathIcon"
+};
 
 QTranslator *Config::translator;
 QStringList Config::recentFiles;
 QSettings *Config::settings = 0;
-QString Config::_ff8Path;
+QMap<FF8Installation::Type, FF8Installation> Config::_ff8Installations;
+FF8Installation::Type Config::_selectedFF8Installation = FF8Installation::Standard;
+bool Config::_ff8InstallationsSearched = false;
+
+QString Config::translationDir()
+{
+#if defined(Q_OS_UNIX) && !defined(Q_OS_MAC)
+	return qApp->applicationDirPath().startsWith("/usr/bin")
+			? "/usr/share/hyne"
+			: qApp->applicationDirPath();
+#else
+	return qApp->applicationDirPath();
+#endif
+}
 
 quint32 Config::sec(quint32 time, int freq_value)
 {
-	return time%freq(freq_value);
+	return time % freq(freq_value);
 }
 
 quint32 Config::min(quint32 time, int freq_value)
 {
-	return (time/freq(freq_value))%60;
+	return (time / freq(freq_value)) % 60;
 }
 
 quint32 Config::hour(quint32 time, int freq_value)
 {
-	return time/(60*freq(freq_value));
+	return time / (60 * freq(freq_value));
 }
 
 quint32 Config::time(quint32 hour, quint32 min, quint32 sec, int freq_value)
 {
 	int f = freq(freq_value);
-	return sec + min*f + hour*f*60;
+	return sec + min * f + hour * f * 60;
 }
 
 void Config::loadRecentFiles()
 {
-	recentFiles = settings->value("recentFiles").toStringList();
+	recentFiles = settings->value(keyToStr(RecentFiles)).toStringList();
 	// Compatibility with old version (< 1.6)
 	if(recentFiles.isEmpty()) {
 		for(int i=0 ; i<20 ; ++i) {
@@ -108,7 +120,7 @@ void Config::saveRecentFiles()
 		if(i > 20)	break;
 	}
 
-	settings->setValue("recentFiles", rf);
+	setValue(RecentFiles, rf);
 	// Compatibility with old version (< 1.6)
 	for(i=0 ; i<20 ; ++i)
 		settings->remove(QString("recentFile%1").arg(i));
@@ -116,42 +128,46 @@ void Config::saveRecentFiles()
 
 void Config::set()
 {
-#ifdef Q_OS_WIN32
+#ifdef Q_OS_WIN
 	settings = new QSettings(QString("%1/%2.ini").arg(qApp->applicationDirPath(), PROG_NAME), QSettings::IniFormat);
 #else
 	settings = new QSettings(PROG_NAME);
 #endif
+	if(int(_KeysSize) != KEYS_SIZE) {
+		qWarning() << "Config: invalid keys size!";
+		Q_ASSERT(false);
+	}
 }
 
 bool Config::mode()
 {
-	return settings->value("mode", false).toBool();
+	return settings->value(keyToStr(Mode), false).toBool();
 }
 
 int Config::freq(const int freq_value)
 {
 	if(freq_auto())	return freq_value;
-	return settings->value("freq", 60).toUInt()==50 ? 50 : 60;
+	return settings->value(keyToStr(Freq), 60).toUInt() == 50 ? 50 : 60;
 }
 
 bool Config::freq_auto()
 {
-	return settings->value("freq_auto", true).toBool();
+	return settings->value(keyToStr(FreqAuto), true).toBool();
 }
 
-QString Config::value(const QString &key, const QString &defaultValue)
+QString Config::value(Key key, const QString &defaultValue)
 {
-	return settings->value(key, defaultValue).toString();
+	return settings->value(keyToStr(key), defaultValue).toString();
 }
 
-void Config::setValue(const QString &key, const QVariant &value)
+void Config::setValue(Key key, const QVariant &value)
 {
-	settings->setValue(key, value);
+	settings->setValue(keyToStr(key), value);
 }
 
-QVariant Config::valueVar(const QString &key, const QVariant &defaultValue)
+QVariant Config::valueVar(Key key, const QVariant &defaultValue)
 {
-	return settings->value(key, defaultValue);
+	return settings->value(keyToStr(key), defaultValue);
 }
 
 void Config::sync()
@@ -159,40 +175,26 @@ void Config::sync()
 	settings->sync();
 }
 
-#ifdef Q_OS_WIN32
-QString Config::regValue(const QString &regPath, const QString &regKey)
+const QMap<FF8Installation::Type, FF8Installation> &Config::ff8Installations()
 {
-	HKEY phkResult;
-	LONG error;
-	REGSAM flags = KEY_READ;
-
-#ifdef KEY_WOW64_32KEY
-	flags |= KEY_WOW64_32KEY; // if you compile in 64-bit, force reg search into 32-bit entries
-#endif
-
-	// Open regPath relative to HKEY_LOCAL_MACHINE
-	error = RegOpenKeyEx(HKEY_LOCAL_MACHINE, (wchar_t *)("SOFTWARE\\" + regPath).utf16(), 0, flags, &phkResult);
-	if(ERROR_SUCCESS == error) {
-		BYTE value[MAX_PATH];
-		DWORD cValue = MAX_PATH, type;
-
-		// Open regKey which must is a string value (REG_SZ)
-		RegQueryValueEx(phkResult, (wchar_t *)regKey.utf16(), NULL, &type, value, &cValue);
-		if(ERROR_SUCCESS == error && type == REG_SZ) {
-			RegCloseKey(phkResult);
-			return QString::fromUtf16((ushort *)value);
-		}
-		RegCloseKey(phkResult);
+	if(!_ff8InstallationsSearched) {
+		_ff8Installations = FF8Installation::installations();
+		_selectedFF8Installation = FF8Installation::Type(settings->value(keyToStr(SelectedFF8Installation)).toInt());
+		_ff8InstallationsSearched = true;
 	}
-	return QString();
+	return _ff8Installations;
 }
-#endif
 
-const QString &Config::ff8Path()
+FF8Installation Config::ff8Installation()
 {
-#ifdef Q_OS_WIN32
-	if(_ff8Path.isEmpty())
-		_ff8Path = QDir::cleanPath( QDir::fromNativeSeparators( regValue("Square Soft, Inc\\Final Fantasy VIII\\1.00", "AppPath") ) );
-#endif
-	return _ff8Path;
+	if(!_ff8InstallationsSearched) {
+		ff8Installations();
+	}
+	return _ff8Installations.value(_selectedFF8Installation, _ff8Installations.constBegin().value());
+}
+
+void Config::setSelectedFF8Installation(FF8Installation::Type id)
+{
+	_selectedFF8Installation = id;
+	settings->setValue(keyToStr(SelectedFF8Installation), id);
 }

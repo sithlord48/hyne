@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -42,15 +42,16 @@ QSize MapWidget::minimumSizeHint() const
 void MapWidget::paintEvent(QPaintEvent *)
 {
 	QPainter p(this);
-	QPixmap pxm = QPixmap(":/images/worldmap.png").scaled(width(), height(), Qt::KeepAspectRatio);
-	p.drawPixmap(0, 0, pxm);
-	if(entered)
-	{
-		p.setPen(Qt::red);
-		p.drawLine(mousePos.x(), 0, mousePos.x(), pxm.height());
-		p.drawLine(0, mousePos.y(), pxm.width(), mousePos.y());
+	QPixmap pxm = QPixmap(":/images/worldmap.png");
+	if(!pxm.isNull()) {
+		pxm = pxm.scaled(width(), height(), Qt::KeepAspectRatio);
+		p.drawPixmap(0, 0, pxm);
+		if(entered) {
+			p.setPen(Qt::red);
+			p.drawLine(mousePos.x(), 0, mousePos.x(), pxm.height());
+			p.drawLine(0, mousePos.y(), pxm.width(), mousePos.y());
+		}
 	}
-	p.end();
 }
 
 void MapWidget::enterEvent(QEvent *)

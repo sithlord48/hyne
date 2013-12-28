@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -98,7 +98,7 @@ void ShopEditor::buildWidget()
 	QGridLayout *layout = new QGridLayout(this);
 	layout->addWidget(shopList, 0, 0, 3, 1, Qt::AlignLeft);
 	layout->addWidget(shopEnabledE, 0, 1);
-	layout->addLayout(infoLayout, 1, 1);
+	layout->addWidget(info, 1, 1);
 	layout->addWidget(itemList, 2, 1);
 	layout->setContentsMargins(QMargins());
 

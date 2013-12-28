@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -51,6 +51,11 @@ void FieldEditor::buildWidget()
 
 	gameMomentList->resizeColumnToContents(0);
 
+	HelpWidget *info = new HelpWidget(32, tr("Cet éditeur ne change que le moment du jeu, c'est-à-dire une valeur "
+											 "qui change en fonction de votre avancée dans l'aventure principale."
+											 " En changeant cette valeur, la position de votre personnage, les sous-quêtes"
+											 " et autres valeurs ne seront pas modifiées."), this);
+
 	autoDiscE = new QCheckBox(tr("Auto."), this);
 
 	discE = new QComboBox(this);
@@ -65,6 +70,7 @@ void FieldEditor::buildWidget()
 	discL->setContentsMargins(QMargins());
 
 	QVBoxLayout *layout = new QVBoxLayout(this);
+	layout->addWidget(info);
 	layout->addWidget(gameMomentList);
 	layout->addLayout(discL);
 	layout->setContentsMargins(QMargins());
@@ -111,7 +117,6 @@ void FieldEditor::fillPage()
 void FieldEditor::savePage()
 {
 	quint8 disc = discE->itemData(discE->currentIndex()).toInt();
-	descData->disc = disc;
 	data->misc3.disc = disc + 1;
 }
 

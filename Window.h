@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -33,10 +33,10 @@ class Window : public QWidget
 public:
 	enum OpenType { File, Slot1, Slot2 };
 
-	explicit Window();
+	Window();
 	virtual ~Window();
 
-	void openFile(const QString &path, bool isPCSlot=false);
+	void openFile(const QString &path, OpenType openType=File, const FF8Installation &installation=FF8Installation());
 	static QString chooseLangDialog();
 	static QStringList availableLanguages();
 public slots:
@@ -50,7 +50,7 @@ private slots:
 	void open(OpenType=File);
 	bool closeFile(bool quit=false);
 	void reload();
-	void openRecentFile(QAction*);
+	void openRecentFile(QAction *);
 	void save();
 	bool exportAs();
 	void properties();
@@ -58,9 +58,12 @@ private slots:
 	void changeFrame(QAction *);
 	void font(bool);
 	void changeLanguage(QAction *);
+	void changeFF8Version(QAction *);
 	void runFF8();
+	void updateMetadata();
 	void fullScreen();
 	void about();
+	static void newWindow();
 
 private:
 	void setIsOpen(bool open);
@@ -70,13 +73,13 @@ private:
 	void restartNow();
 
 	void setTitle(const int currentSaveEdited=-1);
-	QList<int> selectSavesDialog(bool multiSelection=false);
+	QList<int> selectSavesDialog(bool multiSelection=false, bool onlyFF8=false);
 	
 	QTaskBarButton *taskBarButton; // Windows 7+
 	QMenuBar *menuBar;
 	QAction *actionReload, *actionSave, *actionSaveAs;
 	QAction *actionProperties, *actionClose, *actionMode, *actionFont;
-	QMenu *menuRecent, *menuFrame, *menuLang;
+	QMenu *menuRecent, *menuFrame, *menuLang, *menuVersion;
 	QStackedLayout *stackedLayout;
 	SavecardData *saves;
 	SavecardWidget *saveList;

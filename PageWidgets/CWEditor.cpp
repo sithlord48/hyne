@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -85,7 +85,7 @@ void CWEditor::buildWidget()
 
 void CWEditor::fillPage()
 {
-	bokoE->setText(FF8Text::toString((char *)descData->boko, jp));
+	bokoE->setText(saveData->perso(BOKO));
 
 //	for(int i=0 ; i<8 ; ++i)
 //		questE.at(i)->setChecked((data->chocobo.enabled >> i) & 1);
@@ -108,7 +108,7 @@ void CWEditor::fillPage()
 
 void CWEditor::savePage()
 {
-	memcpy(&descData->boko, FF8Text::toByteArray(bokoE->text(), jp).leftJustified(11, '\x00', true).append('\x00').constData(), 12);
+	saveData->setPerso(BOKO, bokoE->text());
 
 //	data->chocobo.enabled = 0;
 //	for(int i=0 ; i<8 ; ++i)

@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -19,6 +19,9 @@
 #include "SavecardView.h"
 #include "Parameters.h"
 #include "HeaderDialog.h"
+#include "Config.h"
+#include "Data.h"
+#include "FF8Text.h"
 
 SavecardView::SavecardView(SavecardWidget *parent) :
 	QWidget(parent), cursorID(-1), blackID(-1),
@@ -27,7 +30,7 @@ SavecardView::SavecardView(SavecardWidget *parent) :
 	mouseMove(0), lastDropData(0)
 {
 	setPalette(QPalette(Qt::black));
-//	saveIcon = new SaveIcon(saveData->saveIcon());
+//	saveIcon = new SaveIcon();//TODO
 //	connect(saveIcon, SIGNAL(nextIcon(QPixmap)), SLOT(refreshIcon()));
 	setMouseTracking(true);
 	setAcceptDrops(true);
@@ -81,7 +84,7 @@ void SavecardView::notifyFileChanged(const QString &path)
 void SavecardView::updateSave(int saveID, bool withCursor)
 {
 	if(withCursor) {
-		update(QRect(0, savePoint(saveID).y(), width(), saveHeight()));
+		update(QRect(savePoint(saveID) - QPoint(horizontalMargin(), 0), saveSize() + QSize(horizontalMargin(), 0)));
 	} else {
 		update(saveRect(saveID));
 	}
@@ -109,7 +112,8 @@ void SavecardView::updateSaves(const QList<int> &saveIDs, bool withCursor)
 		updateSave(minID, withCursor);
 	} else {
 		if(withCursor) {
-			update(QRect(QPoint(0, savePoint(minID).y()), QSize(width(), saveHeight() * (maxID - minID + 1))));
+			update(QRect(savePoint(minID) - QPoint(horizontalMargin(), 0),
+						 QSize(saveWidth() + horizontalMargin(), saveHeight() * (maxID - minID + 1))));
 		} else {
 			update(QRect(savePoint(minID), QSize(saveWidth(), saveHeight() * (maxID - minID + 1))));
 		}
@@ -141,7 +145,7 @@ void SavecardView::moveCursor(int saveID)
 		maxID = minID;
 	}
 
-	update(0, minID*saveHeight() + 16, 48, (maxID - minID)*saveHeight() + 46);
+	update(QRect(savePoint(minID) + QPoint(-36, 16), QSize(48, (maxID - minID)*saveHeight() + 46)));
 }
 
 void SavecardView::setDropIndicator(int saveID)
@@ -250,27 +254,25 @@ void SavecardView::exportPC(int saveID)
 	SaveData *saveData = _data->getSave(saveID);
 	if(!saveData)	return;
 
-	QString path;
+	QString path, savePath = Config::value(Config::SavePath);
 	int index;
 
-	if(Config::value("savePath").isEmpty())
-	{
+	if(savePath.isEmpty()) {
 		index = _data->path().lastIndexOf('/');
 		if(index != -1)		path = _data->path().left(index+1);
-	}
-	else
-	{
-		path = Config::value("savePath") % "/";
+	} else {
+		path = savePath % "/";
 	}
 
-	path = QFileDialog::getSaveFileName(this, tr("Exporter"), path % QString("save%1").arg(saveData->id()+1, 2, 10, QChar('0')), tr("FF8 PC save (*)"));
+	path = QFileDialog::getSaveFileName(this, tr("Exporter"), path % QString("save%1").arg(saveData->id()+1, 2, 10, QChar('0')), tr("FF8 PC save (* *.ff8)"));
 	if(path.isEmpty())		return;
 
 	index = path.lastIndexOf('/');
-	Config::value("savePath") = index == -1 ? path : path.left(index);
+	Config::setValue(Config::SavePath, index == -1 ? path : path.left(index));
 
-	if(!saveData->exportPC(path))
+	if(!saveData->exportPC(path)) {
 		QMessageBox::warning(this, tr("Échec"), tr("Enregistrement échoué, vérifiez que le fichier cible n'est pas utilisé."));
+	}
 }
 
 void SavecardView::newGame(int saveID)
@@ -310,6 +312,16 @@ void SavecardView::newGame(int saveID)
 	}
 
 	saveData->open(newGameFile.readAll(), saveData->MCHeader());
+	// Set translated names
+	saveData->setPerso(SQUALL, Data::names().at(SQUALL));
+	saveData->setPerso(RINOA, Data::names().at(RINOA));
+	saveData->setPerso(GRIEVER, Data::names().at(GRIEVER));
+	saveData->setPerso(BOKO, Data::names().at(BOKO));
+	saveData->setPerso(ANGELO, Data::names().at(ANGELO));
+	int gfID=0;
+	foreach(const QString &gfName, Data::gfnames().list()) {
+		saveData->setGf(gfID++, gfName);
+	}
 	saveData->setModified(true);
 	emit changed();
 	newGameFile.close();
@@ -359,7 +371,7 @@ void SavecardView::properties(int saveID)
 		emit changed();
 		if(!saveData->isFF8() && !saveData->isDelete()) {
 //			saveIcon->setData(saveData->saveIcon());//TODO
-			update(); // update icon
+			refreshIcon(saveData); // update icon
 		}
 	}
 }
@@ -370,8 +382,9 @@ void SavecardView::restore(int saveID)
 	SaveData *saveData = _data->getSave(saveID);
 	if(!saveData)	return;
 
-	int reponse = QMessageBox::question(this, tr("Sauvegarde supprimée"), tr("Cette sauvegarde a été supprimée, voulez-vous tenter de la réparer ? (succès non garanti)"), tr("Oui"), tr("Non"));
-	if(reponse != 0)  return;
+	QMessageBox::StandardButton reponse = QMessageBox::question(this, tr("Sauvegarde supprimée"), tr("Cette sauvegarde a été supprimée, voulez-vous tenter de la réparer ? (succès non garanti)"),
+																QMessageBox::Yes | QMessageBox::No);
+	if(reponse != QMessageBox::Yes)  return;
 
 	HeaderDialog dialog(saveData, this, HeaderDialog::RestoreView);
 
@@ -396,7 +409,7 @@ int SavecardView::saveID(const QPoint &pos) const
 QSize SavecardView::sizeHint() const
 {
 	if(!_data)	return QSize();
-	return QSize(36 + saveWidth() + 36, saveHeight() * _data->saveCount());
+	return QSize(horizontalMargin() * 2 + saveWidth(), saveHeight() * _data->saveCount());
 }
 
 QSize SavecardView::minimumSizeHint() const
@@ -404,14 +417,14 @@ QSize SavecardView::minimumSizeHint() const
 	return sizeHint();
 }
 
-/*void SavecardView::refreshIcon()
+void SavecardView::refreshIcon(SaveData *saveData)
 {
 	if(!saveData->isDelete()) {
-		repaint(width()/2 - 372 + 36 + 36, 43, 16, 16);
+		repaint(QRect(savePoint(saveData->id()) + QPoint(36, 43), QSize(16, 16)));
 	}
-}*/
+}
 
-void SavecardView::renderSave(QPainter *painter, SaveData *saveData, const QRect &sourceRect)
+void SavecardView::renderSave(QPainter *painter, const SaveData *saveData, const QRect &sourceRect)
 {
 	QPixmap menuBg(QString(":/images/menu-fond%1.png").arg(!saveData->isTheLastEdited() && !saveData->isDelete() ? "" : "2"));
 	QPixmap menuTitle(":/images/numbers_title.png");
@@ -420,13 +433,13 @@ void SavecardView::renderSave(QPainter *painter, SaveData *saveData, const QRect
 	renderSave(painter, saveData, menuBg, menuTitle, numberPixmap, sourceRect);
 }
 
-void SavecardView::renderSave(QPixmap *pixmap, SaveData *saveData, const QRect &sourceRect)
+void SavecardView::renderSave(QPixmap *pixmap, const SaveData *saveData, const QRect &sourceRect)
 {
 	QPainter p(pixmap);
 	renderSave(&p, saveData, sourceRect);
 }
 
-void SavecardView::renderSave(QPainter *painter, SaveData *saveData, const QPixmap &menuBg, const QPixmap &fontPixmap, QImage &numberPixmap, const QRect &sourceRect)
+void SavecardView::renderSave(QPainter *painter, const SaveData *saveData, const QPixmap &menuBg, const QPixmap &fontPixmap, QImage &numberPixmap, const QRect &sourceRect)
 {
 	QRect toBePainted;
 	if(sourceRect.isNull()) {
@@ -451,52 +464,52 @@ void SavecardView::renderSave(QPainter *painter, SaveData *saveData, const QPixm
 	if(saveData->isFF8())
 	{
 		// Portrait chars
-		if(saveData->descData().party[0] != 255
+		if(saveData->constDescData().party[0] != 255
 				&& !(toBePainted & QRect(44, 4, 64, 96)).isEmpty())
-			painter->drawPixmap(44, 4, QPixmap(QString(":/images/icons/perso%1.png").arg(saveData->descData().party[0] & 15)));
-		if(saveData->descData().party[1] != 255
+			painter->drawPixmap(44, 4, QPixmap(QString(":/images/icons/perso%1.png").arg(saveData->constDescData().party[0] & 15)));
+		if(saveData->constDescData().party[1] != 255
 				&& !(toBePainted & QRect(112, 4, 64, 96)).isEmpty())
-			painter->drawPixmap(112, 4, QPixmap(QString(":/images/icons/perso%1.png").arg(saveData->descData().party[1] & 15)));
-		if(saveData->descData().party[2] != 255
+			painter->drawPixmap(112, 4, QPixmap(QString(":/images/icons/perso%1.png").arg(saveData->constDescData().party[1] & 15)));
+		if(saveData->constDescData().party[2] != 255
 				&& !(toBePainted & QRect(180, 4, 64, 96)).isEmpty())
-			painter->drawPixmap(180, 4, QPixmap(QString(":/images/icons/perso%1.png").arg(saveData->descData().party[2] & 15)));
+			painter->drawPixmap(180, 4, QPixmap(QString(":/images/icons/perso%1.png").arg(saveData->constDescData().party[2] & 15)));
 
 		// Main char name
 		if(!(toBePainted & QRect(271, 8, saveWidth()-271, 24)).isEmpty()) {
-			int persoIndex = saveData->descData().party[0] != 255 ? saveData->descData().party[0] : (saveData->descData().party[1] != 255 ? saveData->descData().party[1] : saveData->descData().party[2]);
+			int persoIndex = saveData->constDescData().party[0] != 255 ? saveData->constDescData().party[0] : (saveData->constDescData().party[1] != 255 ? saveData->constDescData().party[1] : saveData->constDescData().party[2]);
 			bool langIndep = persoIndex==SQUALL || persoIndex==RINOA || persoIndex==GRIEVER || persoIndex==BOKO || persoIndex==ANGELO;
 			FF8Text::drawTextArea(painter, QPoint(271, 8), saveData->perso(persoIndex), langIndep ? (saveData->isJp() ? 2 : 1) : 0);
 		}
 
 		// Level
 		if(!(toBePainted & QRect(271, 36, saveWidth()-271, 24)).isEmpty()) {
-			FF8Text::drawTextArea(painter, QPoint(271, 36), tr("NV%1").arg(saveData->descData().nivLeader,3,10,QChar(' ')), 1);
+			FF8Text::drawTextArea(painter, QPoint(271, 36), tr("NV%1").arg(saveData->constDescData().nivLeader,3,10,QChar(' ')), 1);
 		}
 
 		// Disc number
 		if(!(toBePainted & QRect(391, 38, saveWidth()-391, 16)).isEmpty()) {
-			QPixmap disc(QString(":/images/disc_%1.png").arg(Config::value("lang")=="fr" ? "fr" : "en"));
+			QPixmap disc(QString(":/images/disc_%1.png").arg(Config::value(Config::Lang)=="fr" ? "fr" : "en"));
 			painter->drawPixmap(391, 38, disc);
-			num2pix(painter, &numberPixmap, 395+disc.width(), 38, saveData->descData().disc+1);
+			num2pix(painter, &numberPixmap, 395+disc.width(), 38, saveData->constDescData().disc+1);
 		}
 
 		// Play time
 		if(!(toBePainted & QRect(511, 16, saveWidth()-511, 16)).isEmpty()) {
-			painter->drawPixmap(511, 16, QPixmap(QString(":/images/play_%1.png").arg(Config::value("lang")=="fr" ? "fr" : "en")));
+			painter->drawPixmap(511, 16, QPixmap(QString(":/images/play_%1.png").arg(Config::value(Config::Lang)=="fr" ? "fr" : "en")));
 
-			int hour = Config::hour(saveData->descData().time, saveData->freqValue());
+			int hour = Config::hour(saveData->constDescData().time, saveData->freqValue());
 			int color = (hour>=100) + (hour>=200) + (hour>=300) + (hour>=400) + (hour>=500);
 			num2pix(painter, &numberPixmap, 576, 16, hour, 2, QChar(' '), color);
 
 			QImage deux_points(":/images/deux-points.png");
 			colors(&deux_points, color);
 			painter->drawImage(612, 18, deux_points);
-			num2pix(painter, &numberPixmap, 624, 16, Config::min(saveData->descData().time, saveData->freqValue()), 2, QChar('0'), color);
+			num2pix(painter, &numberPixmap, 624, 16, Config::min(saveData->constDescData().time, saveData->freqValue()), 2, QChar('0'), color);
 		}
 
 		// Gils
 		if(!(toBePainted & QRect(511, 40, saveWidth()-511, 16)).isEmpty()) {
-			num2pix(painter, &numberPixmap, 511, 40, saveData->descData().gils, 8);
+			num2pix(painter, &numberPixmap, 511, 40, saveData->constDescData().gils, 8);
 			painter->drawPixmap(640, 44, QPixmap(":/images/gils.png"));
 		}
 
@@ -508,14 +521,19 @@ void SavecardView::renderSave(QPainter *painter, SaveData *saveData, const QPixm
 
 			// Location
 			if(!(toBePainted & QRect(256+12, 62+12, saveWidth()-(256+12), 24)).isEmpty()) {
-				FF8Text::drawTextArea(painter, QPoint(12, 12), saveData->descData().locationID<251 ? Data::locations().at(saveData->descData().locationID) : QString("??? (%1)").arg(saveData->descData().locationID));
+				FF8Text::drawTextArea(painter, QPoint(12, 12), saveData->constDescData().locationID<251 ? Data::locations().at(saveData->constDescData().locationID) : QString("??? (%1)").arg(saveData->constDescData().locationID));
 			}
 		}
 	}
 	else
 	{
 		if(!(toBePainted & QRect(36, 43, saveWidth()-36, 24)).isEmpty()) {
-			if(saveData->isDelete())
+			if(saveData->isRaw())
+			{
+				// Unavailable block
+				FF8Text::drawTextArea(painter, QPoint(36, 43), tr("Bloc occupé"));
+			}
+			else if(saveData->isDelete())
 			{
 				// Available block
 				FF8Text::drawTextArea(painter, QPoint(36, 43), tr("Bloc Disponible"));
@@ -523,9 +541,9 @@ void SavecardView::renderSave(QPainter *painter, SaveData *saveData, const QPixm
 			else
 			{
 				// Icon + description
-//				painter->drawPixmap(36, 43, saveIcon->pixmap());
+//				painter->drawPixmap(36, 43, saveIcon->pixmap());//TODO
 				painter->drawPixmap(36, 43, saveData->saveIcon().icon());
-				QString short_desc = saveData->getShortDescription();
+				QString short_desc = saveData->shortDescription();
 				if(!short_desc.isEmpty())
 				{
 					painter->setPen(Qt::white);
@@ -551,7 +569,7 @@ void SavecardView::paintEvent(QPaintEvent *event)
 	painter.fillRect(event->rect(), palette().color(QPalette::Window));
 
 	if(_data) {
-		painter.translate(36, 0);
+		painter.translate(horizontalMargin(), 0);
 
 		int curSaveID, minSaveID, maxSaveID;
 		minSaveID = saveID(event->rect().topLeft());
@@ -690,7 +708,7 @@ void SavecardView::colors(QImage *image, int color)
 
 void SavecardView::mousePressEvent(QMouseEvent *event)
 {
-	int xStart = 36;
+	int xStart = horizontalMargin();
 	int xEnd = width()-xStart;
 
 	if(event->x() < xStart || event->x() > xEnd) {
@@ -723,7 +741,7 @@ void SavecardView::mouseMoveEvent(QMouseEvent *event)
 	_dragStart = saveData->id();
 	mimeData->setData("application/ff8save", saveData->save() + saveData->MCHeader());
 	drag->setMimeData(mimeData);
-	drag->setHotSpot(QPoint(event->pos().x() - 36, event->pos().y() % saveHeight()));
+	drag->setHotSpot(QPoint(event->pos().x() - horizontalMargin(), event->pos().y() % saveHeight()));
 	QPixmap pixmap(saveSize());
 	renderSave(&pixmap, saveData);
 	drag->setPixmap(pixmap);
@@ -745,7 +763,7 @@ void SavecardView::mouseReleaseEvent(QMouseEvent *event)
 		mouseMove = 0;
 	}
 
-	int xStart = 36;
+	int xStart = horizontalMargin();
 	int xEnd = width()-xStart;
 
 	if(event->x() < xStart || event->x() > xEnd) {
@@ -768,8 +786,9 @@ void SavecardView::mouseReleaseEvent(QMouseEvent *event)
 			if(saveData->isDelete()) {
 				contextMenuEvent(new QContextMenuEvent(QContextMenuEvent::Other, event->pos(), event->globalPos(), event->modifiers()));
 				return;
+			} else if(!saveData->isRaw()) {
+				properties(saveData->id());
 			}
-			properties(saveData->id());
 		}
 	}
 	else if(event->button() == Qt::MidButton)
@@ -777,14 +796,15 @@ void SavecardView::mouseReleaseEvent(QMouseEvent *event)
 		if(saveData->isDelete()) {
 			contextMenuEvent(new QContextMenuEvent(QContextMenuEvent::Other, event->pos(), event->globalPos(), event->modifiers()));
 			return;
+		} else if(!saveData->isRaw()) {
+			properties(saveData->id());
 		}
-		properties(saveData->id());
 	}
 }
 
 void SavecardView::contextMenuEvent(QContextMenuEvent *event)
 {
-	int xStart = 36;
+	int xStart = horizontalMargin();
 	int xEnd = width()-xStart;
 
 	if(event->x() < xStart || event->x() > xEnd) {
@@ -804,11 +824,12 @@ void SavecardView::contextMenuEvent(QContextMenuEvent *event)
 	menu.addAction(tr("&Nouvelle partie"), this, SLOT(newGame()));
 	if(!saveData->isDelete()) {
 		menu.addAction(tr("&Vider"), this, SLOT(removeSave()));
-		QAction *action = menu.addAction(tr("&Propriétés..."), this, SLOT(properties()));
-		if(!saveData->isFF8()) {
-			menu.setDefaultAction(action);
+		if(!saveData->isRaw()) {
+			QAction *action = menu.addAction(tr("&Propriétés..."), this, SLOT(properties()));
+			if(!saveData->isFF8()) {
+				menu.setDefaultAction(action);
+			}
 		}
-
 	}
 	menu.exec(event->globalPos());
 }
@@ -826,7 +847,7 @@ void SavecardView::changeEvent(QEvent *event)
 void SavecardView::dragEnterEvent(QDragEnterEvent *event)
 {
 	if(event->mimeData()->hasFormat("application/ff8save")) {
-		isExternalDrag = event->source() == 0; // external source
+		isExternalDrag = event->source() != this; // external source
 		event->acceptProposedAction();
 	}
 }
@@ -851,7 +872,7 @@ void SavecardView::dropEvent(QDropEvent *event)
 	dragLeaveEvent(0);
 
 	event->acceptProposedAction();
-	isExternalDrag = event->source() == 0;
+	isExternalDrag = event->source() != this;
 	if(isExternalDrag) {
 		if(lastDropData)	delete lastDropData;
 		lastDropData = new QByteArray(event->mimeData()->data("application/ff8save"));

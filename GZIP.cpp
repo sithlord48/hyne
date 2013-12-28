@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2012-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ QByteArray GZIP::compress(const QByteArray &ungzip)
 {
 	QString tempPath = QDir::tempPath()+"/qt_temp.gz";
 
-	gzFile file2 = gzopen(tempPath.toLatin1(), "wb");
+	gzFile file2 = gzopen(tempPath.toLatin1(), "wb9");
 	if(!file2) {
 		return QByteArray();
 	}
@@ -95,7 +95,7 @@ bool GZIP::compress(const QString &pathFrom, const QString &pathTo)
 		return false;
 	}
 
-	gzFile file = gzopen(pathTo.toLatin1(), "wb");
+	gzFile file = gzopen(pathTo.toLatin1(), "wb9");
 	if(!file) {
 		return false;
 	}

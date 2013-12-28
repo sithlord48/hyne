@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -21,8 +21,8 @@
 #include "Parameters.h"
 #include "LZS.h"
 
-SavecardData::SavecardData(const QString &path, bool slot) :
-	_ok(true), start(0), _isModified(false)
+SavecardData::SavecardData(const QString &path, quint8 slot, const FF8Installation &ff8Installation) :
+	_ok(true), start(0), _isModified(false), _slot(slot), _ff8Installation(ff8Installation)
 {
 	open(path, slot);
 }
@@ -42,14 +42,14 @@ SavecardData::~SavecardData()
 	foreach(SaveData *save, saves)	delete save;
 }
 
-bool SavecardData::open(const QString &path, bool slot)
+bool SavecardData::open(const QString &path, quint8 slot)
 {
 	if(slot)
 	{
 		setPath(QDir::fromNativeSeparators(QDir::cleanPath(path)) + "/");
-		setType(PcDir);
+		setType(PcSlot);
 
-		directory();
+		directory(_ff8Installation.saveNamePattern(_slot));
 		_ok = !saves.isEmpty();
 	}
 	else
@@ -57,7 +57,7 @@ bool SavecardData::open(const QString &path, bool slot)
 		setPath(QDir::fromNativeSeparators(QDir::cleanPath(path)));
 		QString extension = this->extension();
 
-		if(extension.isEmpty())
+		if(extension.isEmpty() || extension == "ff8")
 		{
 			setType(Pc);
 			if(!pc())	addSave(QByteArray());
@@ -119,11 +119,6 @@ const QFileSystemWatcher *SavecardData::watcher() const
 	return &fileWatcher;
 }
 
-const QString &SavecardData::errorString() const
-{
-	return _lastError;
-}
-
 QString SavecardData::description() const
 {
 	return QString(_description);
@@ -151,29 +146,9 @@ QString SavecardData::extension() const
 	return index != -1 ? _path.mid(index + 1).toLower() : QString();
 }
 
-const QString &SavecardData::path() const
-{
-	return _path;
-}
-
-void SavecardData::setPath(const QString &path)
-{
-	_path = path;
-}
-
 void SavecardData::setName(const QString &name)
 {
 	_path = dirname() + name;
-}
-
-bool SavecardData::ok() const
-{
-	return _ok;
-}
-
-SavecardData::Type SavecardData::type() const
-{
-	return _type;
 }
 
 void SavecardData::setType(Type type)
@@ -204,11 +179,6 @@ void SavecardData::setType(Type type)
 bool SavecardData::hasPath() const
 {
 	return !dirname().isEmpty();
-}
-
-bool SavecardData::isOneSaveType() const
-{
-	return type()==Pc || type()==Psv;
 }
 
 bool SavecardData::isModified() const
@@ -244,21 +214,22 @@ void SavecardData::setIsTheLastEdited(int saveID)
 
 bool SavecardData::ps()
 {
+	setErrorString(QString());
 	QFile fic(_path);
 
 	if(!fic.exists())
 	{
-		_lastError = QObject::tr("Le fichier n'existe plus.\n%1").arg(_path);
+		setErrorString(QObject::tr("Le fichier n'existe plus.\n%1").arg(_path));
 		return false;
 	}
 	if(!fic.open(QIODevice::ReadOnly))
 	{
-		_lastError = QObject::tr("Le fichier est protégé en lecture.");
+		setErrorString(QObject::tr("Le fichier est protégé en lecture."));
 		return false;
 	}
 	if(fic.size() < start+131072)//start+8192*16
 	{
-		_lastError = QObject::tr("Fichier trop court");
+		setErrorString(QObject::tr("Fichier trop court"));
 		return false;
 	}
 
@@ -271,8 +242,23 @@ bool SavecardData::ps()
 	QByteArray header = fic.read(1920);//(128*15)
 	fic.seek(start+SAVE_SIZE);
 
-	for(quint8 i=0 ; i<15 ; ++i)
-		addSave(fic.read(SAVE_SIZE), header.mid(128*i, 127));
+	quint8 blockCount = 1;
+	bool occupied;
+
+	for(quint8 i=0 ; i<15 ; ++i) {
+		if(blockCount <= 1 && !saves.isEmpty()) {
+			blockCount = saves.last()->blockCount();
+		}
+
+		if(blockCount > 1) {
+			blockCount--;
+			occupied = true;
+		} else {
+			occupied = false;
+		}
+
+		addSave(fic.read(SAVE_SIZE), header.mid(128*i, 127), occupied);
+	}
 
 	if(fileWatcher.files().size()<30)
 		fileWatcher.addPath(_path);
@@ -283,15 +269,16 @@ bool SavecardData::ps()
 bool SavecardData::ps3()
 {
 	QFile fic(_path);
+	setErrorString(QString());
 
 	if(!fic.exists())
 	{
-		_lastError = QObject::tr("Le fichier n'existe plus.\n%1").arg(_path);
+		setErrorString(QObject::tr("Le fichier n'existe plus.\n%1").arg(_path));
 		return false;
 	}
 	if(!fic.open(QIODevice::ReadOnly))
 	{
-		_lastError = QObject::tr("Le fichier est protégé en lecture.");
+		setErrorString(QObject::tr("Le fichier est protégé en lecture."));
 		return false;
 	}
 
@@ -302,15 +289,17 @@ bool SavecardData::ps3()
 
 	if(fic.size() < 8324)
 	{
-		_lastError = QObject::tr("Fichier invalide");
+		setErrorString(QObject::tr("Fichier invalide"));
 		return false;
 	}
 
-	fic.seek(90);
-	QByteArray header = fic.read(30);
+	fic.seek(100);
+	QByteArray MCHeader("\x51\x00\x00\x00\x00\x20\x00\x00\xff\xff", 10);
+	MCHeader.append(fic.read(20));
+
 	fic.seek(132);
 
-	addSave(fic.read(SAVE_SIZE), header);
+	addSave(fic.read(SAVE_SIZE), MCHeader);
 
 	if(saves.first()->isDelete())	return false;
 
@@ -320,10 +309,10 @@ bool SavecardData::ps3()
 	return true;
 }
 
-bool SavecardData::pc()
+bool SavecardData::pc(const QString &path)
 {
 	int tailleC;
-	QFile f(_path);
+	QFile f(path.isEmpty() ? _path : path);
 
 	if(!f.exists() || !f.open(QIODevice::ReadOnly))
 		return false;
@@ -399,12 +388,14 @@ bool SavecardData::getFormatFromRaw()
 bool SavecardData::sstate_ePSXe()
 {
 	QTemporaryFile temp;
+	setErrorString(QString());
+
 	if(!temp.open()) {
-		_lastError = QObject::tr("Impossible de créer le fichier temporaire.");
+		setErrorString(QObject::tr("Impossible de créer le fichier temporaire."));
 		return false;
 	}
 	if(!GZIP::decompress(_path, temp.fileName())) {
-		_lastError = QObject::tr("Impossible de décompresser le fichier.");
+		setErrorString(QObject::tr("Impossible de décompresser le fichier."));
 		return false;
 	}
 //	temp.seek(7);
@@ -421,8 +412,10 @@ bool SavecardData::sstate_ePSXe()
 bool SavecardData::sstate_pSX()
 {
 	QFile f(_path);
+	setErrorString(QString());
+
 	if(!f.open(QIODevice::ReadOnly)) {
-		_lastError = QObject::tr("Le fichier est protégé en lecture.");
+		setErrorString(QObject::tr("Le fichier est protégé en lecture."));
 		return false;
 	}
 
@@ -456,7 +449,7 @@ bool SavecardData::sstate(const QByteArray &fdata, const QByteArray &MCHeader)
 	data.append(fdata);
 
 	if(data.size() != 0x139E + 0x182) {
-		_lastError = QObject::tr("Format invalide.");
+		setErrorString(QObject::tr("Format invalide."));
 		return false;
 	}
 
@@ -467,7 +460,7 @@ bool SavecardData::sstate(const QByteArray &fdata, const QByteArray &MCHeader)
 		if(!saveData->isFF8()) {
 			saves.removeLast();
 			delete saveData;
-			_lastError = QObject::tr("La sauvegarde trouvée n'est pas de Final Fantasy VIII.");
+			setErrorString(QObject::tr("La sauvegarde trouvée n'est pas de Final Fantasy VIII."));
 			return false;
 		}
 	}
@@ -475,27 +468,25 @@ bool SavecardData::sstate(const QByteArray &fdata, const QByteArray &MCHeader)
 	return true;
 }
 
-void SavecardData::directory()
+void SavecardData::directory(const QString &filePattern)
 {
-//	QTime t;t.start();
-	for(quint8 i=0 ; i<30 ; ++i)
-	{
-		setName(QString("save%1").arg(i+1, 2, 10, QChar('0')));
-		if(!pc())	addSave();
+	QString dirname = this->dirname();
+
+	for(quint8 i=0 ; i<30 ; ++i) {
+		QString path = filePattern;
+		QString num = QString("%1").arg(i + 1, 2, 10, QChar('0'));
+		path = dirname + path.replace("{num}", num);
+		if(!pc(path)) {
+			addSave(); // Empty save
+		}
 	}
-	setName(QString());
+
 	LZS::clear();
-//	qDebug() << "time: " << t.elapsed();
 }
 
-void SavecardData::addSave(const QByteArray &data, const QByteArray &header)
+void SavecardData::addSave(const QByteArray &data, const QByteArray &header, bool occupied)
 {
-	saves.append(new SaveData(saves.size(), data, header, type()==Psv));
-}
-
-const QList<SaveData *> &SavecardData::getSaves() const
-{
-	return saves;
+	saves.append(new SaveData(saves.size(), data, header, type()!=Psv, occupied));
 }
 
 void SavecardData::moveSave(int sourceID, int targetID)
@@ -525,9 +516,10 @@ int SavecardData::saveCount() const
 
 bool SavecardData::save(const QString &saveAs, Type newType)
 {
-	QString path = saveAs.isEmpty() ? _path : saveAs;
+	const QString path = saveAs.isEmpty() ? _path : saveAs;
 	QTemporaryFile temp("hyne");
 	QFile fic(_path);
+	setErrorString(QString());
 
 	if(saveAs.isEmpty()) {
 		newType = _type;
@@ -535,22 +527,22 @@ bool SavecardData::save(const QString &saveAs, Type newType)
 
 	if(!fic.exists())
 	{
-		_lastError = QObject::tr("Le fichier n'existe plus.\n%1").arg(_path);
+		setErrorString(QObject::tr("Le fichier n'existe plus.\n%1").arg(_path));
 		return false;
 	}
 	if(!fic.open(QIODevice::ReadOnly))
 	{
-		_lastError = QObject::tr("Le fichier est protégé en lecture.\n%1").arg(_path);
+		setErrorString(QObject::tr("Le fichier est protégé en lecture.\n%1").arg(_path));
 		return false;
 	}
 	if(!temp.open())
 	{
 		fic.close();
-		_lastError = QObject::tr("Impossible de créer un fichier temporaire");
+		setErrorString(QObject::tr("Impossible de créer un fichier temporaire"));
 		return false;
 	}
 
-	if(_type==Psv)
+	if(_type == Psv)
 	{
 		temp.write(fic.read(100));
 		temp.write(saves.first()->MCHeader().mid(10, 20));// B + country + code + id
@@ -559,7 +551,7 @@ bool SavecardData::save(const QString &saveAs, Type newType)
 //		compare(fic.peek(FF8SAVE_SIZE), saves.first()->save());
 		temp.write(saves.first()->save());
 	}
-	else if(_type!=Pc && _type!=PcDir)
+	else if(_type != Pc && _type != PcSlot)
 	{
 		quint8 i;
 		SaveData *save;
@@ -611,59 +603,104 @@ bool SavecardData::save(const QString &saveAs, Type newType)
 	if(QFile::exists(path) && !QFile::remove(path))
 	{
 		temp.close();
-		_lastError = QObject::tr("Impossible de supprimer le fichier !\n%1\nÉchec de la sauvegarde.\nVérifiez que le fichier n'est pas utilisé par un autre programme.").arg(path);
+		setErrorString(QObject::tr("Impossible de supprimer le fichier !\n%1\nÉchec de la sauvegarde.\nVérifiez que le fichier n'est pas utilisé par un autre programme.").arg(path));
 		if(readdPath)	fileWatcher.addPath(path);
 		return false;
 	}
 	if(!temp.copy(path))
 	{
-		_lastError = QObject::tr("Échec de la sauvegarde.");
+		setErrorString(QObject::tr("Échec de la sauvegarde."));
 	}
 	if(readdPath)	fileWatcher.addPath(path);
 
 	return true;
 }
 
-bool SavecardData::save2PC(qint8 id, QString path)
+bool SavecardData::save2PC(const quint8 id, const QString &saveAs)
 {
-	if(path.isEmpty())
-		path = _path;
+	const SaveData *save = saves.at(id);
+	setErrorString(QString());
 
-	QTemporaryFile temp("hyneOne");
-	if(!temp.open())
-	{
-		_lastError = QObject::tr("Impossible de créer un fichier temporaire");
+	if(!save->isFF8() && !save->isDelete()) {
+		setErrorString(QObject::tr("Cette sauvegarde ne provient pas de Final Fantasy VIII."));
 		return false;
 	}
 
-	if(id==-1)	id = 0;
+	const QString path = saveAs.isEmpty() ? _path : saveAs;
+
+	QTemporaryFile temp("hyneOne");
+	if(!temp.open()) {
+		setErrorString(QObject::tr("Impossible de créer un fichier temporaire"));
+		return false;
+	}
 
 	bool readdPath = false;
-	if(fileWatcher.files().contains(path))
-	{
+	if(fileWatcher.files().contains(path)) {
 		readdPath = true;
 		fileWatcher.removePath(path);
 	}
 
-	if(saves.at(id)->isDelete()) {
+	// Rerelease 2013
+	UserDirectory userDirectory;
+	quint8 slot=0, num=0;
+
+	QString filename = path.mid(path.lastIndexOf('/') + 1);
+	QRegExp regExp("slot([12])_save(\\d\\d).ff8");
+
+	if(regExp.exactMatch(filename)) {
+		QString dirname = path.left(path.lastIndexOf('/'));
+		userDirectory.setDirname(dirname);
+
+		if(userDirectory.hasMetadata() && userDirectory.openMetadata()) {
+			QStringList capturedTexts = regExp.capturedTexts();
+			slot = capturedTexts.at(1).toInt();
+			num = capturedTexts.at(2).toInt();
+		} else if(!userDirectory.hasMetadata()) {
+			setErrorString(QObject::tr("Le fichier 'metadata.xml' n'a pas été trouvé dans le dossier '%1'.\n"
+									   "Essayez de signer vos sauvegardes manuellement (Fichier > Signer les sauv. pour le Cloud).").arg(dirname));
+		} else {
+			setErrorString(QObject::tr("Le fichier 'metadata.xml' n'a pas pu être ouvert.\n%1").arg(userDirectory.errorString()));
+		}
+	}
+
+	if(save->isDelete()) {
 		QFile::remove(path);
+
+		// Rerelease 2013: removing from metadata file
+		if(slot > 0) {
+			userDirectory.updateMetadata(slot, num);
+			if(!userDirectory.saveMetadata()) {
+				setErrorString(QObject::tr("Le fichier 'metadata.xml' n'a pas pu être mis à jour.\n%1").arg(userDirectory.errorString()));
+			}
+		}
+
 		return true;
 	}
 
-	QByteArray result = LZS::compress(saves.at(id)->save());
+	QByteArray result = LZS::compress(save->save());
 	int size = result.size();
-	temp.write((char *)&size, 4);
+	result.prepend((char *)&size, 4);
+
+	// Rerelease 2013: updating signature in metadata file
+	if(slot > 0) {
+		userDirectory.updateMetadata(slot, num, result);
+		if(!userDirectory.saveMetadata()) {
+			setErrorString(QObject::tr("Le fichier 'metadata.xml' n'a pas pu être mis à jour.\n%1").arg(userDirectory.errorString()));
+		}
+	}
+
 	temp.write(result);
 
 	if(QFile::exists(path) && !QFile::remove(path))
 	{
-		_lastError = QObject::tr("Impossible de supprimer le fichier !\n%1\nÉchec de la sauvegarde.\nVérifiez que le fichier n'est pas utilisé par un autre programme.").arg(path);
+		setErrorString(QObject::tr("Impossible de supprimer le fichier !\n%1\nÉchec de la sauvegarde.\nEssayez de lancer %2 en tant qu'administrateur.")
+				.arg(path).arg(PROG_NAME));
 		if(readdPath)	fileWatcher.addPath(path);
 		return false;
 	}
 	if(!temp.copy(path))
 	{
-		_lastError = QObject::tr("Échec de la sauvegarde.");
+		setErrorString(QObject::tr("Échec de la sauvegarde."));
 	}
 	if(readdPath)	fileWatcher.addPath(path);
 
@@ -675,19 +712,20 @@ bool SavecardData::save2PC(qint8 id, QString path)
 	return true;
 }
 
-bool SavecardData::save2PSV(qint8 id, QString path)
+bool SavecardData::save2PSV(const quint8 id, const QString &saveAs, const QByteArray &MCHeader)
 {
-	if(path.isEmpty())
-		path = _path;
+	const SaveData *save = saves.at(id);
+	const QString path = saveAs.isEmpty()
+			? _path
+			: saveAs;
+	setErrorString(QString());
 
 	QTemporaryFile temp("hynePsv");
 	if(!temp.open())
 	{
-		_lastError = QObject::tr("Impossible de créer un fichier temporaire");
+		setErrorString(QObject::tr("Impossible de créer un fichier temporaire"));
 		return false;
 	}
-
-	if(id==-1)	id = 0;
 
 	bool readdPath = false;
 	if(fileWatcher.files().contains(path))
@@ -696,16 +734,9 @@ bool SavecardData::save2PSV(qint8 id, QString path)
 		fileWatcher.removePath(path);
 	}
 
-	if(saves.at(id)->isDelete()) {
+	if(save->isDelete()) {
 		return QFile::remove(path);
 	}
-
-	if(!saves.first()->hasMCHeader()) {//TODO
-		qWarning() << "Need a MC Header!";
-		return false;
-	}
-
-	QByteArray MCHeader = saves.first()->saveMCHeader();
 
 	QByteArray result;
 	result.append("\0VSP\0\0\0\0", 8);
@@ -716,18 +747,18 @@ bool SavecardData::save2PSV(qint8 id, QString path)
 				  "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x20\x00\x00"
 				  "\x03\x90\x00\x00", 52); // unknown
 	result.append(MCHeader.mid(10, 32)); // Country + prod code + identifier
-	result.append(saves.at(id)->save());
+	result.append(save->save());
 	temp.write(result);
 
 	if(QFile::exists(path) && !QFile::remove(path))
 	{
-		_lastError = QObject::tr("Impossible de supprimer le fichier !\n%1\nÉchec de la sauvegarde.\nVérifiez que le fichier n'est pas utilisé par un autre programme.").arg(path);
+		setErrorString(QObject::tr("Impossible de supprimer le fichier !\n%1\nÉchec de la sauvegarde.\nVérifiez que le fichier n'est pas utilisé par un autre programme.").arg(path));
 		if(readdPath)	fileWatcher.addPath(path);
 		return false;
 	}
 	if(!temp.copy(path))
 	{
-		_lastError = QObject::tr("Échec de la sauvegarde.");
+		setErrorString(QObject::tr("Échec de la sauvegarde."));
 	}
 	if(readdPath)	fileWatcher.addPath(path);
 
@@ -739,22 +770,19 @@ bool SavecardData::save2PSV(qint8 id, QString path)
 	return true;
 }
 
-bool SavecardData::save2PS(QList<int> ids, const QString &path, Type newType, QByteArray MCHeader)
+bool SavecardData::save2PS(const QList<int> &ids, const QString &path, const Type newType, const QByteArray &MCHeader)
 {
 	QTemporaryFile temp("hynePS");
 	quint8 i;
+	setErrorString(QString());
 
 	if(!temp.open())
 	{
-		_lastError = QObject::tr("Impossible de créer un fichier temporaire");
+		setErrorString(QObject::tr("Impossible de créer un fichier temporaire"));
 		return false;
 	}
 
 	temp.write(header(0, newType, true));
-
-	if(_type == Psv) {
-		MCHeader = saves.first()->saveMCHeader();
-	}
 
 	temp.write("MC", 2);//MC
 	temp.write(QByteArray(125,'\x00'));
@@ -770,9 +798,10 @@ bool SavecardData::save2PS(QList<int> ids, const QString &path, Type newType, QB
 		else
 		{
 			if(!MCHeader.isEmpty()) {
-				MCHeader = MCHeader.replace(26, 2, QString("%1").arg(i, 2, 10, QChar('0')).toLatin1());
-				MCHeader[127] = (char)SaveData::xorByte(MCHeader.constData());
-				temp.write(MCHeader);
+				QByteArray MCHeaderCpy = MCHeader;
+				MCHeaderCpy.replace(26, 2, QString("%1").arg(i, 2, 10, QChar('0')).toLatin1());
+				MCHeaderCpy[127] = (char)SaveData::xorByte(MCHeaderCpy.constData());
+				temp.write(MCHeaderCpy);
 			} else {
 				temp.write(saves.at(ids.at(i))->saveMCHeader());
 			}
@@ -803,16 +832,16 @@ bool SavecardData::save2PS(QList<int> ids, const QString &path, Type newType, QB
 
 	if(QFile::exists(path) && !QFile::remove(path))
 	{
-		_lastError = QObject::tr("Impossible de supprimer le fichier !"
+		setErrorString(QObject::tr("Impossible de supprimer le fichier !"
 								 "\n%1\nÉchec de la sauvegarde."
 								 "\nVérifiez que le fichier n'est pas utilisé"
-								 " par un autre programme.").arg(path);
+								 " par un autre programme.").arg(path));
 		if(readdPath)	fileWatcher.addPath(path);
 		return false;
 	}
 	if(!temp.copy(path))
 	{
-		_lastError = QObject::tr("Échec de la sauvegarde.");
+		setErrorString(QObject::tr("Échec de la sauvegarde."));
 	}
 	if(readdPath)	fileWatcher.addPath(path);
 
@@ -826,8 +855,8 @@ bool SavecardData::save2PS(QList<int> ids, const QString &path, Type newType, QB
 		foreach(SaveData *save, saves) {
 			if(save->isFF8()) {
 				if(!MCHeader.isEmpty()) {
-					MCHeader = MCHeader.replace(26, 2, QString("%1").arg(i, 2, 10, QChar('0')).toLatin1());
-					save->setMCHeader(MCHeader);
+					QByteArray MCHeaderCpy = MCHeader;
+					save->setMCHeader(MCHeaderCpy.replace(26, 2, QString("%1").arg(i, 2, 10, QChar('0')).toLatin1()));
 				}
 			}
 			save->setModified(false);
@@ -905,19 +934,27 @@ QByteArray SavecardData::header(QFile *srcFile, Type newType, bool saveAs)
 		return QByteArray();
 }
 
-void SavecardData::saveDir()
+bool SavecardData::saveDirectory()
 {
-	for(int i=0 ; i<saves.size() ; ++i)
-		saveDir(i);
-	setName(QString());
-}
+	QString dirname = this->dirname(), filePattern;
+	bool ok = true;
+	int i = 0;
 
-void SavecardData::saveDir(quint8 i)
-{
-	if(saves.at(i)->isModified()) {
-		setName(QString("save%1").arg(i+1, 2, 10, QChar('0')));
-		save2PC(i);
+	filePattern = _ff8Installation.saveNamePattern(_slot);
+
+	foreach(const SaveData *save, saves) {
+		if(save->isModified()) {
+			QString num = QString("%1").arg(i + 1, 2, 10, QChar('0'));
+			QString path = filePattern;
+
+			if(!save2PC(i, dirname + path.replace("{num}", num))) {
+				ok = false;
+			}
+		}
+		++i;
 	}
+
+	return ok;
 }
 
 void SavecardData::compare(const QByteArray &oldData, const QByteArray &newData)

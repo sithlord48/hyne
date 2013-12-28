@@ -3,10 +3,11 @@
 
 #include <QtCore>
 #include <QWidget>
-#ifdef Q_OS_WIN32
+#ifdef Q_OS_WIN
 #	ifndef __GNUC__
 #		include <shobjidl.h>
 #		include <shlobj.h>
+#		undef min
 #	endif
 #endif
 
@@ -53,10 +54,12 @@ private:
 #ifdef __ITaskbarList3_INTERFACE_DEFINED__
 	void initTaskBar();
 	void initDestinationList();
+#ifdef Q_OS_WIN
 	HWND _winId;
 	ITaskbarList3 *pITask;
 	ICustomDestinationList *destinationList;
 	IObjectArray *removedItems;
+#endif // Q_OS_WIN
 	int _minimum, _maximum, _value;
 	State _state;
 #endif // __ITaskbarList3_INTERFACE_DEFINED__

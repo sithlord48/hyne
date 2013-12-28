@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -18,14 +18,15 @@
 
 #include "SelectSavesDialog.h"
 
-SelectSavesDialog::SelectSavesDialog(const QList<SaveData *> &saveFiles, bool multiSelection, QWidget *parent) :
+SelectSavesDialog::SelectSavesDialog(const QList<SaveData *> &saveFiles, bool multiSelection, bool onlyFF8, QWidget *parent) :
 	QDialog(parent, Qt::Dialog | Qt::WindowCloseButtonHint)
 {
-	QLayout *infoLayout = helpLayout();
+	msg = new HelpWidget(16, this);
 	fillList(saveFiles);
 
 	for(int i=0 ; i<list->count() ; ++i) {
-		if(!saveFiles.at(i)->isFF8())
+		if(!saveFiles.at(i)->isFF8() &&
+				(onlyFF8 || saveFiles.at(i)->isRaw() || saveFiles.at(i)->isDelete()))
 			list->item(i)->setFlags(Qt::NoItemFlags);
 	}
 
@@ -43,7 +44,7 @@ SelectSavesDialog::SelectSavesDialog(const QList<SaveData *> &saveFiles, bool mu
 	connect(buttonBox, SIGNAL(accepted()), SLOT(accept()));
 
 	QVBoxLayout *layout = new QVBoxLayout(this);
-	layout->addLayout(infoLayout);
+	layout->addWidget(msg);
 	layout->addWidget(list);
 	layout->addWidget(buttonBox);
 
@@ -54,7 +55,7 @@ SelectSavesDialog::SelectSavesDialog(const QList<SaveData *> &saveFiles, bool mu
 SelectSavesDialog::SelectSavesDialog(const QList<SaveData *> &saveFiles, QWidget *parent) :
 	QDialog(parent, Qt::Dialog | Qt::WindowCloseButtonHint)
 {
-	QLayout *infoLayout = helpLayout();
+	msg = new HelpWidget(16, this);
 	fillList(saveFiles);
 
 	msg->setText(tr("Déplacez les éléments à la souris pour modifier l'ordre des saves."));
@@ -66,7 +67,7 @@ SelectSavesDialog::SelectSavesDialog(const QList<SaveData *> &saveFiles, QWidget
 	connect(buttonBox, SIGNAL(accepted()), SLOT(accept()));
 
 	QVBoxLayout *layout = new QVBoxLayout(this);
-	layout->addLayout(infoLayout);
+	layout->addWidget(msg);
 	layout->addWidget(list);
 	layout->addWidget(buttonBox);
 }
@@ -80,26 +81,11 @@ void SelectSavesDialog::fillList(const QList<SaveData *> &saveFiles)
 	QString shortDescription;
 	for(int i=0 ; i<saveFiles.size() ; ++i) {
 		save = saveFiles.at(i);
-		item = new QListWidgetItem(tr("Save %1 (%2)").arg(i+1).arg((shortDescription = save->getShortDescription()).isEmpty() ? tr("vide") : shortDescription));
+		item = new QListWidgetItem(tr("Save %1 (%2)").arg(i+1).arg((shortDescription = save->shortDescription()).isEmpty() ? tr("vide") : shortDescription));
 		item->setIcon(save->saveIcon().icon());
 		list->addItem(item);
 		item->setData(Qt::UserRole, i);
 	}
-}
-
-QLayout *SelectSavesDialog::helpLayout()
-{
-	msg = new QLabel(this);
-	msg->setTextFormat(Qt::RichText);
-	QLabel *infoIcon = new QLabel(this);
-	infoIcon->setPixmap(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation).pixmap(16));
-	QHBoxLayout *infoLayout = new QHBoxLayout;
-	infoLayout->addWidget(infoIcon);
-	infoLayout->addWidget(msg);
-	infoLayout->addStretch();
-	infoLayout->setContentsMargins(QMargins());
-
-	return infoLayout;
 }
 
 QString SelectSavesDialog::infoText(bool warn)

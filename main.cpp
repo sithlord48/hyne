@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -30,20 +30,22 @@ int main(int argc, char *argv[])
 	Config::set();
 
 	QTranslator translator;
-	QString lang = QLocale::system().name().toLower();
-	lang = Config::value("lang", lang.left(lang.indexOf("_")));
-	if(translator.load("hyne_" + lang, app.applicationDirPath())) {
+	QString lang = QLocale::system().name().toLower(),
+			translationPath = Config::translationDir();
+
+	lang = Config::value(Config::Lang, lang.left(lang.indexOf("_")));
+	if(translator.load("hyne_" + lang, translationPath)) {
 		app.installTranslator(&translator);
 	} else if(lang != "fr") {
 		lang = Window::chooseLangDialog();
-		if(translator.load("hyne_" + lang, app.applicationDirPath())) {
+		if(translator.load("hyne_" + lang, translationPath)) {
 			app.installTranslator(&translator);
-			Config::setValue("lang", lang);
+			Config::setValue(Config::Lang, lang);
 		} else {
-			Config::setValue("lang", "fr");
+			Config::setValue(Config::Lang, "fr");
 		}
 	} else {
-		Config::setValue("lang", "fr");
+		Config::setValue(Config::Lang, "fr");
 	}
 	Config::translator = &translator;
 

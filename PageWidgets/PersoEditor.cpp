@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -496,8 +496,8 @@ void PersoEditor::buildPage6()
 	LB_E.clear();
 	linoaLB_E.clear();
 	tabWidget->setTabEnabled(5, true);
-	QLabel *angeloPix, *info, *infoIcon;
-	QHBoxLayout *infoLayout;
+	QLabel *angeloPix;
+	HelpWidget *info;
 
 	LBindicator_E = 0;
 	indicatorlabel = 0;
@@ -509,11 +509,11 @@ void PersoEditor::buildPage6()
 		LB_E.first()->setChecked(data->misc2.renzokuken_auto & 1);
 		LB_E << new QCheckBox(tr("Indicateur renzokuken"), lbWidget);
 		LB_E.at(1)->setChecked(data->misc2.renzokuken_indicator < 128);
-		LB_E.at(1)->setEnabled(data->misc2.renzokuken_auto == 0);
+		LB_E.at(1)->setEnabled((data->misc2.renzokuken_auto & 1) == 0);
 		LBindicator_E = new QSlider(Qt::Horizontal, lbWidget);
 		LBindicator_E->setMaximum(127);
 		LBindicator_E->setValue(data->misc2.renzokuken_indicator < 128 ? data->misc2.renzokuken_indicator : 0);
-		LBindicator_E->setEnabled(data->misc2.renzokuken_auto == 0 || data->misc2.renzokuken_indicator < 128);
+		LBindicator_E->setEnabled((data->misc2.renzokuken_auto & 1) == 0 || data->misc2.renzokuken_indicator < 128);
 		connect(LB_E.first(), SIGNAL(stateChanged(int)), SLOT(LBautoChange(int)));
 		connect(LB_E.at(1), SIGNAL(stateChanged(int)), SLOT(LBindicatorChange(int)));
 		indicatorlabel = new QLabel(QString::number(data->misc2.renzokuken_indicator < 128 ? data->misc2.renzokuken_indicator : 0), lbWidget);
@@ -526,17 +526,21 @@ void PersoEditor::buildPage6()
 		grid->setColumnStretch(3, 1);
 		return;
 	case ZELL:
+		LB_E << new QCheckBox(tr("Ring Master auto"), lbWidget);
+		LB_E.first()->setChecked((data->misc2.renzokuken_auto >> 1) & 1);
+		grid->addWidget(LB_E.first(), 0, 0);
+		cur++;
 		for(int i=0 ; i<2 ; ++i)
 		{
 			for(int j=0 ; j<5 ; ++j)
 			{
-				LB_E << new QCheckBox(Data::zellLBs().at(cur), lbWidget);
-				grid->addWidget(LB_E.at(cur), i, j);
-				LB_E.at(cur)->setChecked((data->limitb.zell >> cur) & 1);
+				LB_E << new QCheckBox(Data::zellLBs().at(cur - 1), lbWidget);
+				grid->addWidget(LB_E.at(cur), 1 + i, j);
+				LB_E.at(cur)->setChecked((data->limitb.zell >> (cur - 1)) & 1);
 				cur++;
 			}
 		}
-		grid->setRowStretch(2, 1);
+		grid->setRowStretch(3, 1);
 		return;
 	case IRVINE:
 		for(int i=0 ; i<2 ; ++i)
@@ -565,7 +569,7 @@ void PersoEditor::buildPage6()
 		grid->setRowStretch(4, 1);
 		return;
 	case RINOA:
-		angel_E = new QLineEdit(FF8Text::toString((char *)descData->angelo, jp), lbWidget);
+		angel_E = new QLineEdit(saveData->perso(ANGELO), lbWidget);
 		angel_disabledE = new QCheckBox(tr("Angel désactivé"), lbWidget);
 		angel_disabledE->setChecked((data->misc2.dream >> 4) & 1);
 		a_wing_enabledE = new QCheckBox(tr("Canonisation activé"), lbWidget);
@@ -573,18 +577,13 @@ void PersoEditor::buildPage6()
 		angeloPix = new QLabel(lbWidget);
 		angeloPix->setPixmap(QPixmap(":/images/icons/perso15.png"));
 
-		info = new QLabel(tr("<b>Case cochée :</b> limit break appris<br/><b>Case partiellement cochée :</b> limit break connu<br/><b>Valeur :</b> nombre de points restants pour apprendre le limit break"), lbWidget);
-		info->setTextFormat(Qt::RichText);
-		infoIcon = new QLabel(lbWidget);
-		infoIcon->setPixmap(QApplication::style()->standardIcon(QStyle::SP_MessageBoxInformation).pixmap(32));
-		infoLayout = new QHBoxLayout;
-		infoLayout->addWidget(infoIcon);
-		infoLayout->addWidget(info);
-		infoLayout->addStretch();
+		info = new HelpWidget(32, tr("<b>Case cochée :</b> limit break appris<br/><b>Case partiellement cochée :</b>"
+									 " limit break connu<br/><b>Valeur :</b> nombre de points restants pour apprendre "
+									 "le limit break"), lbWidget);
 
 		grid->addWidget(new QLabel(Data::names().at(ANGELO)+tr(" :"), lbWidget), 0, 0);
 		grid->addWidget(angel_E, 0, 1, 1, 6);
-		grid->addLayout(infoLayout, 1, 0, 1, 7);
+		grid->addWidget(info, 1, 0, 1, 7);
 		grid->addWidget(angeloPix, 0, 7, 3, 1, Qt::AlignRight);
 
 		for(int i=2 ; i<4 ; ++i)
@@ -643,15 +642,10 @@ void PersoEditor::fillPage()
 	this->id = persoListe->currentRow();
 	this->perso_data = &data->persos[id];
 
-	QString persoName;
-	if(id == SQUALL)		persoName = FF8Text::toString((char *)descData->squall, jp);
-	else if(id == RINOA)	persoName = FF8Text::toString((char *)descData->linoa, jp);
-	else					persoName = Data::names().at(id);
-
 	/* PAGE 1 */
 
 	existsE->setChecked(perso_data->exists & 1);
-	nameE->setText(persoName);
+	nameE->setText(saveData->perso(id));
 	nameE->setDisabled(id != SQUALL && id != RINOA);
 
 	current_HPsE->setValue(perso_data->current_HPs);
@@ -746,9 +740,9 @@ void PersoEditor::savePage()
 
 	perso_data->exists = (unknown6E->value() << 3) | (lock2E->isChecked() << 2) | (lock1E->isChecked() << 1) | int(existsE->isChecked());
 
-	const char *persoName = FF8Text::toByteArray(nameE->text(), jp).leftJustified(11, '\x00', true).append('\x00').constData();
-	if(id == SQUALL)		memcpy(&descData->squall, persoName, 12);
-	else if(id == RINOA)	memcpy(&descData->linoa, persoName, 12);
+	if(id == SQUALL || id == RINOA) {
+		saveData->setPerso(id, nameE->text());
+	}
 
 	perso_data->current_HPs = current_HPsE->value();
 	perso_data->HPs = HPs_E->value();
@@ -826,13 +820,14 @@ void PersoEditor::savePage()
 	switch(id)
 	{
 	case SQUALL:
-		data->misc2.renzokuken_auto = LB_E.first()->isChecked();
+		data->misc2.renzokuken_auto = (data->misc2.renzokuken_auto & 0xFE) | LB_E.first()->isChecked();
 		data->misc2.renzokuken_indicator = !LB_E.at(1)->isChecked() ? 128 : LBindicator_E->value();
 		break;
 	case ZELL:
+		data->misc2.renzokuken_auto = (data->misc2.renzokuken_auto & 0xFD) | (LB_E.first()->isChecked() << 1);
 		data->limitb.zell = 0;
 		for(int i=0 ; i<10 ; ++i)
-			data->limitb.zell |= LB_E.at(i)->isChecked() << i;
+			data->limitb.zell |= LB_E.at(i + 1)->isChecked() << i;
 		break;
 	case IRVINE:
 		data->limitb.irvine = 0;
@@ -845,8 +840,7 @@ void PersoEditor::savePage()
 			data->limitb.quistis |= LB_E.at(i)->isChecked() << i;
 		break;
 	case RINOA:
-		persoName = FF8Text::toByteArray(angel_E->text(), jp).leftJustified(11, '\x00', true).append('\x00').constData();
-		memcpy(&descData->angelo, persoName, 12);
+		saveData->setPerso(ANGELO, angel_E->text());
 		data->limitb.angel_known = data->limitb.angel_completed = 0;
 		for(int i=0 ; i<8 ; ++i)
 		{

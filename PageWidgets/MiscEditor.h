@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 #define DEF_MISCEDITOR
 
 #include "PageWidget.h"
+#include "../TimeWidget.h"
 
 class MiscEditor : public PageWidget
 {
@@ -44,18 +45,12 @@ private:
 	// Page 1
 	QTabWidget *tabWidget;
 	// Misc
-	QSpinBox *tempsSecE, *tempsMinE, *tempsHourE;
-	QSpinBox *countdownSecE, *countdownMinE, *countdownHourE;
+	TimeWidget *timeE, *countdownE;
 	QSpinBox *seedLvlE, *seedExpE;
 	QLabel *lastFieldLabel, *currentFrameLabel;
 	QDoubleSpinBox *argentE, *lagunaGilsE, *currentFrameE;
 	QDoubleSpinBox *stepsE;
 	QSpinBox *testSeedE, *lastFieldE;
-	QLabel *hpMaxLeaderLabel;
-	// Header
-	QComboBox *locationIDE;
-	QSpinBox *hpMaxLeaderE, *saveCountE;
-	QDoubleSpinBox *curSaveE;
 	// Unknown
 	QGroupBox *unknownE;
 	QSpinBox *unknown1E, *unknown2E, *unknown5E;

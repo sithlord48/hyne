@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 #define COUNTRY_EU	'E'
 
 #include <QtCore>
+#include "SaveIcon.h"
 
 #ifdef _MSC_VER
 #	define PACK(structure)			\
@@ -177,7 +178,7 @@ PACK(
 struct ITEMS//428
 {
 	quint8 battle_order[32];
-	quint16 items[198];
+	quint16 items[198]; // (quint8(itemID), quint8(quantity)) * 198
 });
 
 PACK(
@@ -191,16 +192,16 @@ struct MISC2//144
 	quint16 u2;
 	quint16 battle_escaped;
 	quint32 u3;
-	quint32 tomberry_vaincus;
-	quint32 tomberry_sr_vaincu;
+	quint32 tomberry_vaincus; // var81 (in battle scripts)
+	quint32 tomberry_sr_vaincu; // var82 (in battle scripts)
 	quint32 u4;
-	quint32 elmidea_battle_r1;
-	quint32 succube_battle_elemental;
-	quint32 trex_battle_mental;
-	quint32 battle_irvine;// first battle with Irvine who explains limit break
+	quint32 elmidea_battle_r1; // var84 (in battle scripts)
+	quint32 succube_battle_elemental; // var85 (in battle scripts)
+	quint32 trex_battle_mental; // var86 (in battle scripts)
+	quint32 battle_irvine;// first battle with Irvine who explains limit break, var87 (in battle scripts)
 	quint8 magic_drawn_once[8];
 	quint8 ennemy_scanned_once[20];
-	quint8 renzokuken_auto;
+	quint8 renzokuken_auto;// Renzo auto|Ring Master auto|???|???|???|???|???|???
 	quint8 renzokuken_indicator;
 	quint8 dream;//dream|Odin|Phoenix|Gilgamesh|Angelo disabled|Angel Wing enabled|???|???
 	// /Battle vars
@@ -258,16 +259,17 @@ struct MISC3//256
 	quint8 music_played; // var199
 	quint8 uC;
 	quint8 music_is_played; // var201
-	quint8 uD[2];
-	quint8 battle_music; // var204
-	quint8 disc; // var205
+	quint8 uD;
+	quint8 battle_music; // var203
+	quint8 disc; // var204
 	quint8 uE;
-	quint8 music_is_loaded; // var207
-	quint8 battle_off; // var208
+	quint8 music_is_loaded; // var206
+	quint8 battle_off; // var207
+	quint8 uF;
 	quint8 save_enabled; // var209 (1: save enabled, 2: PHS enabled)
-	quint8 uF[3];
+	quint8 uG[3];
 	quint8 music_loaded; // var213
-	quint8 uG[42];
+	quint8 uH[42];
 });
 
 PACK(
@@ -423,58 +425,72 @@ struct HEADER//76	(pos=388)		[58+18(auto)/76 editable]
 	quint8 nivLeader;// auto
 	quint8 party[3];// auto
 	quint8 squall[12];
-	quint8 linoa[12];
+	quint8 rinoa[12];
 	quint8 angelo[12];
 	quint8 boko[12];
 	quint32 disc;// auto
 	quint32 curSave;
 });
 
-#include "FF8Text.h"
-#include "SaveIcon.h"
-#include "Data.h"
-#include "LZS.h"
-
 class SaveData
 {
 public:
 	SaveData();
-	SaveData(int id, const QByteArray &data, const QByteArray &MCHeader, bool isVmp);
+	SaveData(int id, const QByteArray &data, const QByteArray &MCHeader, bool hasExistsInfos, bool isRaw);
+	// Operations
 	void open(const QByteArray &data, const QByteArray &MCHeader);
 	QByteArray save() const;
 	void remove();
-	QString perso(quint8 id) const;
-	QString getShortDescription() const;
-	bool exportPC(const QString &path) const;
 	void restore();
-	const QByteArray &MCHeader() const;
-	char MCHeaderCountry() const;
-	QString MCHeaderCode() const;
-	QString MCHeaderId() const;
-	QByteArray saveMCHeader();// with xor byte
-	static QByteArray emptyMCHeader();
-	const QByteArray &header() const;
-	void setMCHeader(const QByteArray &);
-	void setMCHeader(bool exists, char country, const QString &code, const QString &id);
-	const SaveIconData &saveIcon() const;
-	void setSaveIcon(const SaveIconData &saveIconData);
-	const HEADER &descData() const;
-	const MAIN &mainData() const;
-	void setSaveData(const HEADER &, const MAIN &);
+	// Informations
 	bool isModified() const;
 	bool wasModified() const;
 	void setModified(bool modified);
 	int freqValue() const;
 	int id() const;
 	void setId(int id);
-	bool isFF8() const;
 	bool isDelete() const;
 	void setIsTheLastEdited(bool isTheLast);
 	bool isTheLastEdited() const;
+	bool hasExistsInfos() const;
+	bool isRaw() const;
+	// MC Header
 	bool hasMCHeader() const;
+	const QByteArray &MCHeader() const;
+	char MCHeaderCountry() const;
 	bool isJp() const;
-	bool isVmp() const;
+	QString MCHeaderCode() const;
+	QString MCHeaderId() const;
+	QByteArray saveMCHeader();// with xor byte
+	static QByteArray emptyMCHeader();
+	void setMCHeader(const QByteArray &);
+	void setMCHeader(bool exists, char country, const QString &code, const QString &id);
 	static quint8 xorByte(const char *data);
+	// SC Header
+	bool hasSCHeader() const;
+	quint8 blockCount() const;
+	void setBlockCount(quint8 blockCount);
+	QString shortDescription() const;
+	void setShortDescription(const QString &desc);
+	bool isDescriptionAuto() const;
+	void setDescriptionAuto(bool descAuto);
+	const SaveIconData &saveIcon() const;
+	void setSaveIcon(const SaveIconData &saveIconData);
+	// FF8
+	bool isFF8() const;
+	QString perso(quint8 index) const;
+	void setPerso(quint8 index, const QString &name);
+	QString gf(quint8 index) const;
+	void setGf(quint8 index, const QString &name);
+	bool exportPC(const QString &path) const;
+	HEADER &descData();
+	const HEADER &constDescData() const;
+	MAIN &mainData();
+	const MAIN &constMainData() const;
+	void updateDescData();
+	void setSaveData(const HEADER &descData, const MAIN &data);
+	bool isPreviewAuto() const;
+	void setPreviewAuto(bool prevAuto);
 private:
 	bool setData(const QByteArray &data);
 	static quint16 calcChecksum(const char *data);
@@ -487,8 +503,9 @@ private:
 	MAIN _mainData;
 	int _freqValue, _id;
 	bool _isFF8, _isDelete, _isTheLastEdited;
-	bool _isVmp;
+	bool _hasExistsInfos, _isRaw;
 	bool _isModified, _wasModified;
+	bool _descriptionAuto, _previewAuto;
 	QByteArray _saveData;
 };
 

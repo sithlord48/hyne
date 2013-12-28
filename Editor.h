@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -21,20 +21,6 @@
 
 #include <QtWidgets>
 #include "SaveData.h"
-#include "PageWidgets/GfEditor.h"
-#include "PageWidgets/PersoEditor.h"
-#include "PageWidgets/ItemEditor.h"
-#include "PageWidgets/TTriadEditor.h"
-#include "PageWidgets/CWEditor.h"
-#include "PageWidgets/MiscEditor.h"
-#include "PageWidgets/ConfigEditor.h"
-#include "PageWidgets/AllEditor.h"
-#include "PageWidgets/DrawPointEditor.h"
-#include "PageWidgets/BattleEditor.h"
-#include "PageWidgets/ShopEditor.h"
-#include "PageWidgets/WorldmapEditor.h"
-#include "PageWidgets/FieldEditor.h"
-#include "PageWidgets/PartyEditor.h"
 
 class Editor : public QWidget
 {
@@ -48,8 +34,7 @@ private:
 	QStackedLayout *stackedLayout;
 	QListWidget *liste;
 	SaveData *saveData;
-	HEADER descCopy;
-	MAIN copy;
+	SaveData saveDataCopy;
 	bool pc;
 signals:
 	void accepted();

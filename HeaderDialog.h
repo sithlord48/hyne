@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ private slots:
 	inline void saveIcon2() { saveIcon(true); }
 private:
 	static void fillCode(QComboBox *code);
-	static void fillId(QComboBox *id);
+	static void fillId(QComboBox *id, int saveId);
 
 	void fill();
 	void saveIcon(bool chocobo_world_icon=false);
@@ -50,10 +50,11 @@ private:
 	QComboBox *code;
 	QComboBox *id;
 	QGroupBox *group2;
-	QPushButton *buttonSave;
 	QPushButton *icon2_saveButton;
 	QComboBox *icon1, *icon2;
-	QLabel *id_lbl, *desc, *bloc, *icon2_lbl;
+	QLineEdit *desc;
+	QCheckBox *desc_auto;
+	QLabel *id_lbl, *bloc, *icon2_lbl;
 	SaveData *saveData;
 	ViewType viewType;
 };

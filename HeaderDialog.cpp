@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
  ****************************************************************************/
 
 #include "HeaderDialog.h"
+#include "Config.h"
 
 HeaderDialog::HeaderDialog(SaveData *saveData, QWidget *parent, ViewType viewType)
 	: QDialog(parent, Qt::Dialog | Qt::WindowCloseButtonHint), saveData(saveData), viewType(viewType)
@@ -37,7 +38,7 @@ HeaderDialog::HeaderDialog(SaveData *saveData, QWidget *parent, ViewType viewTyp
 	country->addItem(QIcon(":/images/eu.png"), tr("Europe"), COUNTRY_EU);
 	country->addItem(tr("Invalide"), '\x00');
 
-	country->setCurrentIndex(Config::valueVar("lastCountry").toInt());
+	country->setCurrentIndex(Config::valueVar(Config::LastCountry).toInt());
 
 	QLabel *code_lbl = new QLabel(tr("Code :"));
 	code_lbl->setTextFormat(Qt::PlainText);
@@ -46,7 +47,7 @@ HeaderDialog::HeaderDialog(SaveData *saveData, QWidget *parent, ViewType viewTyp
 	code->lineEdit()->setMaxLength(10);
 	fillCode(code);
 
-	QString lastGameCode = Config::value("lastGameCode");
+	QString lastGameCode = Config::value(Config::LastGameCode);
 	if(!lastGameCode.isEmpty()) {
 		setCode(lastGameCode);
 	}
@@ -56,7 +57,7 @@ HeaderDialog::HeaderDialog(SaveData *saveData, QWidget *parent, ViewType viewTyp
 	id = new QComboBox;
 	id->setEditable(true);
 	id->lineEdit()->setMaxLength(8);
-	fillId(id);
+	fillId(id, saveData->id());
 
 	QGridLayout *layout1 = new QGridLayout(group1);
 	layout1->addWidget(exists_lbl, 0, 0);
@@ -70,8 +71,10 @@ HeaderDialog::HeaderDialog(SaveData *saveData, QWidget *parent, ViewType viewTyp
 
 	group2 = new QGroupBox(tr("Save header"), this);
 
-	desc = new QLabel();
-	desc->setTextFormat(Qt::PlainText);
+	desc = new QLineEdit();
+	desc->setMaxLength(64);
+
+	desc_auto = new QCheckBox(tr("Auto."));
 
 	QLabel *bloc_lbl = new QLabel(tr("Blocs utilisés :"));
 	bloc = new QLabel();
@@ -116,6 +119,7 @@ HeaderDialog::HeaderDialog(SaveData *saveData, QWidget *parent, ViewType viewTyp
 	layout2->addWidget(bloc, 0, 1, 1, 2);
 	layout2->addWidget(desc_lbl, 1, 0);
 	layout2->addWidget(desc, 1, 1, 1, 2);
+	layout2->addWidget(desc_auto, 1, 3);
 	layout2->addWidget(icon1_lbl, 2, 0);
 	layout2->addWidget(icon1, 2, 1);
 	layout2->addWidget(icon1_saveButton, 2, 2, Qt::AlignRight);
@@ -123,8 +127,7 @@ HeaderDialog::HeaderDialog(SaveData *saveData, QWidget *parent, ViewType viewTyp
 	layout2->addWidget(icon2, 3, 1);
 	layout2->addWidget(icon2_saveButton, 3, 2, Qt::AlignRight);
 
-	QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Save | QDialogButtonBox::Close);
-	buttonSave = buttonBox->button(QDialogButtonBox::Save);
+	QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Close);
 
 	QGridLayout *layout = new QGridLayout(this);
 	layout->addWidget(group1, 0, 0);
@@ -136,6 +139,7 @@ HeaderDialog::HeaderDialog(SaveData *saveData, QWidget *parent, ViewType viewTyp
 	connect(buttonBox, SIGNAL(rejected()), SLOT(reject()));
 	connect(icon1_saveButton, SIGNAL(released()), SLOT(saveIcon1()));
 	connect(icon2_saveButton, SIGNAL(released()), SLOT(saveIcon2()));
+	connect(desc_auto, SIGNAL(toggled(bool)), desc, SLOT(setDisabled(bool)));
 
 	fill();
 }
@@ -154,11 +158,11 @@ void HeaderDialog::fillCode(QComboBox *code)
 	code->addItem(QIcon(":/images/sp.png"), "SLESP02084");//spanish
 }
 
-void HeaderDialog::fillId(QComboBox *id)
+void HeaderDialog::fillId(QComboBox *id, int saveId)
 {
-	id->addItem(QIcon(":/images/jp.png"), "FF0800");
-	id->addItem(QIcon(":/images/us.png"), "042600");
-	id->addItem(QIcon(":/images/eu.png"), "052000");
+	id->addItem(QIcon(":/images/jp.png"), QString("FF08%1").arg(saveId, 2, 10, QChar('0')));
+	id->addItem(QIcon(":/images/us.png"), QString("0426%1").arg(saveId, 2, 10, QChar('0')));
+	id->addItem(QIcon(":/images/eu.png"), QString("0520%1").arg(saveId, 2, 10, QChar('0')));
 }
 
 void HeaderDialog::fill()
@@ -185,7 +189,7 @@ void HeaderDialog::fill()
 		}
 	}
 
-	if(saveData->isVmp()) {
+	if(!saveData->hasExistsInfos()) {
 		exists->hide();
 		exists_lbl->hide();
 	}
@@ -202,12 +206,10 @@ void HeaderDialog::fill()
 	else {
 		// Fill group2 (SC_header)
 
-		QString short_desc = saveData->getShortDescription();
-		if(!short_desc.isEmpty()) {
-			desc->setText(short_desc);
-		}
-
-		bloc->setText(QString::number((quint8)saveData->header().at(3)));
+		desc->setText(saveData->shortDescription());
+		desc_auto->setChecked(saveData->isDescriptionAuto());
+		desc_auto->setVisible(saveData->isFF8());
+		bloc->setText(QString::number(saveData->blockCount()));
 		QImage pix = saveData->saveIcon().icon().toImage();
 		int currentIndex = -1;
 		for(int i=0 ; i<icon1->count() ; ++i) {
@@ -295,8 +297,8 @@ void HeaderDialog::setId(const QString &idStr)
 void HeaderDialog::accept()
 {
 	if(viewType != NormalView || saveData->hasMCHeader()) {
-		Config::setValue("lastCountry", country->currentIndex());
-		Config::setValue("lastGameCode", code->currentText());
+		Config::setValue(Config::LastCountry, country->currentIndex());
+		Config::setValue(Config::LastGameCode, code->currentText());
 
 		// Edit MC Header
 		saveData->setMCHeader(exists->isChecked(),
@@ -304,6 +306,10 @@ void HeaderDialog::accept()
 							  code->currentText(),
 							  id->isVisible() ? id->currentText() : QString());
 	}
+
+	// Edit short description
+	saveData->setShortDescription(desc->text());
+	saveData->setDescriptionAuto(desc_auto->isChecked());
 
 	// Edit icon 1
 	SaveIconData saveIcon = saveData->saveIcon();
@@ -327,13 +333,16 @@ void HeaderDialog::accept()
 
 void HeaderDialog::saveIcon(bool chocobo_world_icon)
 {
-	QString path = Config::value("savePathIcon").isEmpty() ? QString() : Config::value("savePathIcon") % "/";
+	QString path, savePathIcon = Config::value(Config::SavePathIcon);
+
+	path = savePathIcon.isEmpty() ? QString() : savePathIcon % "/";
 	path = QFileDialog::getSaveFileName(this, tr("Enregistrer sous"), path % QString("icon%1%2.png").arg(saveData->id()+1).arg(chocobo_world_icon ? "b" : ""), tr("Image PNG (*.png);;Image JPG (*.jpg *.jpeg);;Image BMP (*.bmp)"));
 	if(path.isEmpty())		return;
 
 	int index = path.lastIndexOf('/');
-	Config::setValue("savePathIcon", index == -1 ? path : path.left(index));
+	Config::setValue(Config::SavePathIcon, index == -1 ? path : path.left(index));
 
-	if(!saveData->saveIcon().icon(0, chocobo_world_icon).save(path))
+	if(!saveData->saveIcon().icon(0, chocobo_world_icon).save(path)) {
 		QMessageBox::warning(this, tr("Erreur"), tr("Format incorrect."));
+	}
 }

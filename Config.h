@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -21,13 +21,24 @@
 
 #include <QtCore>
 #include "Parameters.h"
+#include "FF8Installation.h"
+
+#define KEYS_SIZE 13
 
 class Config
 {
 public:
-	static QString value(const QString &key, const QString &defaultValue=QString());
-	static QVariant valueVar(const QString &key, const QVariant &defaultValue=QVariant());
-	static void setValue(const QString &key, const QVariant &value);
+	enum Key {
+		RecentFiles, Lang, Geometry, // Application
+		Font, Freq, FreqAuto, Mode, LastCountry, LastGameCode, SelectedFF8Installation, // FF8
+		LoadPath, SavePath, SavePathIcon, // Load and save
+		_KeysSize
+	};
+
+	static QString translationDir();
+	static QString value(Key key, const QString &defaultValue=QString());
+	static QVariant valueVar(Key key, const QVariant &defaultValue=QVariant());
+	static void setValue(Key key, const QVariant &value);
 	static void sync();
 	static quint32 sec(quint32 time, int freq_value);
 	static quint32 min(quint32 time, int freq_value);
@@ -43,15 +54,21 @@ public:
 	static int recentFilesSize();
 	static void saveRecentFiles();
 	static void set();
-	static const QString &ff8Path();
+	static const QMap<FF8Installation::Type, FF8Installation> &ff8Installations();
+	static FF8Installation ff8Installation();
+	static void setSelectedFF8Installation(FF8Installation::Type id);
+
 	static QTranslator *translator;
-#ifdef Q_OS_WIN32
-	static QString regValue(const QString &regPath, const QString &regKey);
-#endif
 private:
-	static QString _ff8Path;
+	static inline QString keyToStr(Key key) {
+		return keys[int(key)];
+	}
+	static QMap<FF8Installation::Type, FF8Installation> _ff8Installations;
+	static FF8Installation::Type _selectedFF8Installation;
+	static bool _ff8InstallationsSearched;
 	static QSettings *settings;
 	static QStringList recentFiles;
+	static const char *keys[KEYS_SIZE];
 };
 
 #endif // CONFIG_H

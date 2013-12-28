@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
 #include "../Data.h"
 #include "../Config.h"
 #include "../SaveData.h"
+#include "../HelpWidget.h"
 
 class PageWidget : public QWidget
 {
@@ -30,7 +31,7 @@ class PageWidget : public QWidget
 public:
 	explicit PageWidget(QWidget *parent = 0);
 	virtual QString name()=0;
-	void load(MAIN *data, HEADER *descData, int freq_value, bool jp, bool pc);
+	void load(SaveData *saveData, bool pc);
 	void unload();
 	bool isLoaded() const;
 	bool isBuilded() const;
@@ -48,8 +49,7 @@ protected:
 	bool builded, loaded;
 	MAIN *data;
 	HEADER *descData;
-	int freq_value;
-	bool jp;
+	SaveData *saveData;
 	bool pc;
 };
 

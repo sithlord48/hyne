@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2012 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -39,6 +39,7 @@ protected:
 	void buildWidget();
 private:
 	QGroupBox *unknownGroupE;
+	QCheckBox *monsterkillsAuto;
 	QDoubleSpinBox *battlewinE, *tombyE, *monsterkillsE, *unknown1E, *unknown2E;
 	QSpinBox *battleescE;
 	QCheckBox *tombySrE, *firstr1E, *firsteleE, *firstmtlE, *firstirvinelbE;
