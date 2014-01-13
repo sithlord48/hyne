@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="en" sourcelanguage="fr">
-<defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>AllEditor</name>
     <message>
@@ -216,7 +215,7 @@
         <translation>HP max:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/CWEditor.h" line="30"/>
+        <location filename="PageWidgets/CWEditor.h" line="29"/>
         <source>Chocobo World</source>
         <translation>Chocobo World</translation>
     </message>
@@ -570,6 +569,19 @@
     </message>
 </context>
 <context>
+    <name>FF8InstallationConfigDialog</name>
+    <message>
+        <location filename="FF8InstallationConfigDialog.cpp" line="29"/>
+        <source>Exécutable FF8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="FF8InstallationConfigDialog.cpp" line="30"/>
+        <source>Dossier des sauvegardes</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FieldEditor</name>
     <message>
         <location filename="PageWidgets/FieldEditor.cpp" line="36"/>
@@ -667,13 +679,13 @@
     </message>
     <message>
         <location filename="PageWidgets/GfEditor.cpp" line="139"/>
-        <location filename="PageWidgets/GfEditor.cpp" line="428"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="424"/>
         <source>Ajouter</source>
         <translation>Add</translation>
     </message>
     <message>
         <location filename="PageWidgets/GfEditor.cpp" line="143"/>
-        <location filename="PageWidgets/GfEditor.cpp" line="533"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="526"/>
         <source>Oublier</source>
         <translation>Forget</translation>
     </message>
@@ -723,25 +735,25 @@
         <translation>:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/GfEditor.cpp" line="362"/>
-        <location filename="PageWidgets/GfEditor.cpp" line="468"/>
-        <location filename="PageWidgets/GfEditor.cpp" line="606"/>
-        <location filename="PageWidgets/GfEditor.cpp" line="658"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="360"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="464"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="599"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="651"/>
         <source>Acquis!</source>
         <translation>Complete!</translation>
     </message>
     <message>
-        <location filename="PageWidgets/GfEditor.cpp" line="456"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="452"/>
         <source>Modifier PDC</source>
         <translation>Edit AP</translation>
     </message>
     <message>
-        <location filename="PageWidgets/GfEditor.cpp" line="470"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="466"/>
         <source>Fermer</source>
         <translation>Close</translation>
     </message>
     <message>
-        <location filename="PageWidgets/GfEditor.cpp" line="533"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="526"/>
         <source>Supprimer</source>
         <translation>Remove</translation>
     </message>
@@ -1013,41 +1025,54 @@
 <context>
     <name>MetadataDialog</name>
     <message>
-        <location filename="MetadataDialog.cpp" line="19"/>
+        <location filename="MetadataDialog.cpp" line="36"/>
         <source>Pour être placées dans le Cloud, les sauvegardes doivent être signées. Ces signatures sont écrites dans un fichier nommé metadata.xml, normalement situé dans le même dossier que vos sauvegardes.
 Pour trouver votre numéro d&apos;utilisateur, regardez le nom du dossier où se trouve vos sauvegardes. Si vous ne voyez pas, essayez en laissant le champ vide.
 Par défaut Hyne tente de signer les sauvegardes automatiquement, mais en cas d&apos;erreur, vous pouvez essayer de le faire manuellement ici.</source>
-        <translation type="unfinished"></translation>
+        <translation>To be placed in the cloud, save files must be signed. These signatures are written in a file called metadata.xml, normally located in the same folder as your save files.
+To find your user number, look at the name of the folder where your save files are. If you do not find this folder, try leaving it blank.
+By default Hyne attempts to automatically sign saves, but in case of error, you can try to do it manually here.</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="32"/>
+        <location filename="MetadataDialog.cpp" line="49"/>
         <source>Parcourir...</source>
-        <translation type="unfinished"></translation>
+        <translation>Browse...</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="50"/>
+        <location filename="MetadataDialog.cpp" line="67"/>
         <source>metadata.xml</source>
-        <translation type="unfinished"></translation>
+        <translation>metadata.xml</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="51"/>
+        <location filename="MetadataDialog.cpp" line="68"/>
         <source>Numéro d&apos;utilisateur</source>
-        <translation type="unfinished"></translation>
+        <translation>User number</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="82"/>
+        <location filename="MetadataDialog.cpp" line="97"/>
+        <source>Erreur</source>
+        <translation>Error</translation>
+    </message>
+    <message>
+        <location filename="MetadataDialog.cpp" line="97"/>
+        <source>Impossible de mettre à jour les signatures.
+</source>
+        <translation>Unable to update signatures.</translation>
+    </message>
+    <message>
+        <location filename="MetadataDialog.cpp" line="110"/>
         <source>Fichiers XML (*.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation>XML files (*.xml)</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="83"/>
+        <location filename="MetadataDialog.cpp" line="111"/>
         <source>Tous les fichiers (*)</source>
-        <translation type="unfinished"></translation>
+        <translation>All files (*)</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="84"/>
+        <location filename="MetadataDialog.cpp" line="112"/>
         <source>Rechercher metadata.xml</source>
-        <translation type="unfinished"></translation>
+        <translation>Search metadata.xml</translation>
     </message>
 </context>
 <context>
@@ -1928,405 +1953,405 @@ Par défaut Hyne tente de signer les sauvegardes automatiquement, mais en cas d&
 <context>
     <name>PersoEditor</name>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="54"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="58"/>
         <source>État</source>
         <translation>Status</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="55"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="59"/>
         <source>G-Forces</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="56"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="60"/>
         <source>Magies</source>
         <translation>Magics</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="57"/>
-        <location filename="PageWidgets/PersoEditor.cpp" line="371"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="61"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="375"/>
         <source>Capacités</source>
         <translation>Abilities</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="58"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="62"/>
         <source>Associations</source>
         <translation>Junction</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="60"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="64"/>
         <source>Limit Break</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="91"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="95"/>
         <source>Disponible</source>
         <oldsource>Disponible :</oldsource>
         <translation>Available</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="93"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="97"/>
         <source>Nom :</source>
         <translation>Name:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="95"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="99"/>
         <source>HP actuels :</source>
         <translation>Current HP:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="109"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="113"/>
         <source>EXP :</source>
         <translation>EXP:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="118"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="122"/>
         <source>Tués :</source>
         <translation>Kills:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="120"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="124"/>
         <source>Mort :</source>
         <translation>KOs:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="136"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="140"/>
         <source>Personnage :</source>
         <translation>Body:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="138"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="142"/>
         <source>Arme :</source>
         <translation>Weapon:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="141"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="145"/>
         <source>Statut</source>
         <translation>Status</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="145"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="149"/>
         <source>Mort</source>
         <translation>KO</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="145"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="149"/>
         <source>Poison</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="145"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="149"/>
         <source>Fossile</source>
         <translation>Petrify</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="145"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="149"/>
         <source>Darkness</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="145"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="149"/>
         <source>Aphasie</source>
         <translation>Silence</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="145"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="149"/>
         <source>Trouble</source>
         <translation>Berserk</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="145"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="149"/>
         <source>Zombie</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="154"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="158"/>
         <source>???</source>
         <translation>???</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="158"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="162"/>
         <source>Inconnu</source>
         <translation>Unknown</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="171"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="175"/>
         <source>1 :</source>
         <translation>1:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="173"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="177"/>
         <source>2 :</source>
         <translation>2:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="175"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="179"/>
         <source>3 :</source>
         <translation>3:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="177"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="181"/>
         <source>4 :</source>
         <translation>4:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="179"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="183"/>
         <source>5 :</source>
         <translation>5:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="182"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="186"/>
         <source>Bonus</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="199"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="203"/>
         <source>Bonus HP :</source>
         <translation>HP bonus:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="201"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="205"/>
         <source>Bonus vgr :</source>
         <translation>Str Bonus:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="203"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="207"/>
         <source>Bonus dfs :</source>
         <translation>Vit Bonus:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="205"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="209"/>
         <source>Bonus mgi :</source>
         <translation>Mag Bonus:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="207"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="211"/>
         <source>Bonus psy :</source>
         <translation>Spr Bonus:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="209"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="213"/>
         <source>Bonus vts :</source>
         <translation>Spd Bonus:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="211"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="215"/>
         <source>Bonus chc :</source>
         <translation>Luck Bonus:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="214"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="218"/>
         <source>Costume alternatif (Seed, galbadien)</source>
         <translation>Alternative model (SeeD, galbadian)</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="215"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="219"/>
         <source>Vérouillé 1 (menu &apos;remplacer&apos;)</source>
         <translation>Locked 1 (&apos;switch&apos; menu)</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="216"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="220"/>
         <source>Vérouillé 2 (menu &apos;remplacer&apos;)</source>
         <translation>Locked 2 (&apos;switch&apos; menu)</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="257"/>
-        <location filename="PageWidgets/PersoEditor.cpp" line="258"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="261"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="262"/>
         <source>Compatibilité</source>
         <translation>Compatibility</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="313"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="317"/>
         <source>Supprimer tout</source>
         <translation>Remove All</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="317"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="321"/>
         <source>Tout</source>
         <translation>All</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="343"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="347"/>
         <source>Commandes</source>
         <translation>Command</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="356"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="360"/>
         <source>Inconnu (commande 4) :</source>
         <translation>Unknown (command 4):</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="361"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="365"/>
         <source>Commande 1 :</source>
         <translation>Command 1:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="363"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="367"/>
         <source>Commande 2 :</source>
         <translation>Command 2:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="365"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="369"/>
         <source>Commande 3 :</source>
         <translation>Command 3:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="390"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="394"/>
         <source>Capacité 1 :</source>
         <translation>Ability 1:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="392"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="396"/>
         <source>Capacité 2 :</source>
         <translation>Ability 2:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="394"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="398"/>
         <source>Capacité 3 :</source>
         <translation>Ability 3:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="396"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="400"/>
         <source>Capacité 4 :</source>
         <translation>Ability 4:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="411"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="415"/>
         <source>Aptitudes</source>
         <translation>Ability</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="420"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="424"/>
         <source>HP :</source>
         <translation>HP:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="422"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="426"/>
         <source>Vigueur :</source>
         <translation>Strength:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="424"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="428"/>
         <source>Défense :</source>
         <translation>Vitality:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="426"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="430"/>
         <source>Magie :</source>
         <translation>Magic:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="428"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="432"/>
         <source>Psychisme :</source>
         <translation>Spirit:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="431"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="435"/>
         <source>Vitesse :</source>
         <translation>Speed:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="433"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="437"/>
         <source>Esquive :</source>
         <translation>Evade:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="435"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="439"/>
         <source>Protection :</source>
         <translation>Hit%:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="437"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="441"/>
         <source>Chance :</source>
         <translation>Luck:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="440"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="444"/>
         <source>Élémental</source>
         <translation>Elemental</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="449"/>
-        <location filename="PageWidgets/PersoEditor.cpp" line="469"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="453"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="473"/>
         <source>Attaque :</source>
         <translation>Attack:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="451"/>
-        <location filename="PageWidgets/PersoEditor.cpp" line="471"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="455"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="475"/>
         <source>Défense 1 :</source>
         <translation>Defense 1:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="453"/>
-        <location filename="PageWidgets/PersoEditor.cpp" line="473"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="457"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="477"/>
         <source>Défense 2 :</source>
         <translation>Defense 2:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="455"/>
-        <location filename="PageWidgets/PersoEditor.cpp" line="475"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="459"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="479"/>
         <source>Défense 3 :</source>
         <translation>Defense 3:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="457"/>
-        <location filename="PageWidgets/PersoEditor.cpp" line="477"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="461"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="481"/>
         <source>Défense 4 :</source>
         <translation>Defense 4:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="460"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="464"/>
         <source>Mental</source>
         <translation>Status</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="508"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="512"/>
         <source>Gunblade auto</source>
         <translation>Gunblade Auto</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="510"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="514"/>
         <source>Indicateur renzokuken</source>
         <translation>Renzokuken Indicator</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="529"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="533"/>
         <source>Ring Master auto</source>
         <translation>Duel auto</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="573"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="577"/>
         <source>Angel désactivé</source>
         <translation>Angel disabled</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="575"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="579"/>
         <source>Canonisation activé</source>
         <translation>Angelo Wing enabled</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="584"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="588"/>
         <source> :</source>
         <translation>:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="580"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="584"/>
         <source>&lt;b&gt;Case cochée :&lt;/b&gt; limit break appris&lt;br/&gt;&lt;b&gt;Case partiellement cochée :&lt;/b&gt; limit break connu&lt;br/&gt;&lt;b&gt;Valeur :&lt;/b&gt; nombre de points restants pour apprendre le limit break</source>
         <translation>&lt;b&gt;Checked:&lt;/b&gt; learned limit break&lt;br/&gt;&lt;b&gt;Partially checked:&lt;/b&gt; known limit break&lt;br/&gt;&lt;b&gt;Value:&lt;/b&gt; number of points remaining to learn the limit break</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="107"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="111"/>
         <source>Niveau :</source>
         <translation>Level:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="285"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="289"/>
         <source>Nom</source>
         <translation>Name</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="285"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="289"/>
         <source>Qté</source>
         <translation>Qty</translation>
     </message>
@@ -7791,20 +7816,23 @@ Verify that the file is not used by another program.</translation>
         <location filename="SavecardData.cpp" line="659"/>
         <source>Le fichier &apos;metadata.xml&apos; n&apos;a pas été trouvé dans le dossier &apos;%1&apos;.
 Essayez de signer vos sauvegardes manuellement (Fichier &gt; Signer les sauv. pour le Cloud).</source>
-        <translation type="unfinished"></translation>
+        <translation>The &apos;metadata.xml&apos; file was not found in the directory &apos;%1&apos;.
+Try to sign your saves manually (File &gt; Sign saves for the Cloud).</translation>
     </message>
     <message>
         <location filename="SavecardData.cpp" line="662"/>
         <source>Le fichier &apos;metadata.xml&apos; n&apos;a pas pu être ouvert.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>The &apos;metadata.xml&apos; file cannot be opened.
+%1</translation>
     </message>
     <message>
         <location filename="SavecardData.cpp" line="673"/>
         <location filename="SavecardData.cpp" line="688"/>
         <source>Le fichier &apos;metadata.xml&apos; n&apos;a pas pu être mis à jour.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>The &apos;metadata.xml&apos; file cannot be updated.
+%1</translation>
     </message>
     <message>
         <location filename="SavecardData.cpp" line="696"/>
@@ -7830,34 +7858,34 @@ Try to launch %2 as admin.</translation>
         <translation type="obsolete">Cannot load file contents &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="FF8Installation.cpp" line="80"/>
+        <location filename="FF8Installation.cpp" line="97"/>
         <source>FF8 Standard</source>
         <translation>FF8 Standard</translation>
     </message>
     <message>
-        <location filename="FF8Installation.cpp" line="82"/>
+        <location filename="FF8Installation.cpp" line="99"/>
         <source>FF8 Steam</source>
         <translation>FF8 Steam</translation>
     </message>
     <message>
-        <location filename="FF8Installation.cpp" line="84"/>
+        <location filename="FF8Installation.cpp" line="101"/>
         <source>FF8 personnalisé</source>
         <translation>FF8 custom</translation>
     </message>
     <message>
-        <location filename="Metadata.cpp" line="41"/>
+        <location filename="Metadata.cpp" line="58"/>
         <source>Attribut &apos;num&apos; invalide</source>
-        <translation type="unfinished"></translation>
+        <translation>Invalid &apos;num&apos; attribute</translation>
     </message>
     <message>
-        <location filename="Metadata.cpp" line="46"/>
+        <location filename="Metadata.cpp" line="63"/>
         <source>Attribut &apos;slot&apos; invalide</source>
-        <translation type="unfinished"></translation>
+        <translation>Invalid &apos;slot&apos; attribute</translation>
     </message>
     <message>
-        <location filename="Metadata.cpp" line="140"/>
+        <location filename="Metadata.cpp" line="157"/>
         <source>Erreur inconnue</source>
-        <translation type="unfinished"></translation>
+        <translation>Unknown error</translation>
     </message>
 </context>
 <context>
@@ -8075,39 +8103,39 @@ Would you analyze it to get the right format?</translation>
 <context>
     <name>SavecardView</name>
     <message>
-        <location filename="SavecardView.cpp" line="73"/>
+        <location filename="SavecardView.cpp" line="75"/>
         <source>Fichier supprimé</source>
         <translation>File removed</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="74"/>
+        <location filename="SavecardView.cpp" line="76"/>
         <source>Le fichier &apos;%1&apos; a été supprimé par un programme externe !</source>
         <translation>The file &apos;%1&apos; has been removed by another program!</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="78"/>
+        <location filename="SavecardView.cpp" line="80"/>
         <source>Fichier modifié</source>
         <translation>File modified</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="79"/>
+        <location filename="SavecardView.cpp" line="81"/>
         <source>Le fichier &apos;%1&apos; a été modifié par un programme externe.</source>
         <translation>The file &apos;%1&apos; has been modified by another program.</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="202"/>
+        <location filename="SavecardView.cpp" line="204"/>
         <source>Écraser</source>
         <translation>Overwrite</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="202"/>
+        <location filename="SavecardView.cpp" line="204"/>
         <source>Tout le contenu de la sauvegarde sera écrasé.
 Continuer ?</source>
         <translation>All content of the save will be overwritten.
 Continue?</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="267"/>
+        <location filename="SavecardView.cpp" line="269"/>
         <source>Exporter</source>
         <translation>Export</translation>
     </message>
@@ -8116,51 +8144,51 @@ Continue?</translation>
         <translation type="obsolete">FF8 PC save (*)</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="267"/>
+        <location filename="SavecardView.cpp" line="269"/>
         <source>FF8 PC save (* *.ff8)</source>
         <translation>FF8 PC save (* *.ff8)</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="274"/>
+        <location filename="SavecardView.cpp" line="276"/>
         <source>Échec</source>
         <translation>Failed</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="274"/>
+        <location filename="SavecardView.cpp" line="276"/>
         <source>Enregistrement échoué, vérifiez que le fichier cible n&apos;est pas utilisé.</source>
         <translation>Save failed, verify that the target file is not used.</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="290"/>
+        <location filename="SavecardView.cpp" line="292"/>
         <source>Nouvelle partie</source>
         <translation>New game</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="290"/>
+        <location filename="SavecardView.cpp" line="292"/>
         <source>Tout le contenu de la sauvegarde sera remplacé par une nouvelle partie.
 Continuer ?</source>
         <translation>All content of the save will be replaced with a new game.
 Continue?</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="344"/>
+        <location filename="SavecardView.cpp" line="346"/>
         <source>Vider</source>
         <translation>Empty</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="344"/>
+        <location filename="SavecardView.cpp" line="346"/>
         <source>Tout le contenu de la sauvegarde sera vidé.
 Continuer ?</source>
         <translation>All content of the save will be emptied.
 Continue?</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="385"/>
+        <location filename="SavecardView.cpp" line="386"/>
         <source>Sauvegarde supprimée</source>
         <translation>Save deleted</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="385"/>
+        <location filename="SavecardView.cpp" line="386"/>
         <source>Cette sauvegarde a été supprimée, voulez-vous tenter de la réparer ? (succès non garanti)</source>
         <translation>This save has been deleted, do you try to repair it? (Success not guaranteed)</translation>
     </message>
@@ -8173,42 +8201,42 @@ Continue?</translation>
         <translation type="obsolete">No</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="486"/>
+        <location filename="SavecardView.cpp" line="497"/>
         <source>NV%1</source>
         <translation>LV%1</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="534"/>
+        <location filename="SavecardView.cpp" line="545"/>
         <source>Bloc occupé</source>
         <translation>Used block</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="539"/>
+        <location filename="SavecardView.cpp" line="550"/>
         <source>Bloc Disponible</source>
         <translation>unused block</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="821"/>
+        <location filename="SavecardView.cpp" line="832"/>
         <source>&amp;Modifier...</source>
         <translation>&amp;Edit...</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="822"/>
+        <location filename="SavecardView.cpp" line="833"/>
         <source>&amp;Exporter en sauv. PC...</source>
         <translation>&amp;Convert to PC Save...</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="824"/>
+        <location filename="SavecardView.cpp" line="835"/>
         <source>&amp;Nouvelle partie</source>
         <translation>&amp;New game</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="826"/>
+        <location filename="SavecardView.cpp" line="837"/>
         <source>&amp;Vider</source>
         <translation>E&amp;mpty</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="828"/>
+        <location filename="SavecardView.cpp" line="839"/>
         <source>&amp;Propriétés...</source>
         <translation>&amp;Properties...</translation>
     </message>
@@ -8719,7 +8747,7 @@ Continue?</translation>
     </message>
     <message>
         <location filename="Window.cpp" line="77"/>
-        <location filename="Window.cpp" line="917"/>
+        <location filename="Window.cpp" line="911"/>
         <source>&amp;Fermer</source>
         <translation>&amp;Close</translation>
     </message>
@@ -8845,14 +8873,13 @@ Continue anyway?</translation>
         <location filename="Window.cpp" line="346"/>
         <location filename="Window.cpp" line="570"/>
         <location filename="Window.cpp" line="861"/>
-        <location filename="Window.cpp" line="871"/>
         <source>Erreur</source>
         <translation>Error</translation>
     </message>
     <message>
         <location filename="Window.cpp" line="572"/>
         <source>Attention</source>
-        <translation type="unfinished"></translation>
+        <translation>Warning</translation>
     </message>
     <message>
         <location filename="Window.cpp" line="861"/>
@@ -8915,8 +8942,9 @@ Continue anyway?</translation>
     </message>
     <message>
         <location filename="Window.cpp" line="65"/>
-        <source>Signer des sauv. pour le Cloud...</source>
-        <translation type="unfinished"></translation>
+        <source>S&amp;igner des sauv. pour le Cloud...</source>
+        <oldsource>Signer des sauv. pour le Cloud...</oldsource>
+        <translation>S&amp;ign saves for the Cloud...</translation>
     </message>
     <message>
         <location filename="Window.cpp" line="68"/>
@@ -8926,7 +8954,7 @@ Continue anyway?</translation>
     <message>
         <location filename="Window.cpp" line="72"/>
         <source>Nou&amp;velle fenêtre</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne&amp;w window</translation>
     </message>
     <message>
         <location filename="Window.cpp" line="73"/>
@@ -8996,11 +9024,6 @@ Continue anyway?</translation>
         <location filename="Window.cpp" line="229"/>
         <source>15 sauvegardes</source>
         <translation>15 saves</translation>
-    </message>
-    <message>
-        <location filename="Window.cpp" line="903"/>
-        <source>Par myst6re&lt;br/&gt;&lt;a href=&quot;https://sourceforge.net/projects/hyne/&quot;&gt;https://sourceforge.net/projects/hyne/&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;75% modifiable&lt;br/&gt;&lt;br/&gt;Merci à :&lt;br/&gt; - Qhimm&lt;br/&gt; - Cyberman&lt;br/&gt; - sithlord48&lt;br/&gt; - Aladore384&lt;br/&gt;&lt;br/&gt;Traducteurs :&lt;br/&gt; - Anglais : myst6re, Vgr&lt;br/&gt; - Japonais : Asa, Sharleen</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Fichiers compatibles (*.mcr *.ddf *.gme *.mc *.mcd *.mci *.ps *.psm *.vm1 *.psv save?? *.mem *.vgs *.vmp *.000 *.001 *.002 *.003 *.004);;FF8 PS memorycard (*.mcr *.ddf *.mc *.mcd *.mci *.ps *.psm *.vm1);;FF8 PC save (save??);;FF8 vgs memorycard (*.mem *.vgs);;FF8 gme memorycard (*.gme);;FF8 PSN memorycard (*.vmp);;FF8 PS3 memorycard/pSX save state (*.psv);;ePSXe save state (*.000 *.001 *.002 *.003 *.004);;Tous les fichiers (*)</source>
@@ -9105,19 +9128,15 @@ Would you analyze it to get the right format?</translation>
         <translation>Restart the program for the settings to take effect.</translation>
     </message>
     <message>
-        <location filename="Window.cpp" line="871"/>
-        <source>Impossible de mettre à jour les signatures.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="Window.cpp" line="887"/>
+        <location filename="Window.cpp" line="881"/>
         <source>À propos</source>
         <translation>About</translation>
     </message>
     <message>
-        <source>Par myst6re&lt;br/&gt;&lt;a href=&quot;https://sourceforge.net/projects/hyne/&quot;&gt;https://sourceforge.net/projects/hyne/&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;75% modifiable&lt;br/&gt;&lt;br/&gt;Merci à :&lt;br/&gt; - Qhimm&lt;br/&gt; - Cyberman&lt;br/&gt; - sithlord48&lt;br/&gt; - Aladore384&lt;br/&gt;&lt;br/&gt;Traducteurs :&lt;br/&gt; - Anglais : myst6re, Vgr&lt;br/&gt; - Japonais : Asa</source>
-        <translation type="obsolete">By myst6re&lt;br/&gt;&lt;a href=&quot;https://sourceforge.net/projects/hyne/&quot;&gt;https://sourceforge.net/projects/hyne/&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;75% editable&lt;br/&gt;&lt;br/&gt;Thanks to:&lt;br/&gt; - Qhimm&lt;br/&gt; - Cyberman&lt;br/&gt; - sithlord48&lt;br/&gt; - Aladore384&lt;br/&gt;&lt;br/&gt;Translators:&lt;br/&gt; - English: myst6re, Vgr&lt;br/&gt; - Japanese: Asa</translation>
+        <location filename="Window.cpp" line="897"/>
+        <source>Par myst6re&lt;br/&gt;&lt;a href=&quot;https://sourceforge.net/projects/hyne/&quot;&gt;https://sourceforge.net/projects/hyne/&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;75% modifiable&lt;br/&gt;&lt;br/&gt;Merci à :&lt;br/&gt; - Qhimm&lt;br/&gt; - Cyberman&lt;br/&gt; - sithlord48&lt;br/&gt; - Aladore384&lt;br/&gt;&lt;br/&gt;Traducteurs :&lt;br/&gt; - Anglais : myst6re, Vgr&lt;br/&gt; - Japonais : Asa, Sharleen</source>
+        <oldsource>Par myst6re&lt;br/&gt;&lt;a href=&quot;https://sourceforge.net/projects/hyne/&quot;&gt;https://sourceforge.net/projects/hyne/&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;75% modifiable&lt;br/&gt;&lt;br/&gt;Merci à :&lt;br/&gt; - Qhimm&lt;br/&gt; - Cyberman&lt;br/&gt; - sithlord48&lt;br/&gt; - Aladore384&lt;br/&gt;&lt;br/&gt;Traducteurs :&lt;br/&gt; - Anglais : myst6re, Vgr&lt;br/&gt; - Japonais : Asa</oldsource>
+        <translation>By myst6re&lt;br/&gt;&lt;a href=&quot;https://sourceforge.net/projects/hyne/&quot;&gt;https://sourceforge.net/projects/hyne/&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;75% editable&lt;br/&gt;&lt;br/&gt;Thanks to:&lt;br/&gt; - Qhimm&lt;br/&gt; - Cyberman&lt;br/&gt; - sithlord48&lt;br/&gt; - Aladore384&lt;br/&gt;&lt;br/&gt;Translators:&lt;br/&gt; - English: myst6re, Vgr&lt;br/&gt; - Japanese: Asa, Sharleen</translation>
     </message>
     <message>
         <source>Fermer</source>

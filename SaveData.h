@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2013 Arzel J√©r√¥me <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel JÈrÙme <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -26,6 +26,8 @@
 #define COUNTRY_JP	'I'
 #define COUNTRY_US	'A'
 #define COUNTRY_EU	'E'
+#define FF8SAVE_SIZE		5408
+#define SAVE_SIZE			8192
 
 #include <QtCore>
 #include "SaveIcon.h"
@@ -320,15 +322,15 @@ struct WORLDMAP//128
 	quint16 car_steps_related;
 	quint16 car_steps_related2;
 	quint8 vehicles_instructions_worldmap;//voiture|Unused|BGU|Chocobo|Hydre|???|???|Unused
-	quint8 koyok_quest;//04 : Mandy Beach|Winhill|Trabia|Kashkabald Desert|UFO? Battu|80 : Koyo K Battu/Soign√©/Mang√©
+	quint8 koyok_quest;//04 : Mandy Beach|Winhill|Trabia|Kashkabald Desert|UFO? Battu|80 : Koyo K Battu/SoignÈ/MangÈ
 	quint8 obel_quest[8];
-	/* [0] => avoir fredonn√© twice|???|Unused|Unused|n ricochets|infini ricochets|Vu ryo|Vu ryo¬≤ ("100x + de ricochets que toi !")
-	 * [1] => Ryo a donn√© tablette|Unused|Indices ombre pour trouver l'idiot|Unused|Unused|Unused|Indice ombre pour Eldbeak|Eldbeak trouv√©
-	 * [2] => Tr√©sor √Æle Minde|Tr√©sor Plaine de Mordor|Unused|Unused|Unused|Unused|Unused|Unused
+	/* [0] => avoir fredonnÈ twice|???|Unused|Unused|n ricochets|infini ricochets|Vu ryo|Vu ryo≤ ("100x + de ricochets que toi !")
+	 * [1] => Ryo a donnÈ tablette|Unused|Indices ombre pour trouver l'idiot|Unused|Unused|Unused|Indice ombre pour Eldbeak|Eldbeak trouvÈ
+	 * [2] => TrÈsor Óle Minde|TrÈsor Plaine de Mordor|Unused|Unused|Unused|Unused|Unused|Unused
 	 * [3] => ???|Pierre Balamb|Pierre Ryo|Pierre Timber|Pierre Galbadia|Toutes les pierres|Indice Ombre pour Balamb|???
 	 * [4] => ??? (mordor var?)
 	 * [5] => ???|???|???|???|Block access Lunatic Pandora|???|Block access Lunatic Pandora|???
-	 * [6] => avoir parl√© √† l'ombre|Accepter de chercher l'idiot|Avoir vu l'idiot|...
+	 * [6] => avoir parlÈ ‡ l'ombre|Accepter de chercher l'idiot|Avoir vu l'idiot|...
 	 * [7] => ??? (temp var)
 	 */
 	quint8 u6[2];
@@ -344,15 +346,15 @@ struct WORLDMAP_PC//26 (padding 8)
 	quint16 car_steps_related;
 	quint16 car_steps_related2;
 	quint8 vehicles_instructions_worldmap;//voiture|Unused|BGU|Chocobo|Hydre|???|???|Unused
-	quint8 koyok_quest;//04 : Mandy Beach|Winhill|Trabia|Kashkabald Desert|UFO? Battu|80 : Koyo K Battu/Soign√©/Mang√©
+	quint8 koyok_quest;//04 : Mandy Beach|Winhill|Trabia|Kashkabald Desert|UFO? Battu|80 : Koyo K Battu/SoignÈ/MangÈ
 	quint8 obel_quest[8];
-	/* [0] => avoir fredonn√© twice|???|Unused|Unused|n ricochets|infini ricochets|Vu ryo|Vu ryo¬≤ ("100x + de ricochets que toi !")
-	 * [1] => Ryo a donn√© tablette|Unused|Indices ombre pour trouver l'idiot|Unused|Unused|Unused|Indice ombre pour Eldbeak|Eldbeak trouv√©
-	 * [2] => Tr√©sor √Æle Minde|Tr√©sor Plaine de Mordor|Unused|Unused|Unused|Unused|Unused|Unused
+	/* [0] => avoir fredonnÈ twice|???|Unused|Unused|n ricochets|infini ricochets|Vu ryo|Vu ryo≤ ("100x + de ricochets que toi !")
+	 * [1] => Ryo a donnÈ tablette|Unused|Indices ombre pour trouver l'idiot|Unused|Unused|Unused|Indice ombre pour Eldbeak|Eldbeak trouvÈ
+	 * [2] => TrÈsor Óle Minde|TrÈsor Plaine de Mordor|Unused|Unused|Unused|Unused|Unused|Unused
 	 * [3] => ???|Pierre Balamb|Pierre Ryo|Pierre Timber|Pierre Galbadia|Toutes les pierres|Indice Ombre pour Balamb|???
 	 * [4] => ??? (mordor var?)
 	 * [5] => ???|???|???|???|Block access Lunatic Pandora|???|Block access Lunatic Pandora|???
-	 * [6] => avoir parl√© √† l'ombre|Accepter de chercher l'idiot|Avoir vu l'idiot|...
+	 * [6] => avoir parlÈ ‡ l'ombre|Accepter de chercher l'idiot|Avoir vu l'idiot|...
 	 * [7] => ??? (temp var)
 	 */
 	quint8 u6[2];
@@ -375,24 +377,34 @@ struct TTCARDS//128
 PACK(
 struct CHOCOBO//64
 {
-	quint8 enabled;// Enabled|Dans le world|MiniMog trouv√©|Roi d√©mon vaincu|Koko enlev√©e|D√©p√™che-toi !|Koko rencontr√©e|Event Wait off
+	quint8 enabled;// Enabled|In world|MiniMog found|Demon King defeated|Koko kidnapped|Hurry!|Koko met|Event Wait off
 	quint8 level;
 	quint8 current_hp;
 	quint8 max_hp;
 	quint16 weapon;// 4 bit = 1 weapon
+	quint8 rank;
 	quint8 move;
-	quint8 u1[5];
+	quint32 saveCount;
 	quint16 id_related;
-	quint8 u2[31];
-	quint8 boko_attack;// star count (chocobraise | chocoflammes | chocom√©t√©ore | grochocobo)
-	quint8 u3[18];
+	quint8 u1[6];
+	quint8 itemClassACount;
+	quint8 itemClassBCount;
+	quint8 itemClassCCount;
+	quint8 itemClassDCount;
+	quint8 u2[16];
+	quint32 associatedSaveID;
+	quint8 u3;
+	quint8 boko_attack;// star count (chocobraise | chocoflammes | chocomÈtÈore | grochocobo)
+	quint8 u4;
+	quint8 home_walking;
+	quint8 u5[16];
 });
 
 /*
   A chercher :
 1. Event WAIT : ON ou OFF
 2. le Move  : 1, 2, 3, 4, 5, ou 6
-3. Etat MiniMog : Stand by ou Sleep (√† mon avis y a aussi un 3e cach√© pour dire si on montre ou pas ce menu qui d√©pend de si on a trouv√© ou pas MiniMog)
+3. Etat MiniMog : Stand by ou Sleep (‡ mon avis y a aussi un 3e cachÈ pour dire si on montre ou pas ce menu qui dÈpend de si on a trouvÈ ou pas MiniMog)
 */
 
 PACK(
@@ -410,7 +422,7 @@ struct MAIN//4944 (~4242 used)
 	FIELD field;//				(pos=4064)		[30/1024 editable] (702 unused)
 	WORLDMAP worldmap;//		(pos=5088)		[13/128 editable]
 	TTCARDS ttcards;//			(pos=5216)		[128/128 editable]
-	CHOCOBO chocobo;//			(pos=5344)		[8/64 editable]
+	CHOCOBO chocobo;//			(pos=5344)		[16/64 editable]
 });
 
 PACK(

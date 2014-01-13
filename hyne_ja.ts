@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
 <TS version="2.0" language="ja" sourcelanguage="fr">
-<defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>AllEditor</name>
     <message>
@@ -253,7 +252,7 @@
         <translation>最大 HP :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/CWEditor.h" line="30"/>
+        <location filename="PageWidgets/CWEditor.h" line="29"/>
         <source>Chocobo World</source>
         <translation>おでかけチョコボ</translation>
     </message>
@@ -687,6 +686,19 @@
     </message>
 </context>
 <context>
+    <name>FF8InstallationConfigDialog</name>
+    <message>
+        <location filename="FF8InstallationConfigDialog.cpp" line="29"/>
+        <source>Exécutable FF8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="FF8InstallationConfigDialog.cpp" line="30"/>
+        <source>Dossier des sauvegardes</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FieldEditor</name>
     <message>
         <location filename="PageWidgets/FieldEditor.cpp" line="36"/>
@@ -800,14 +812,14 @@
     </message>
     <message>
         <location filename="PageWidgets/GfEditor.cpp" line="139"/>
-        <location filename="PageWidgets/GfEditor.cpp" line="428"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="424"/>
         <source>Ajouter</source>
         <translatorcomment>Add</translatorcomment>
         <translation>追加</translation>
     </message>
     <message>
         <location filename="PageWidgets/GfEditor.cpp" line="143"/>
-        <location filename="PageWidgets/GfEditor.cpp" line="533"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="526"/>
         <source>Oublier</source>
         <translatorcomment>Forget</translatorcomment>
         <translation>忘れる</translation>
@@ -867,28 +879,28 @@
         <translation>:</translation>
     </message>
     <message>
-        <location filename="PageWidgets/GfEditor.cpp" line="362"/>
-        <location filename="PageWidgets/GfEditor.cpp" line="468"/>
-        <location filename="PageWidgets/GfEditor.cpp" line="606"/>
-        <location filename="PageWidgets/GfEditor.cpp" line="658"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="360"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="464"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="599"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="651"/>
         <source>Acquis!</source>
         <translatorcomment>Complete!</translatorcomment>
         <translation>Complete!</translation>
     </message>
     <message>
-        <location filename="PageWidgets/GfEditor.cpp" line="456"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="452"/>
         <source>Modifier PDC</source>
         <translatorcomment>Edit AP</translatorcomment>
         <translation>AP の編集</translation>
     </message>
     <message>
-        <location filename="PageWidgets/GfEditor.cpp" line="470"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="466"/>
         <source>Fermer</source>
         <translatorcomment>Close</translatorcomment>
         <translation>閉じる</translation>
     </message>
     <message>
-        <location filename="PageWidgets/GfEditor.cpp" line="533"/>
+        <location filename="PageWidgets/GfEditor.cpp" line="526"/>
         <source>Supprimer</source>
         <translatorcomment>Remove</translatorcomment>
         <translation>削除</translation>
@@ -1210,41 +1222,54 @@
 <context>
     <name>MetadataDialog</name>
     <message>
-        <location filename="MetadataDialog.cpp" line="19"/>
+        <location filename="MetadataDialog.cpp" line="36"/>
         <source>Pour être placées dans le Cloud, les sauvegardes doivent être signées. Ces signatures sont écrites dans un fichier nommé metadata.xml, normalement situé dans le même dossier que vos sauvegardes.
 Pour trouver votre numéro d&apos;utilisateur, regardez le nom du dossier où se trouve vos sauvegardes. Si vous ne voyez pas, essayez en laissant le champ vide.
 Par défaut Hyne tente de signer les sauvegardes automatiquement, mais en cas d&apos;erreur, vous pouvez essayer de le faire manuellement ici.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">To be placed in the cloud, save files must be signed. These signatures are written in a file called metadata.xml, normally located in the same folder as your save files.
+To find your user number, look at the name of the folder where your save files are. If you do not find this folder, try leaving it blank.
+By default Hyne attempts to automatically sign saves, but in case of error, you can try to do it manually here.</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="32"/>
+        <location filename="MetadataDialog.cpp" line="49"/>
         <source>Parcourir...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Browse...</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="50"/>
+        <location filename="MetadataDialog.cpp" line="67"/>
         <source>metadata.xml</source>
-        <translation type="unfinished"></translation>
+        <translation>metadata.xml</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="51"/>
+        <location filename="MetadataDialog.cpp" line="68"/>
         <source>Numéro d&apos;utilisateur</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">User number</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="82"/>
+        <location filename="MetadataDialog.cpp" line="97"/>
+        <source>Erreur</source>
+        <translation>エラー</translation>
+    </message>
+    <message>
+        <location filename="MetadataDialog.cpp" line="97"/>
+        <source>Impossible de mettre à jour les signatures.
+</source>
+        <translation type="unfinished">Unable to update signatures.</translation>
+    </message>
+    <message>
+        <location filename="MetadataDialog.cpp" line="110"/>
         <source>Fichiers XML (*.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">XML files (*.xml)</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="83"/>
+        <location filename="MetadataDialog.cpp" line="111"/>
         <source>Tous les fichiers (*)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">All files (*)</translation>
     </message>
     <message>
-        <location filename="MetadataDialog.cpp" line="84"/>
+        <location filename="MetadataDialog.cpp" line="112"/>
         <source>Rechercher metadata.xml</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Search metadata.xml</translation>
     </message>
 </context>
 <context>
@@ -2158,473 +2183,473 @@ Par défaut Hyne tente de signer les sauvegardes automatiquement, mais en cas d&
 <context>
     <name>PersoEditor</name>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="54"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="58"/>
         <source>État</source>
         <translatorcomment>Status</translatorcomment>
         <translation>ステータス</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="55"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="59"/>
         <source>G-Forces</source>
         <translation>Ｇ．Ｆ．</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="56"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="60"/>
         <source>Magies</source>
         <translatorcomment>Magics</translatorcomment>
         <translation>まほう</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="57"/>
-        <location filename="PageWidgets/PersoEditor.cpp" line="371"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="61"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="375"/>
         <source>Capacités</source>
         <translatorcomment>Abilities</translatorcomment>
         <translation>アビリティ</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="58"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="62"/>
         <source>Associations</source>
         <translatorcomment>Junction</translatorcomment>
         <translation>ジャンクション</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="60"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="64"/>
         <source>Limit Break</source>
         <translatorcomment>Limit Break</translatorcomment>
         <translation>特殊技</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="91"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="95"/>
         <source>Disponible</source>
         <oldsource>Disponible :</oldsource>
         <translatorcomment>Available</translatorcomment>
         <translation>使用可能</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="93"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="97"/>
         <source>Nom :</source>
         <translatorcomment>Name:</translatorcomment>
         <translation>名前 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="95"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="99"/>
         <source>HP actuels :</source>
         <translatorcomment>Current HP:</translatorcomment>
         <translation>現在の HP :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="109"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="113"/>
         <source>EXP :</source>
         <translatorcomment>EXP:</translatorcomment>
         <translation>EXP :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="118"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="122"/>
         <source>Tués :</source>
         <translatorcomment>Kills:</translatorcomment>
         <translation>倒した敵の数 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="120"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="124"/>
         <source>Mort :</source>
         <translatorcomment>KOs:</translatorcomment>
         <translation>戦闘不能回数 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="136"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="140"/>
         <source>Personnage :</source>
         <translatorcomment>Body:</translatorcomment>
         <translation>ボディ :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="138"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="142"/>
         <source>Arme :</source>
         <translatorcomment>Weapon:</translatorcomment>
         <translation>武器 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="141"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="145"/>
         <source>Statut</source>
         <translatorcomment>Status</translatorcomment>
         <translation>ステータス</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="145"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="149"/>
         <source>Mort</source>
         <translatorcomment>KO</translatorcomment>
         <translation>戦闘不能</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="145"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="149"/>
         <source>Poison</source>
         <translation>毒</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="145"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="149"/>
         <source>Fossile</source>
         <translatorcomment>Petrify</translatorcomment>
         <translation>石化</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="145"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="149"/>
         <source>Darkness</source>
         <translation>暗闇</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="145"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="149"/>
         <source>Aphasie</source>
         <translatorcomment>Silence</translatorcomment>
         <translation>沈黙</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="145"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="149"/>
         <source>Trouble</source>
         <translatorcomment>Berserk</translatorcomment>
         <translation>バーサク</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="145"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="149"/>
         <source>Zombie</source>
         <translation>ゾンビ</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="154"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="158"/>
         <source>???</source>
         <translatorcomment>???</translatorcomment>
         <translation>？？？</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="158"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="162"/>
         <source>Inconnu</source>
         <translatorcomment>Unknown</translatorcomment>
         <translation>不明</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="171"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="175"/>
         <source>1 :</source>
         <translatorcomment>1:</translatorcomment>
         <translation>1 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="173"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="177"/>
         <source>2 :</source>
         <translatorcomment>2:</translatorcomment>
         <translation>2 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="175"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="179"/>
         <source>3 :</source>
         <translatorcomment>3:</translatorcomment>
         <translation>3 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="177"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="181"/>
         <source>4 :</source>
         <translatorcomment>4:</translatorcomment>
         <translation>4 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="179"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="183"/>
         <source>5 :</source>
         <translatorcomment>5:</translatorcomment>
         <translation>5 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="182"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="186"/>
         <source>Bonus</source>
         <translation>ボーナス</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="199"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="203"/>
         <source>Bonus HP :</source>
         <translatorcomment>HP bonus:</translatorcomment>
         <translation>HPボーナス :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="201"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="205"/>
         <source>Bonus vgr :</source>
         <translatorcomment>Str Bonus:</translatorcomment>
         <translation>力ボーナス :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="203"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="207"/>
         <source>Bonus dfs :</source>
         <translatorcomment>Vit Bonus:</translatorcomment>
         <translation>体力ボーナス :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="205"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="209"/>
         <source>Bonus mgi :</source>
         <translatorcomment>Mag Bonus:</translatorcomment>
         <translation>魔力ボーナス :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="207"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="211"/>
         <source>Bonus psy :</source>
         <translatorcomment>Spr Bonus:</translatorcomment>
         <translation>精神ボーナス :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="209"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="213"/>
         <source>Bonus vts :</source>
         <translatorcomment>Spd Bonus:</translatorcomment>
         <translation>速さボーナス :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="211"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="215"/>
         <source>Bonus chc :</source>
         <translatorcomment>Luck Bonus:</translatorcomment>
         <translation>運ボーナス :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="214"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="218"/>
         <source>Costume alternatif (Seed, galbadien)</source>
         <translation>着替え (ＳｅｅＤ制服/ガルバディア兵)</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="215"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="219"/>
         <source>Vérouillé 1 (menu &apos;remplacer&apos;)</source>
         <translatorcomment>Locked 1 (&apos;switch&apos; menu)</translatorcomment>
         <translation>「いれかえ」のロック 1</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="216"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="220"/>
         <source>Vérouillé 2 (menu &apos;remplacer&apos;)</source>
         <translatorcomment>Locked 2 (&apos;switch&apos; menu)</translatorcomment>
         <translation>「いれかえ」のロック 2</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="257"/>
-        <location filename="PageWidgets/PersoEditor.cpp" line="258"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="261"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="262"/>
         <source>Compatibilité</source>
         <translatorcomment>Compatibility</translatorcomment>
         <translation>相性</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="313"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="317"/>
         <source>Supprimer tout</source>
         <translation>すべて削除</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="317"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="321"/>
         <source>Tout</source>
         <translation>すべて</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="343"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="347"/>
         <source>Commandes</source>
         <translatorcomment>Command</translatorcomment>
         <translation>コマンド</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="356"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="360"/>
         <source>Inconnu (commande 4) :</source>
         <translatorcomment>Unknown (command 4):</translatorcomment>
         <translation>コマンド 4 (詳細不明) :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="361"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="365"/>
         <source>Commande 1 :</source>
         <translatorcomment>Command 1:</translatorcomment>
         <translation>コマンド１ :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="363"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="367"/>
         <source>Commande 2 :</source>
         <translatorcomment>Command 2:</translatorcomment>
         <translation>コマンド２ :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="365"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="369"/>
         <source>Commande 3 :</source>
         <translatorcomment>Command 3:</translatorcomment>
         <translation>コマンド３ :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="390"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="394"/>
         <source>Capacité 1 :</source>
         <translatorcomment>Ability 1:</translatorcomment>
         <translation>アビリティ１ :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="392"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="396"/>
         <source>Capacité 2 :</source>
         <translatorcomment>Ability 2:</translatorcomment>
         <translation>アビリティ２ :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="394"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="398"/>
         <source>Capacité 3 :</source>
         <translatorcomment>Ability 3:</translatorcomment>
         <translation>アビリティ３ :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="396"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="400"/>
         <source>Capacité 4 :</source>
         <translatorcomment>Ability 4:</translatorcomment>
         <translation>アビリティ４ :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="411"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="415"/>
         <source>Aptitudes</source>
         <translatorcomment>Ability</translatorcomment>
         <translation>能力値</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="420"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="424"/>
         <source>HP :</source>
         <translatorcomment>HP:</translatorcomment>
         <translation>HP :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="422"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="426"/>
         <source>Vigueur :</source>
         <translatorcomment>Strength:</translatorcomment>
         <translation>力 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="424"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="428"/>
         <source>Défense :</source>
         <translatorcomment>Vitality:</translatorcomment>
         <translation>体力 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="426"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="430"/>
         <source>Magie :</source>
         <translatorcomment>Magic:</translatorcomment>
         <translation>魔力 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="428"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="432"/>
         <source>Psychisme :</source>
         <translatorcomment>Spirit:</translatorcomment>
         <translation>精神 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="431"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="435"/>
         <source>Vitesse :</source>
         <translatorcomment>Speed:</translatorcomment>
         <translation>早さ :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="433"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="437"/>
         <source>Esquive :</source>
         <translatorcomment>Evade:</translatorcomment>
         <translation>回避 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="435"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="439"/>
         <source>Protection :</source>
         <translatorcomment>Hit%:</translatorcomment>
         <translation>命中 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="437"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="441"/>
         <source>Chance :</source>
         <translatorcomment>Luck:</translatorcomment>
         <translation>運 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="440"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="444"/>
         <source>Élémental</source>
         <translatorcomment>Elemental</translatorcomment>
         <translation>属性攻撃/防御</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="449"/>
-        <location filename="PageWidgets/PersoEditor.cpp" line="469"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="453"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="473"/>
         <source>Attaque :</source>
         <translatorcomment>Attack:</translatorcomment>
         <translation>攻撃 :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="451"/>
-        <location filename="PageWidgets/PersoEditor.cpp" line="471"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="455"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="475"/>
         <source>Défense 1 :</source>
         <translatorcomment>Defense 1:</translatorcomment>
         <translation>防御１ :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="453"/>
-        <location filename="PageWidgets/PersoEditor.cpp" line="473"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="457"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="477"/>
         <source>Défense 2 :</source>
         <translatorcomment>Defense 2:</translatorcomment>
         <translation>防御２ :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="455"/>
-        <location filename="PageWidgets/PersoEditor.cpp" line="475"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="459"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="479"/>
         <source>Défense 3 :</source>
         <translatorcomment>Defense 3:</translatorcomment>
         <translation>防御３ :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="457"/>
-        <location filename="PageWidgets/PersoEditor.cpp" line="477"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="461"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="481"/>
         <source>Défense 4 :</source>
         <translatorcomment>Defense 4:</translatorcomment>
         <translation>防御４ :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="460"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="464"/>
         <source>Mental</source>
         <translatorcomment>Status</translatorcomment>
         <translation>ステータス攻撃/防御</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="508"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="512"/>
         <source>Gunblade auto</source>
         <translatorcomment>Gunblade Auto</translatorcomment>
         <translation>連続剣オート処理</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="510"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="514"/>
         <source>Indicateur renzokuken</source>
         <translatorcomment>Renzokuken Indicator</translatorcomment>
         <translation>連続剣バー表示</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="529"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="533"/>
         <source>Ring Master auto</source>
         <translation type="unfinished">デュエルオート</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="573"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="577"/>
         <source>Angel désactivé</source>
         <translatorcomment>Angel disabled</translatorcomment>
         <translation>アンジェロの無効化</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="575"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="579"/>
         <source>Canonisation activé</source>
         <translatorcomment>Angelo Wing enabled</translatorcomment>
         <translation>ヴァリーの有効化</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="584"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="588"/>
         <source> :</source>
         <translatorcomment>:</translatorcomment>
         <translation> :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="580"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="584"/>
         <source>&lt;b&gt;Case cochée :&lt;/b&gt; limit break appris&lt;br/&gt;&lt;b&gt;Case partiellement cochée :&lt;/b&gt; limit break connu&lt;br/&gt;&lt;b&gt;Valeur :&lt;/b&gt; nombre de points restants pour apprendre le limit break</source>
         <translatorcomment>&lt;b&gt;Checked:&lt;/b&gt; learned limit break&lt;br/&gt;&lt;b&gt;Partially checked:&lt;/b&gt; known limit break&lt;br/&gt;&lt;b&gt;Value:&lt;/b&gt; number of points remaining to learn the limit break</translatorcomment>
         <translation>&lt;b&gt;チェックあり :&lt;/b&gt; 修得済みの特殊技&lt;br/&gt;&lt;b&gt;半チェック (灰) :&lt;/b&gt; 既知の特殊技&lt;br/&gt;&lt;b&gt;値 :&lt;/b&gt; 特殊技の修得に必要な残りポイント</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="107"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="111"/>
         <source>Niveau :</source>
         <translation>ＬＶ :</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="285"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="289"/>
         <source>Nom</source>
         <translatorcomment>Name</translatorcomment>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="PageWidgets/PersoEditor.cpp" line="285"/>
+        <location filename="PageWidgets/PersoEditor.cpp" line="289"/>
         <source>Qté</source>
         <translatorcomment>Qty</translatorcomment>
         <translation>個数</translation>
@@ -8930,20 +8955,23 @@ Vérifiez que le fichier n&apos;est pas utilisé par un autre programme.</source
         <location filename="SavecardData.cpp" line="659"/>
         <source>Le fichier &apos;metadata.xml&apos; n&apos;a pas été trouvé dans le dossier &apos;%1&apos;.
 Essayez de signer vos sauvegardes manuellement (Fichier &gt; Signer les sauv. pour le Cloud).</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">The &apos;metadata.xml&apos; file was not found in the directory &apos;%1&apos;.
+Try to sign your saves manually (File &gt; Sign saves for the Cloud).</translation>
     </message>
     <message>
         <location filename="SavecardData.cpp" line="662"/>
         <source>Le fichier &apos;metadata.xml&apos; n&apos;a pas pu être ouvert.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">The &apos;metadata.xml&apos; file cannot be opened.
+%1</translation>
     </message>
     <message>
         <location filename="SavecardData.cpp" line="673"/>
         <location filename="SavecardData.cpp" line="688"/>
         <source>Le fichier &apos;metadata.xml&apos; n&apos;a pas pu être mis à jour.
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">The &apos;metadata.xml&apos; file cannot be updated.
+%1</translation>
     </message>
     <message>
         <location filename="SavecardData.cpp" line="696"/>
@@ -8969,34 +8997,34 @@ Try to launch %2 as admin.</translation>
         <translation type="obsolete">Cannot load file contents &apos;%1&apos;</translation>
     </message>
     <message>
-        <location filename="FF8Installation.cpp" line="80"/>
+        <location filename="FF8Installation.cpp" line="97"/>
         <source>FF8 Standard</source>
         <translation type="unfinished">FF8 Standard</translation>
     </message>
     <message>
-        <location filename="FF8Installation.cpp" line="82"/>
+        <location filename="FF8Installation.cpp" line="99"/>
         <source>FF8 Steam</source>
         <translation type="unfinished">FF8 Steam</translation>
     </message>
     <message>
-        <location filename="FF8Installation.cpp" line="84"/>
+        <location filename="FF8Installation.cpp" line="101"/>
         <source>FF8 personnalisé</source>
         <translation type="unfinished">FF8 custom</translation>
     </message>
     <message>
-        <location filename="Metadata.cpp" line="41"/>
+        <location filename="Metadata.cpp" line="58"/>
         <source>Attribut &apos;num&apos; invalide</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Invalid &apos;num&apos; attribute</translation>
     </message>
     <message>
-        <location filename="Metadata.cpp" line="46"/>
+        <location filename="Metadata.cpp" line="63"/>
         <source>Attribut &apos;slot&apos; invalide</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Invalid &apos;slot&apos; attribute</translation>
     </message>
     <message>
-        <location filename="Metadata.cpp" line="140"/>
+        <location filename="Metadata.cpp" line="157"/>
         <source>Erreur inconnue</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Unknown error</translation>
     </message>
 </context>
 <context>
@@ -9183,39 +9211,39 @@ Verify that the file is not used by another program.</translatorcomment>
 <context>
     <name>SavecardView</name>
     <message>
-        <location filename="SavecardView.cpp" line="73"/>
+        <location filename="SavecardView.cpp" line="75"/>
         <source>Fichier supprimé</source>
         <translation>ファイルの削除</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="74"/>
+        <location filename="SavecardView.cpp" line="76"/>
         <source>Le fichier &apos;%1&apos; a été supprimé par un programme externe !</source>
         <translation>ファイルe &apos;%1&apos; は他のプログラムによって削除されました !</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="78"/>
+        <location filename="SavecardView.cpp" line="80"/>
         <source>Fichier modifié</source>
         <translation>ファイルの変更</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="79"/>
+        <location filename="SavecardView.cpp" line="81"/>
         <source>Le fichier &apos;%1&apos; a été modifié par un programme externe.</source>
         <translation>ファイル &apos;%1&apos; は他のプログラムによって変更されました。</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="202"/>
+        <location filename="SavecardView.cpp" line="204"/>
         <source>Écraser</source>
         <translation type="unfinished">Overwrite</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="202"/>
+        <location filename="SavecardView.cpp" line="204"/>
         <source>Tout le contenu de la sauvegarde sera écrasé.
 Continuer ?</source>
         <translation type="unfinished">All content of the save will be overwritten.
 Continue?</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="267"/>
+        <location filename="SavecardView.cpp" line="269"/>
         <source>Exporter</source>
         <translation>エクスポート</translation>
     </message>
@@ -9224,51 +9252,51 @@ Continue?</translation>
         <translation type="obsolete">FF8 PC セーブ (*)</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="267"/>
+        <location filename="SavecardView.cpp" line="269"/>
         <source>FF8 PC save (* *.ff8)</source>
         <translation>FF8 PC セーブ (* *.ff8)</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="274"/>
+        <location filename="SavecardView.cpp" line="276"/>
         <source>Échec</source>
         <translation>失敗</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="274"/>
+        <location filename="SavecardView.cpp" line="276"/>
         <source>Enregistrement échoué, vérifiez que le fichier cible n&apos;est pas utilisé.</source>
         <translation>保存に失敗しました。ファイルが使用中でないか確認してください。</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="290"/>
+        <location filename="SavecardView.cpp" line="292"/>
         <source>Nouvelle partie</source>
         <translation type="unfinished">ニューゲーム</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="290"/>
+        <location filename="SavecardView.cpp" line="292"/>
         <source>Tout le contenu de la sauvegarde sera remplacé par une nouvelle partie.
 Continuer ?</source>
         <translation type="unfinished">All content of the save will be replaced with a new game.
 Continue?</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="344"/>
+        <location filename="SavecardView.cpp" line="346"/>
         <source>Vider</source>
         <translation type="unfinished">空ける</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="344"/>
+        <location filename="SavecardView.cpp" line="346"/>
         <source>Tout le contenu de la sauvegarde sera vidé.
 Continuer ?</source>
         <translation type="unfinished">All content of the save will be emptied.
 Continue?</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="385"/>
+        <location filename="SavecardView.cpp" line="386"/>
         <source>Sauvegarde supprimée</source>
         <translation>削除済みのセーブ</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="385"/>
+        <location filename="SavecardView.cpp" line="386"/>
         <source>Cette sauvegarde a été supprimée, voulez-vous tenter de la réparer ? (succès non garanti)</source>
         <translation>このセーブは削除されています。修復しますか？ (成功するとは限りません)</translation>
     </message>
@@ -9281,42 +9309,42 @@ Continue?</translation>
         <translation type="obsolete">いいえ</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="486"/>
+        <location filename="SavecardView.cpp" line="497"/>
         <source>NV%1</source>
         <translation>Lv.%1</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="534"/>
+        <location filename="SavecardView.cpp" line="545"/>
         <source>Bloc occupé</source>
         <translation type="unfinished">Used block</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="539"/>
+        <location filename="SavecardView.cpp" line="550"/>
         <source>Bloc Disponible</source>
         <translation>未使用ファイルです</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="821"/>
+        <location filename="SavecardView.cpp" line="832"/>
         <source>&amp;Modifier...</source>
         <translation type="unfinished">変化する(&amp;E)...</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="822"/>
+        <location filename="SavecardView.cpp" line="833"/>
         <source>&amp;Exporter en sauv. PC...</source>
         <translation type="unfinished">PC セーブに変換(&amp;C)...</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="824"/>
+        <location filename="SavecardView.cpp" line="835"/>
         <source>&amp;Nouvelle partie</source>
         <translation type="unfinished">ニューゲーム(&amp;N)</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="826"/>
+        <location filename="SavecardView.cpp" line="837"/>
         <source>&amp;Vider</source>
         <translation type="unfinished">エンプティー(&amp;M)</translation>
     </message>
     <message>
-        <location filename="SavecardView.cpp" line="828"/>
+        <location filename="SavecardView.cpp" line="839"/>
         <source>&amp;Propriétés...</source>
         <translation type="unfinished">プロパティ(&amp;P)...</translation>
     </message>
@@ -9889,7 +9917,7 @@ Continue?</translation>
     </message>
     <message>
         <location filename="Window.cpp" line="77"/>
-        <location filename="Window.cpp" line="917"/>
+        <location filename="Window.cpp" line="911"/>
         <source>&amp;Fermer</source>
         <translatorcomment>&amp;Close</translatorcomment>
         <translation>閉じる(&amp;C)</translation>
@@ -10028,14 +10056,13 @@ Continuer quand même ?</source>
         <location filename="Window.cpp" line="346"/>
         <location filename="Window.cpp" line="570"/>
         <location filename="Window.cpp" line="861"/>
-        <location filename="Window.cpp" line="871"/>
         <source>Erreur</source>
         <translation>エラー</translation>
     </message>
     <message>
         <location filename="Window.cpp" line="572"/>
         <source>Attention</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Warning</translation>
     </message>
     <message>
         <location filename="Window.cpp" line="861"/>
@@ -10105,8 +10132,9 @@ Continuer quand même ?</source>
     </message>
     <message>
         <location filename="Window.cpp" line="65"/>
-        <source>Signer des sauv. pour le Cloud...</source>
-        <translation type="unfinished"></translation>
+        <source>S&amp;igner des sauv. pour le Cloud...</source>
+        <oldsource>Signer des sauv. pour le Cloud...</oldsource>
+        <translation type="unfinished">S&amp;ign saves for the Cloud...</translation>
     </message>
     <message>
         <location filename="Window.cpp" line="68"/>
@@ -10116,7 +10144,7 @@ Continuer quand même ?</source>
     <message>
         <location filename="Window.cpp" line="72"/>
         <source>Nou&amp;velle fenêtre</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">新しいウインドー(&amp;W)</translation>
     </message>
     <message>
         <location filename="Window.cpp" line="73"/>
@@ -10248,11 +10276,6 @@ Would you analyze it to get the right format?</translation>
         <translation>エクスポート</translation>
     </message>
     <message>
-        <location filename="Window.cpp" line="903"/>
-        <source>Par myst6re&lt;br/&gt;&lt;a href=&quot;https://sourceforge.net/projects/hyne/&quot;&gt;https://sourceforge.net/projects/hyne/&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;75% modifiable&lt;br/&gt;&lt;br/&gt;Merci à :&lt;br/&gt; - Qhimm&lt;br/&gt; - Cyberman&lt;br/&gt; - sithlord48&lt;br/&gt; - Aladore384&lt;br/&gt;&lt;br/&gt;Traducteurs :&lt;br/&gt; - Anglais : myst6re, Vgr&lt;br/&gt; - Japonais : Asa, Sharleen</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="Window.cpp" line="355"/>
         <location filename="Window.cpp" line="463"/>
         <source>Sauvegarde hasardeuse</source>
@@ -10298,19 +10321,15 @@ Would you analyze it to get the right format?</translation>
         <translation>設定の変更を有効化するためにプログラムを再起動してください。</translation>
     </message>
     <message>
-        <location filename="Window.cpp" line="871"/>
-        <source>Impossible de mettre à jour les signatures.
-</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="Window.cpp" line="887"/>
+        <location filename="Window.cpp" line="881"/>
         <source>À propos</source>
         <translation type="unfinished">About</translation>
     </message>
     <message>
-        <source>Par myst6re&lt;br/&gt;&lt;a href=&quot;https://sourceforge.net/projects/hyne/&quot;&gt;https://sourceforge.net/projects/hyne/&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;75% modifiable&lt;br/&gt;&lt;br/&gt;Merci à :&lt;br/&gt; - Qhimm&lt;br/&gt; - Cyberman&lt;br/&gt; - sithlord48&lt;br/&gt; - Aladore384&lt;br/&gt;&lt;br/&gt;Traducteurs :&lt;br/&gt; - Anglais : myst6re, Vgr&lt;br/&gt; - Japonais : Asa</source>
-        <translation type="obsolete">作者 : myst6re&lt;br/&gt;&lt;a href=&quot;https://sourceforge.net/projects/hyne/&quot;&gt;https://sourceforge.net/projects/hyne/&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;編集可能 : 75%&lt;br/&gt;&lt;br/&gt;多謝 :&lt;br/&gt; - Qhimm&lt;br/&gt; - Cyberman&lt;br/&gt; - sithlord48&lt;br/&gt; - Aladore384&lt;br/&gt;&lt;br/&gt;翻訳者 :&lt;br/&gt; - 英語 : myst6re, Vgr&lt;br/&gt; - 日本語 : Asa (麻袋)</translation>
+        <location filename="Window.cpp" line="897"/>
+        <source>Par myst6re&lt;br/&gt;&lt;a href=&quot;https://sourceforge.net/projects/hyne/&quot;&gt;https://sourceforge.net/projects/hyne/&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;75% modifiable&lt;br/&gt;&lt;br/&gt;Merci à :&lt;br/&gt; - Qhimm&lt;br/&gt; - Cyberman&lt;br/&gt; - sithlord48&lt;br/&gt; - Aladore384&lt;br/&gt;&lt;br/&gt;Traducteurs :&lt;br/&gt; - Anglais : myst6re, Vgr&lt;br/&gt; - Japonais : Asa, Sharleen</source>
+        <oldsource>Par myst6re&lt;br/&gt;&lt;a href=&quot;https://sourceforge.net/projects/hyne/&quot;&gt;https://sourceforge.net/projects/hyne/&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;75% modifiable&lt;br/&gt;&lt;br/&gt;Merci à :&lt;br/&gt; - Qhimm&lt;br/&gt; - Cyberman&lt;br/&gt; - sithlord48&lt;br/&gt; - Aladore384&lt;br/&gt;&lt;br/&gt;Traducteurs :&lt;br/&gt; - Anglais : myst6re, Vgr&lt;br/&gt; - Japonais : Asa</oldsource>
+        <translation type="unfinished">作者 : myst6re&lt;br/&gt;&lt;a href=&quot;https://sourceforge.net/projects/hyne/&quot;&gt;https://sourceforge.net/projects/hyne/&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;編集可能 : 75%&lt;br/&gt;&lt;br/&gt;多謝 :&lt;br/&gt; - Qhimm&lt;br/&gt; - Cyberman&lt;br/&gt; - sithlord48&lt;br/&gt; - Aladore384&lt;br/&gt;&lt;br/&gt;翻訳者 :&lt;br/&gt; - 英語 : myst6re, Vgr&lt;br/&gt; - 日本語 : Asa (麻袋)</translation>
     </message>
     <message>
         <source>Fermer</source>

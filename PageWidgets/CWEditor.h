@@ -21,6 +21,7 @@
 
 #include "../FF8Text.h"
 #include "PageWidget.h"
+#include "../SpinBox.h"
 
 class CWEditor : public PageWidget
 {
@@ -31,12 +32,20 @@ public:
 public slots:
 	void fillPage();
 	void savePage();
+private slots:
+	void setCWEnabled(bool enabled);
 protected:
 	void buildWidget();
 private:
 	QLineEdit *bokoE;
-	QSpinBox *levelE, *currentHpE, *maxHpE, *idE, *weaponE;
-//	QList<QCheckBox *> questE;
+	SpinBox8 *levelE, *currentHpE, *maxHpE;
+	QSpinBox *idE, *weaponE;
+	SpinBox8 *rankE;
+	SpinBox8 *itemClassACountE, *itemClassBCountE, *itemClassCCountE, *itemClassDCountE;
+	SpinBox32 *saveCountE;
+	QGroupBox *enabledE;
+	QList<QCheckBox *> questE;
+	QList<QRadioButton *> starCountE;
 };
 
 #endif
