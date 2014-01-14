@@ -1,6 +1,6 @@
 /****************************************************************************
  ** Hyne Final Fantasy VIII Save Editor
- ** Copyright (C) 2009-2013 Arzel Jérôme <myst6re@gmail.com>
+ ** Copyright (C) 2009-2013 Arzel JÃ©rÃ´me <myst6re@gmail.com>
  **
  ** This program is free software: you can redistribute it and/or modify
  ** it under the terms of the GNU General Public License as published by
@@ -322,15 +322,15 @@ struct WORLDMAP//128
 	quint16 car_steps_related;
 	quint16 car_steps_related2;
 	quint8 vehicles_instructions_worldmap;//voiture|Unused|BGU|Chocobo|Hydre|???|???|Unused
-	quint8 koyok_quest;//04 : Mandy Beach|Winhill|Trabia|Kashkabald Desert|UFO? Battu|80 : Koyo K Battu/Soigné/Mangé
+	quint8 koyok_quest;//04 : Mandy Beach|Winhill|Trabia|Kashkabald Desert|UFO? Battu|80 : Koyo K Battu/SoignÃ©/MangÃ©
 	quint8 obel_quest[8];
-	/* [0] => avoir fredonné twice|???|Unused|Unused|n ricochets|infini ricochets|Vu ryo|Vu ryo² ("100x + de ricochets que toi !")
-	 * [1] => Ryo a donné tablette|Unused|Indices ombre pour trouver l'idiot|Unused|Unused|Unused|Indice ombre pour Eldbeak|Eldbeak trouvé
-	 * [2] => Trésor île Minde|Trésor Plaine de Mordor|Unused|Unused|Unused|Unused|Unused|Unused
+	/* [0] => avoir fredonnÃ© twice|???|Unused|Unused|n ricochets|infini ricochets|Vu ryo|Vu ryoÂ² ("100x + de ricochets que toi !")
+	 * [1] => Ryo a donnÃ© tablette|Unused|Indices ombre pour trouver l'idiot|Unused|Unused|Unused|Indice ombre pour Eldbeak|Eldbeak trouvÃ©
+	 * [2] => TrÃ©sor Ã®le Minde|TrÃ©sor Plaine de Mordor|Unused|Unused|Unused|Unused|Unused|Unused
 	 * [3] => ???|Pierre Balamb|Pierre Ryo|Pierre Timber|Pierre Galbadia|Toutes les pierres|Indice Ombre pour Balamb|???
 	 * [4] => ??? (mordor var?)
 	 * [5] => ???|???|???|???|Block access Lunatic Pandora|???|Block access Lunatic Pandora|???
-	 * [6] => avoir parlé à l'ombre|Accepter de chercher l'idiot|Avoir vu l'idiot|...
+	 * [6] => avoir parlÃ© Ã  l'ombre|Accepter de chercher l'idiot|Avoir vu l'idiot|...
 	 * [7] => ??? (temp var)
 	 */
 	quint8 u6[2];
@@ -346,15 +346,15 @@ struct WORLDMAP_PC//26 (padding 8)
 	quint16 car_steps_related;
 	quint16 car_steps_related2;
 	quint8 vehicles_instructions_worldmap;//voiture|Unused|BGU|Chocobo|Hydre|???|???|Unused
-	quint8 koyok_quest;//04 : Mandy Beach|Winhill|Trabia|Kashkabald Desert|UFO? Battu|80 : Koyo K Battu/Soigné/Mangé
+	quint8 koyok_quest;//04 : Mandy Beach|Winhill|Trabia|Kashkabald Desert|UFO? Battu|80 : Koyo K Battu/SoignÃ©/MangÃ©
 	quint8 obel_quest[8];
-	/* [0] => avoir fredonné twice|???|Unused|Unused|n ricochets|infini ricochets|Vu ryo|Vu ryo² ("100x + de ricochets que toi !")
-	 * [1] => Ryo a donné tablette|Unused|Indices ombre pour trouver l'idiot|Unused|Unused|Unused|Indice ombre pour Eldbeak|Eldbeak trouvé
-	 * [2] => Trésor île Minde|Trésor Plaine de Mordor|Unused|Unused|Unused|Unused|Unused|Unused
+	/* [0] => avoir fredonnÃ© twice|???|Unused|Unused|n ricochets|infini ricochets|Vu ryo|Vu ryoÂ² ("100x + de ricochets que toi !")
+	 * [1] => Ryo a donnÃ© tablette|Unused|Indices ombre pour trouver l'idiot|Unused|Unused|Unused|Indice ombre pour Eldbeak|Eldbeak trouvÃ©
+	 * [2] => TrÃ©sor Ã®le Minde|TrÃ©sor Plaine de Mordor|Unused|Unused|Unused|Unused|Unused|Unused
 	 * [3] => ???|Pierre Balamb|Pierre Ryo|Pierre Timber|Pierre Galbadia|Toutes les pierres|Indice Ombre pour Balamb|???
 	 * [4] => ??? (mordor var?)
 	 * [5] => ???|???|???|???|Block access Lunatic Pandora|???|Block access Lunatic Pandora|???
-	 * [6] => avoir parlé à l'ombre|Accepter de chercher l'idiot|Avoir vu l'idiot|...
+	 * [6] => avoir parlÃ© Ã  l'ombre|Accepter de chercher l'idiot|Avoir vu l'idiot|...
 	 * [7] => ??? (temp var)
 	 */
 	quint8 u6[2];
@@ -394,7 +394,7 @@ struct CHOCOBO//64
 	quint8 u2[16];
 	quint32 associatedSaveID;
 	quint8 u3;
-	quint8 boko_attack;// star count (chocobraise | chocoflammes | chocométéore | grochocobo)
+	quint8 boko_attack;// star count (chocobraise | chocoflammes | chocomÃ©tÃ©ore | grochocobo)
 	quint8 u4;
 	quint8 home_walking;
 	quint8 u5[16];
@@ -404,7 +404,7 @@ struct CHOCOBO//64
   A chercher :
 1. Event WAIT : ON ou OFF
 2. le Move  : 1, 2, 3, 4, 5, ou 6
-3. Etat MiniMog : Stand by ou Sleep (à mon avis y a aussi un 3e caché pour dire si on montre ou pas ce menu qui dépend de si on a trouvé ou pas MiniMog)
+3. Etat MiniMog : Stand by ou Sleep (Ã  mon avis y a aussi un 3e cachÃ© pour dire si on montre ou pas ce menu qui dÃ©pend de si on a trouvÃ© ou pas MiniMog)
 */
 
 PACK(
